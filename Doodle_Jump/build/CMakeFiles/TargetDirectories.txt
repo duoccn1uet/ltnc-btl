@@ -1,0 +1,5 @@
+C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build/CMakeFiles/doodle_jump.dir
+C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build/CMakeFiles/package.dir
+C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build/CMakeFiles/package_source.dir
+C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build/CMakeFiles/edit_cache.dir
+C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build/CMakeFiles/rebuild_cache.dir
