@@ -58,12 +58,3 @@ void ImgProcess :: Free()
     }
 }
 
-bool ImgProcess :: OverlapWith(const ImgProcess& other)
-{
-    SDL_Rect other_rect = other.GetRect();
-    if (d_rect.x > other_rect.x + other_rect.w || other_rect.x > d_rect.x + d_rect.w)
-        return false;
-    if (d_rect.y > other_rect.y + other_rect.h || other_rect.y > d_rect.y + d_rect.h)
-        return false;
-    return true;
-}

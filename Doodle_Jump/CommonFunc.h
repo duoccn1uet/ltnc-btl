@@ -51,11 +51,12 @@ const string ICON_FOLDER = "img\\icon\\";
 
 /// Character
 const float g = 0.4;
-const float v0 = 14;
+const float v0 = 15;
 const float pi = acos(-1);
-const float delta_alpha = pi/18;
+const float delta_alpha = pi/6;
 const int d_JumpHeight = v0*v0/(2*g);
-const int PRESS_FRAME = 1;
+const int PRESS_FRAME = 3;
+const float push_force = 11;
 
 /// Platforms
 const int d_min_dist = 60;

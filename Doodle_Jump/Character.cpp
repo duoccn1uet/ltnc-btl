@@ -1,6 +1,6 @@
 #include "Character.h"
 
-#define CHARACTER_DEBUG
+///#define CHARACTER_DEBUG
 #ifndef CHARACTER_DEBUG
 
 Character :: Character()
@@ -37,10 +37,6 @@ SDL_Rect Character :: GetLegsRect()
         SubR = 24, SubL = 17; else
     if (d_CurrentMoveType[int(d_MoveType::LEFT)])
         SubR = 17, SubL = 24;
-    /**if (d_CurrentMoveType[int(d_MoveType::LEFT)])
-        cout << "left\n";
-    if (d_CurrentMoveType[d_MoveType : : RIGHT])
-        cout << "right\n";*/
     SDL_Rect res = {d_rect.x + SubL, d_rect.y+d_rect.h-8, d_rect.w - SubR - SubL, 1};
     return res;
 }
@@ -56,64 +52,22 @@ bool Character :: OnPlatform(Platform& platform)
     return platform.CharacterStandOn(GetLegsRect());
 }
 
-void Character :: ChangePosition(d_MoveType MoveType, bool change_side)
-{
-    int t = (d_CurrentMoveType[int(d_MoveType::JUMP)] == true ? d_JumpTimes : d_FallTimes);
-    int vy = (d_CurrentMoveType[int(d_MoveType::JUMP)] == true ? v0 - g*t : g*t);
-    int deltaX = (vy + 10) * cosa;
-    ///deltaX = 10;
-    ///if (change_side) cout << deltaX << endl;
-    if (MoveType == d_MoveType::RIGHT)
-    {
-        if (change_side)
-            d_rect.x += d_MoveStep;
-        d_rect.x += deltaX;
-    } else
-    if (MoveType == d_MoveType::LEFT)
-    {
-        if (change_side)
-            d_rect.x -= d_MoveStep;
-        d_rect.x -= deltaX;
-    }
-}
-
-void Character :: GetMoveType(const SDL_Event& event, SDL_Renderer* renderer)
+d_MoveType Character :: GetMoveType(const SDL_Event& event)
 {
     if (event.type == SDL_KEYDOWN)
     {
-        int status = -1;
         switch (event.key.keysym.sym)
         {
         case SDLK_RIGHT:
-                status = int(d_MoveType::RIGHT);
-                break;
+                return d_MoveType::RIGHT;
 
         case SDLK_LEFT:
-                status = int(d_MoveType::LEFT);
-                break;
+                return d_MoveType::LEFT;
+        default:
+            return d_MoveType::INVALID;
         }
-        if (status != -1)
-        {
-            d_move = static_cast<d_MoveType>(status);
-            int other = int(d_MoveType::RIGHT) + int(d_MoveType::LEFT) - status;
-            ChangePosition(static_cast<d_MoveType>(status), d_CurrentMoveType[other]);
-            d_CurrentMoveType[other] = false;
-            d_CurrentMoveType[status] = true;
-        }
-
-    } else
-    if (event.type == SDL_KEYUP);
-    /*{
-        switch (event.key.keysym.sym)
-        {
-        case SDLK_d_MoveType : : RIGHT:
-            d_CurrentMoveType[d_MoveType : : RIGHT] = false;
-            break;
-        case SDLK_d_MoveType::LEFT:
-            d_CurrentMoveType[int(d_MoveType::LEFT)] = false;
-            break;
-        }
-    }*/
+    }
+    return d_MoveType::INVALID;
 }
 
 void Character :: Render(SDL_Renderer* renderer)
@@ -122,22 +76,54 @@ void Character :: Render(SDL_Renderer* renderer)
     d_Img[int(d_move)].Render(renderer, nullptr);
 }
 
-bool Character :: DoJump(Platform& platform)
+bool Character :: DoJump(Platform& platform, d_MoveType move_type)
 {
+    bool move = false;
+    float alpha = pi/2;
+    if (move_event.times != 0)
+        move_type = move_event.key_event;
+    if (move_type != d_MoveType::INVALID)
+    {
+        if (move_event.times == 0)
+            move_event = {move_type, PRESS_FRAME};
+        --move_event.times;
+        d_move = move_type;
+        if (move_type == d_MoveType::RIGHT)
+        {
+            alpha -= delta_alpha, move = true;
+            d_CurrentMoveType[short(move_type)] = true;
+            if (d_CurrentMoveType[short(d_MoveType::LEFT)])
+            {
+                d_rect.x += d_MoveStep;
+                d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
+            }
+        }
+        if (move_type == d_MoveType::LEFT)
+        {
+            alpha += delta_alpha, move = true;
+            d_CurrentMoveType[short(move_type)] = true;
+            if (d_CurrentMoveType[short(d_MoveType::RIGHT)])
+            {
+                d_rect.x -= d_MoveStep;
+                d_CurrentMoveType[short(d_MoveType::RIGHT)] = false; 
+            }
+            
+        }
+    }
     if (d_CurrentMoveType[int(d_MoveType::JUMP)])
     {
-        motion.JumpUp(d_rect.y, v0, pi/2, ++d_JumpTimes);
-        /**++d_JumpTimes;
-        int t = d_JumpTimes;*/
+        ++d_JumpTimes;
         if (d_JumpTimes > d_MaxJumpTimes)
         {
             d_CurrentMoveType[int(d_MoveType::JUMP)] = false;
             d_FallTimes = 0;
         }
+        else
+            motion.JumpUp(d_rect.x, d_rect.y, v0, alpha, d_JumpTimes, move);
     }
     else
     {
-        motion.FallDown(d_rect.y, ++d_FallTimes);
+        motion.FallDown(d_rect.x, d_rect.y, alpha, ++d_FallTimes, move);
         if (OnPlatform(platform))
         {
             SDL_Delay(SHORT_DELAY);
@@ -165,9 +151,9 @@ bool Character :: DoOutOfFrame()
     return false;
 }
 
-void Character :: DoActions(Platform& platform)
+void Character :: DoActions(Platform& platform, const d_MoveType& move_type)
 {
-    DoJump(platform);
+    DoJump(platform, move_type);
     DoOutOfFrame();
 }
 
@@ -261,16 +247,26 @@ d_MoveType Character :: GetMoveType(const SDL_Event& event)
         default:
             return d_MoveType::INVALID;
         }
-        /**if (status != -1)
-        {
-            d_move = static_cast<d_MoveType>(status);
-            int other = int(d_MoveType::RIGHT) + int(d_MoveType::LEFT) - status;
-            ChangePosition(static_cast<d_MoveType>(status), d_CurrentMoveType[other]);
-            d_CurrentMoveType[other] = false;
-            d_CurrentMoveType[status] = true;
-        }*/
-
     }
+    return d_MoveType::INVALID;
+}
+
+d_MoveType Character :: GetMoveType(const int& key)
+{
+    /**switch (int(key))
+        {
+        case SDLK_RIGHT:
+                return d_MoveType::RIGHT;
+
+        case SDLK_LEFT:
+                return d_MoveType::LEFT;
+        default:
+            return d_MoveType::INVALID;
+        }*/
+    if (key == SDLK_RIGHT)
+        return d_MoveType::RIGHT;
+    if (key == SDLK_LEFT)
+        return d_MoveType::LEFT;
     return d_MoveType::INVALID;
 }
 
@@ -280,10 +276,17 @@ void Character :: Render(SDL_Renderer* renderer)
     d_Img[int(d_move)].Render(renderer, nullptr);
 }
 
-bool Character :: DoJump(Platform& platform, const d_MoveType& move_type)
+bool Character :: DoJump(Platform& platform)
 {
     bool move = false;
     float alpha = pi/2;
+    d_MoveType move_type = d_MoveType::INVALID;
+    if (event_queue.size())
+    {
+        move_type = GetMoveType(event_queue.front().key_event);
+        if (!--event_queue.front().times)
+            event_queue.pop();
+    }
     if (move_type != d_MoveType::INVALID)
     {
         d_move = move_type;
@@ -291,13 +294,22 @@ bool Character :: DoJump(Platform& platform, const d_MoveType& move_type)
         {
             alpha -= delta_alpha, move = true;
             d_CurrentMoveType[short(move_type)] = true;
-            d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
+            if (d_CurrentMoveType[short(d_MoveType::LEFT)])
+            {
+                d_rect.x += d_MoveStep;
+                d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
+            }
         }
         if (move_type == d_MoveType::LEFT)
         {
             alpha += delta_alpha, move = true;
             d_CurrentMoveType[short(move_type)] = true;
-            d_CurrentMoveType[short(d_MoveType::RIGHT)] = false; 
+            if (d_CurrentMoveType[short(d_MoveType::RIGHT)])
+            {
+                d_rect.x -= d_MoveStep;
+                d_CurrentMoveType[short(d_MoveType::RIGHT)] = false; 
+            }
+            
         }
     }
     if (d_CurrentMoveType[int(d_MoveType::JUMP)])
@@ -340,10 +352,15 @@ bool Character :: DoOutOfFrame()
     return false;
 }
 
-void Character :: DoActions(Platform& platform, const d_MoveType& move_type)
+void Character :: DoActions(Platform& platform)
 {
-    DoJump(platform, move_type);
+    DoJump(platform);
     DoOutOfFrame();
+}
+
+void Character :: PushAction(const SDL_Event& event)
+{
+    event_queue.emplace(event.key.keysym.sym, PRESS_FRAME);
 }
 
 #endif /// CHARACTER_DEBUG

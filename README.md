@@ -11,7 +11,7 @@
 
 11h, 24/3/2022: <br>
 +) More real motion.<br>
-+) Bad random platforms algorithm, may not be able to generate more platforms.<br>
++) **Bad random platforms algorithm, may not be able to generate more platforms.** <br>
 
 0h31, 30/3/2022: <br>
 +) Simple Menu. <br>
@@ -19,3 +19,7 @@
 0h32, 31/3/2022: <br>
 +) The menu is almost completed. <br>
 +) Have sound. <br>
+
+0h31, 9/4/2022: <br>
++) Update score.<br>
++) **When choose help option multiple times, memory increases because of recursion, not fixed.** <br>

@@ -23,6 +23,7 @@ public:
     Timer timer;
     Map _map;
     Text show_score;
+    int d_score = 0;
     Menu menu;
     Mix_Music *menu_sound = nullptr;
 
@@ -32,10 +33,11 @@ public:
     Game(const string& _MAP_NAME);
     ~Game();
 
-    void Init(SDL_Renderer* renderer);
-    void ShowScore(SDL_Renderer* renderer);
-    void LoadOption(SDL_Renderer* renderer, const MenuOption& option, const string& font_path, const string& menu_path);
-    void ShowMenu(SDL_Renderer* renderer, const string& font_path, const string& menu_path);
+    void Init(SDL_Renderer*& renderer);
+    void ShowScore(SDL_Renderer*& renderer);
+    void LoadOption(SDL_Renderer*& renderer, const MenuOption& option, const string& font_path, const string& menu_path);
+    void ShowMenu(SDL_Renderer*& renderer, const string& font_path, const string& menu_path);
+    void PlayGame(SDL_Renderer*& renderer);
 
 private:
 };

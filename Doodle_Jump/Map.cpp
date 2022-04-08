@@ -19,7 +19,7 @@ Map :: Map(Platform* _platform, Character* _character)
     LoadCharacter(_character);
 }
 
-bool Map :: SrcollMap()
+int Map :: SrcollMap()
 {
     SDL_Rect d_char_rect = d_character->GetRect();
     ///cout << d_char_rect.y << endl;
@@ -73,9 +73,9 @@ bool Map :: SrcollMap()
             } while (!d_platforms->GoodPlatform(i));
         }
         d_platforms->SetNumberOfPlatforms(new_nop);
-        return true;
+        return diff;
     }
-    return false;
+    return 0;
 }
 
 #else

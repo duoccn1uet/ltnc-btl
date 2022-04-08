@@ -17,7 +17,7 @@ public:
 
     void LoadPlatform(Platform* _platform) {d_platforms = _platform;}
     void LoadCharacter(Character* _character) {d_character = _character;}
-    bool SrcollMap();
+    int SrcollMap();
 
 private:
     Platform* d_platforms;
