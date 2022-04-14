@@ -22,4 +22,4 @@
 
 0h31, 9/4/2022: <br>
 +) Update score.<br>
-+) **When choose help option multiple times, memory increases because of recursion, not fixed.** <br>
++) **When choose help option multiple times, memory increases because of recursion, fixed.** <br>
