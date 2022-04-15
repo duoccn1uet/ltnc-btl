@@ -80,16 +80,19 @@ const string OPTION_FONT = "KaneiwaAlpRegular-jEpG.ttf";
 
 /// Sound
 ///const bool SoundOn = true;
-const int INFINITE_LOOP = -1;
+const int INFINITE_LOOP = -1;/// {} // end recursion
+
 
 namespace CommonFunc
 {
-    /**void show() {}
+    template <typename... ArgTypes>
+    void show(ArgTypes... yeuha);
     template <typename T, typename... V> void show(T t, V... v)
     {
-     cerr << t; if (sizeof...(v)) cerr << ", "; show(v...);
+        cerr << t; if (sizeof...(v)) {cerr << ", "; show(v...);}
     }
-    #define debug(...) cerr << '[' << #__VA_ARGS__ << "]   =   [", show(__VA_ARGS__), cerr << "]\n"*/
+    template <> void show();
+    #define debug(...) cerr << '[' << #__VA_ARGS__ << "]   =   [", show(__VA_ARGS__), cerr << "]\n"
 
     template <class X>
     bool mini(X& a, const X& b)

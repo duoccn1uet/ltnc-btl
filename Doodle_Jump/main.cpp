@@ -48,14 +48,16 @@ void test()
 
 int main(int agrc, char* argv[])
 {
-    srand(time(0));
+    /**srand(time(0));
     initSDL(window, renderer);
-    game.ShowMenu(renderer);
+    game.ShowMenu(renderer);*/
+    show(1,2, "Dfdds");
     ///PlaySound(sound, 1);
    ///Khi thông thường chạy với môi trường bình thường ở nhà
    /// SDL_RenderPresent(renderer);
    ///Khi chạy ở máy thực hành WinXP ở trường (máy ảo)
    ///SDL_UpdateWindowSurface(window);
-    quitSDL(window, renderer);
+    ///waitUntilKeyPressed();
+    ///quitSDL(window, renderer);
     return 0;
 }

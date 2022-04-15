@@ -96,14 +96,14 @@ HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
                 return HelpOption::QUIT;
             case SDL_MOUSEMOTION:
                 for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
-                    if (PointToOption(event.motion.x, event.motion.y, d_help_option[i]))
+                    if (PointToOption(event.x, event.y, d_help_option[i]))
                         OptionOn(renderer, CurrentOption::HELP, i, MAP_NAME);
                     else
                         OptionOff(renderer, CurrentOption::HELP, i, MAP_NAME);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
-                    if (PointToOption(event.motion.x, event.motion.y, d_help_option[i]))
+                    if (PointToOption(event.x, event.y, d_help_option[i]))
                         return static_cast <HelpOption> (i);
                 break;
             }
@@ -133,18 +133,18 @@ MenuOption Menu :: HandleMenuEvent(SDL_Renderer*& renderer)
             case SDL_QUIT:
                 return MenuOption::EXIT;
             case SDL_MOUSEMOTION:
-               /// int x_mouse = event.motion.x;
-                ///int y_mouse = event.motion.y;
-                ///cout << event.motion.x << ' ' << event.motion.y << endl;
+               /// int x_mouse = event.x;
+                ///int y_mouse = event.y;
+                ///cout << event.x << ' ' << event.y << endl;
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
-                    if (PointToOption(event.motion.x, event.motion.y, d_menu_option[i]))
+                    if (PointToOption(event.x, event.y, d_menu_option[i]))
                         OptionOn(renderer, CurrentOption::MENU, i);
                     else
                         OptionOff(renderer, CurrentOption::MENU, i);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
-                    if (PointToOption(event.motion.x, event.motion.y, d_menu_option[i]))
+                    if (PointToOption(event.x, event.y, d_menu_option[i]))
                         return static_cast <MenuOption>(i);
                 break;
             }
@@ -276,9 +276,9 @@ MenuOption Menu :: HandleMenuEvent(SDL_Renderer*& renderer)
             case SDL_QUIT:
                 return MenuOption::EXIT;
             case SDL_MOUSEMOTION:
-               /// int x_mouse = event.motion.x;
-                ///int y_mouse = event.motion.y;
-                ///cout << event.motion.x << ' ' << event.motion.y << endl;
+               /// int x_mouse = event.x;
+                ///int y_mouse = event.y;
+                ///cout << event.x << ' ' << event.y << endl;
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
                     if (PointToOption(event.motion.x, event.motion.y, d_menu_option[i]))
                         OptionOn(renderer, CurrentOption::MENU, i);

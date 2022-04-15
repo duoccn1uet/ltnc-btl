@@ -31,11 +31,6 @@
 },
 {
   "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",
-  "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\X86_64~2.EXE  @CMakeFiles/doodle_jump.dir/includes_CXX.rsp -g -o CMakeFiles\\doodle_jump.dir\\Map.cpp.obj -c C:\\Users\\LENOVO\\OneDrive\\Desktop\\ltnc-btl\\Doodle_Jump\\Map.cpp",
-  "file": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Map.cpp"
-},
-{
-  "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",
   "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\X86_64~2.EXE  @CMakeFiles/doodle_jump.dir/includes_CXX.rsp -g -o CMakeFiles\\doodle_jump.dir\\Menu.cpp.obj -c C:\\Users\\LENOVO\\OneDrive\\Desktop\\ltnc-btl\\Doodle_Jump\\Menu.cpp",
   "file": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Menu.cpp"
 },

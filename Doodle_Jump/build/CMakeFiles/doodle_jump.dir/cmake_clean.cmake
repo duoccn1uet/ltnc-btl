@@ -11,8 +11,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Item.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Item.cpp.obj.d"
-  "CMakeFiles/doodle_jump.dir/Map.cpp.obj"
-  "CMakeFiles/doodle_jump.dir/Map.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Menu.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Menu.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Motion.cpp.obj"

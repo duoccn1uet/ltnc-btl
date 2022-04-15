@@ -158,26 +158,11 @@ CMakeFiles/doodle_jump.dir/Item.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/doodle_jump.dir/Item.cpp.s"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Item.cpp -o CMakeFiles\doodle_jump.dir\Item.cpp.s
 
-CMakeFiles/doodle_jump.dir/Map.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
-CMakeFiles/doodle_jump.dir/Map.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
-CMakeFiles/doodle_jump.dir/Map.cpp.obj: ../Map.cpp
-CMakeFiles/doodle_jump.dir/Map.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/doodle_jump.dir/Map.cpp.obj"
-	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Map.cpp.obj -MF CMakeFiles\doodle_jump.dir\Map.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Map.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Map.cpp
-
-CMakeFiles/doodle_jump.dir/Map.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/doodle_jump.dir/Map.cpp.i"
-	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Map.cpp > CMakeFiles\doodle_jump.dir\Map.cpp.i
-
-CMakeFiles/doodle_jump.dir/Map.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/doodle_jump.dir/Map.cpp.s"
-	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Map.cpp -o CMakeFiles\doodle_jump.dir\Map.cpp.s
-
 CMakeFiles/doodle_jump.dir/Menu.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/Menu.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Menu.cpp.obj: ../Menu.cpp
 CMakeFiles/doodle_jump.dir/Menu.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/doodle_jump.dir/Menu.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/doodle_jump.dir/Menu.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Menu.cpp.obj -MF CMakeFiles\doodle_jump.dir\Menu.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Menu.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Menu.cpp
 
 CMakeFiles/doodle_jump.dir/Menu.cpp.i: cmake_force
@@ -192,7 +177,7 @@ CMakeFiles/doodle_jump.dir/Motion.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/Motion.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Motion.cpp.obj: ../Motion.cpp
 CMakeFiles/doodle_jump.dir/Motion.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/doodle_jump.dir/Motion.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/doodle_jump.dir/Motion.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Motion.cpp.obj -MF CMakeFiles\doodle_jump.dir\Motion.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Motion.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Motion.cpp
 
 CMakeFiles/doodle_jump.dir/Motion.cpp.i: cmake_force
@@ -207,7 +192,7 @@ CMakeFiles/doodle_jump.dir/Option.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/Option.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Option.cpp.obj: ../Option.cpp
 CMakeFiles/doodle_jump.dir/Option.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/doodle_jump.dir/Option.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/doodle_jump.dir/Option.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Option.cpp.obj -MF CMakeFiles\doodle_jump.dir\Option.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Option.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Option.cpp
 
 CMakeFiles/doodle_jump.dir/Option.cpp.i: cmake_force
@@ -222,7 +207,7 @@ CMakeFiles/doodle_jump.dir/Platform.cpp.obj: CMakeFiles/doodle_jump.dir/flags.ma
 CMakeFiles/doodle_jump.dir/Platform.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Platform.cpp.obj: ../Platform.cpp
 CMakeFiles/doodle_jump.dir/Platform.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/doodle_jump.dir/Platform.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/doodle_jump.dir/Platform.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Platform.cpp.obj -MF CMakeFiles\doodle_jump.dir\Platform.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Platform.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Platform.cpp
 
 CMakeFiles/doodle_jump.dir/Platform.cpp.i: cmake_force
@@ -237,7 +222,7 @@ CMakeFiles/doodle_jump.dir/Text.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/Text.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Text.cpp.obj: ../Text.cpp
 CMakeFiles/doodle_jump.dir/Text.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/doodle_jump.dir/Text.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/doodle_jump.dir/Text.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Text.cpp.obj -MF CMakeFiles\doodle_jump.dir\Text.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Text.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Text.cpp
 
 CMakeFiles/doodle_jump.dir/Text.cpp.i: cmake_force
@@ -252,7 +237,7 @@ CMakeFiles/doodle_jump.dir/Timer.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: ../Timer.cpp
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/doodle_jump.dir/Timer.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/doodle_jump.dir/Timer.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Timer.cpp.obj -MF CMakeFiles\doodle_jump.dir\Timer.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Timer.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Timer.cpp
 
 CMakeFiles/doodle_jump.dir/Timer.cpp.i: cmake_force
@@ -267,7 +252,7 @@ CMakeFiles/doodle_jump.dir/main.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/main.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/main.cpp.obj: ../main.cpp
 CMakeFiles/doodle_jump.dir/main.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/doodle_jump.dir/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/doodle_jump.dir/main.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/main.cpp.obj -MF CMakeFiles\doodle_jump.dir\main.cpp.obj.d -o CMakeFiles\doodle_jump.dir\main.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\main.cpp
 
 CMakeFiles/doodle_jump.dir/main.cpp.i: cmake_force
@@ -286,7 +271,6 @@ doodle_jump_OBJECTS = \
 "CMakeFiles/doodle_jump.dir/Game.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Item.cpp.obj" \
-"CMakeFiles/doodle_jump.dir/Map.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Menu.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Motion.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Option.cpp.obj" \
@@ -304,7 +288,6 @@ doodle_jump.exe: CMakeFiles/doodle_jump.dir/CreateWindow.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Game.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Item.cpp.obj
-doodle_jump.exe: CMakeFiles/doodle_jump.dir/Map.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Menu.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Motion.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Option.cpp.obj
@@ -316,7 +299,7 @@ doodle_jump.exe: CMakeFiles/doodle_jump.dir/build.make
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/linklibs.rsp
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/objects1.rsp
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable doodle_jump.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX executable doodle_jump.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\doodle_jump.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

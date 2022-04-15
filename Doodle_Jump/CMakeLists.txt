@@ -11,7 +11,7 @@ link_directories(${SDL2_LIB_DIR})
 #FILE(GLOB cpp_file ${CMAKE_SOURCE_DIR}/*.cpp)
 file(GLOB cpp_file *.cpp)
 #add_executable(doodle_jump main.cpp Character.cpp CommonFunc.cpp CreateWindow.cpp Game.cpp
-#                           ImgProcess.cpp Map.cpp Menu.cpp Platform.cpp Text.cpp Timer.cpp 
+#                           ImgProcess.cpp Menu.cpp Platform.cpp Text.cpp Timer.cpp 
 #                           Motion.cpp Option.cpp Item.cpp)
 
 add_executable(doodle_jump ${cpp_file})

@@ -41,17 +41,6 @@ SDL_Rect Character :: GetLegsRect()
     return res;
 }
 
-bool Character :: OnPlatform(Platform& platform)
-{
-    /**int d_LeftToLegs = d_SidesToLegs[int(d_MoveType::LEFT)];
-    int d_RightToLegs = d_SidesToLegs[d_MoveType : : RIGHT];
-    if (d_CurrentMoveType[int(d_MoveType::LEFT)] == true)
-        swap(d_LeftToLegs, d_RightToLegs);
-    SDL_Rect g = {d_rect.x + d_LeftToLegs, d_rect.y+d_rect.h-8, d_rect.w - d_RightToLegs - d_LeftToLegs, 1};*/
-    ///cout << g.x << ' ' << g.y << ' ' << g.w << ' ' << g.h << endl;
-    return platform.CharacterStandOn(GetLegsRect());
-}
-
 d_MoveType Character :: GetMoveType(const SDL_Event& event)
 {
     if (event.type == SDL_KEYDOWN)
@@ -76,32 +65,32 @@ void Character :: Render(SDL_Renderer* renderer)
     d_Img[int(d_move)].Render(renderer, nullptr);
 }
 
-bool Character :: DoJump(Platform& platform, d_MoveType move_type)
+void Character :: Cross(d_MoveType side)
 {
-    bool move = false;
-    float alpha = pi/2;
     if (move_event.times != 0)
-        move_type = move_event.key_event;
-    if (move_type != d_MoveType::INVALID)
+        side = move_event.key_event;
+    if (side != d_MoveType::INVALID)
     {
+        int sign = (d_CurrentMoveType[uint16_t(d_MoveType::JUMP)] ? 1 : -1);
+        float alpha = sign * pi/2;
         if (move_event.times == 0)
-            move_event = {move_type, PRESS_FRAME};
+            move_event = {side, PRESS_FRAME};
         --move_event.times;
-        d_move = move_type;
-        if (move_type == d_MoveType::RIGHT)
+        d_move = side;
+        if (side == d_MoveType::RIGHT)
         {
-            alpha -= delta_alpha, move = true;
-            d_CurrentMoveType[short(move_type)] = true;
+            alpha -= sign * delta_alpha;
+            d_CurrentMoveType[short(side)] = true;
             if (d_CurrentMoveType[short(d_MoveType::LEFT)])
             {
                 d_rect.x += d_MoveStep;
                 d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
             }
         }
-        if (move_type == d_MoveType::LEFT)
+        if (side == d_MoveType::LEFT)
         {
-            alpha += delta_alpha, move = true;
-            d_CurrentMoveType[short(move_type)] = true;
+            alpha += sign * delta_alpha;
+            d_CurrentMoveType[short(side)] = true;
             if (d_CurrentMoveType[short(d_MoveType::RIGHT)])
             {
                 d_rect.x -= d_MoveStep;
@@ -109,31 +98,34 @@ bool Character :: DoJump(Platform& platform, d_MoveType move_type)
             }
             
         }
-    }
-    if (d_CurrentMoveType[int(d_MoveType::JUMP)])
-    {
-        ++d_JumpTimes;
-        if (d_JumpTimes > d_MaxJumpTimes)
-        {
-            d_CurrentMoveType[int(d_MoveType::JUMP)] = false;
-            d_FallTimes = 0;
-        }
+        if (sign == 1)
+            Motion::Cross(d_rect.x, v0, alpha, d_JumpTimes);
         else
-            motion.JumpUp(d_rect.x, d_rect.y, v0, alpha, d_JumpTimes, move);
+            Motion::Cross(d_rect.x, 0, alpha, d_FallTimes);
+    }
+}
+
+void Character :: Fall()
+{
+    JumpUp(d_rect.y, 0, ++d_FallTimes);
+}
+
+bool Character :: Jump()
+{
+    if (!d_CurrentMoveType[int(d_MoveType::JUMP)])
+        return false;
+    int& t = ++d_JumpTimes;
+    if (t == 1)
+        PlaySound(landing, 1);
+    if (t > d_MaxJumpTimes)
+    {
+        d_CurrentMoveType[int(d_MoveType::JUMP)] = false;
+        d_FallTimes = 0;
+        return false;
     }
     else
-    {
-        motion.FallDown(d_rect.x, d_rect.y, alpha, ++d_FallTimes, move);
-        if (OnPlatform(platform))
-        {
-            SDL_Delay(SHORT_DELAY);
-            PlaySound(landing, 1);
-            d_CurrentMoveType[int(d_MoveType::JUMP)] = true;
-            d_JumpTimes = 0;
-            return true;
-        }
-    }
-    return false;
+        JumpUp(d_rect.y, v0, t);
+    return true;
 }
 
 bool Character :: DoOutOfFrame()
@@ -151,11 +143,6 @@ bool Character :: DoOutOfFrame()
     return false;
 }
 
-void Character :: DoActions(Platform& platform, const d_MoveType& move_type)
-{
-    DoJump(platform, move_type);
-    DoOutOfFrame();
-}
 
 #else
 
@@ -280,30 +267,30 @@ bool Character :: DoJump(Platform& platform)
 {
     bool move = false;
     float alpha = pi/2;
-    d_MoveType move_type = d_MoveType::INVALID;
+    d_MoveType side = d_MoveType::INVALID;
     if (event_queue.size())
     {
-        move_type = GetMoveType(event_queue.front().key_event);
+        side = GetMoveType(event_queue.front().key_event);
         if (!--event_queue.front().times)
             event_queue.pop();
     }
-    if (move_type != d_MoveType::INVALID)
+    if (side != d_MoveType::INVALID)
     {
-        d_move = move_type;
-        if (move_type == d_MoveType::RIGHT)
+        d_move = side;
+        if (side == d_MoveType::RIGHT)
         {
             alpha -= delta_alpha, move = true;
-            d_CurrentMoveType[short(move_type)] = true;
+            d_CurrentMoveType[short(side)] = true;
             if (d_CurrentMoveType[short(d_MoveType::LEFT)])
             {
                 d_rect.x += d_MoveStep;
                 d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
             }
         }
-        if (move_type == d_MoveType::LEFT)
+        if (side == d_MoveType::LEFT)
         {
             alpha += delta_alpha, move = true;
-            d_CurrentMoveType[short(move_type)] = true;
+            d_CurrentMoveType[short(side)] = true;
             if (d_CurrentMoveType[short(d_MoveType::RIGHT)])
             {
                 d_rect.x -= d_MoveStep;
@@ -315,7 +302,7 @@ bool Character :: DoJump(Platform& platform)
     if (d_CurrentMoveType[int(d_MoveType::JUMP)])
     {
         ++d_JumpTimes;
-        motion.JumpUp(d_rect.x, d_rect.y, v0, alpha, d_JumpTimes, move);
+        JumpUp(d_rect.x, d_rect.y, v0, alpha, d_JumpTimes, move);
         if (d_JumpTimes > d_MaxJumpTimes)
         {
             d_CurrentMoveType[int(d_MoveType::JUMP)] = false;
@@ -324,7 +311,7 @@ bool Character :: DoJump(Platform& platform)
     }
     else
     {
-        motion.FallDown(d_rect.x, d_rect.y, alpha, ++d_FallTimes, move);
+        FallDown(d_rect.x, d_rect.y, alpha, ++d_FallTimes, move);
         if (OnPlatform(platform))
         {
             SDL_Delay(SHORT_DELAY);

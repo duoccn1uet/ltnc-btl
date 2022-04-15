@@ -3,19 +3,13 @@
 
 #include "CommonFunc.h"
 
-class Motion
+namespace Motion
 {
-public:
-
-    Motion();
-    ~Motion();
-
-    void JumpUp(int& x, int& y, const float& v0, const float& alpha, const int& t, bool cross);
-    void FallDown(int& x, int& y, const float& alpha, const int& t, bool cross);
+    void JumpUp(int& y, const float& v0, const int& t);
+    void Cross(int& x, const float& v0, const float& alpha, const int& t);
     ///void JumpCross(int& x, const int& t)
-
-private:
-
 };
+
+using namespace Motion;
 
 #endif /// MOTION_H

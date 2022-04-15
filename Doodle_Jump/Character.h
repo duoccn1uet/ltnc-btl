@@ -50,15 +50,13 @@ public:
     void Init(SDL_Renderer* renderer, const string& path);
     d_MoveType GetMoveType(const SDL_Event& event);
     void Render(SDL_Renderer* renderer);
-    void ChangePosition(d_MoveType MoveType, bool change_side);
-    bool OnPlatform(Platform& platform);
-    bool DoJump(Platform& platform, d_MoveType move_type);
-    void DoActions(Platform& platform, const d_MoveType& move_type);
+    bool Jump();
+    void Fall();
+    void Cross(d_MoveType side);
     bool DoOutOfFrame();
-    void PushAction(const SDL_Event& event);
     SDL_Rect GetLegsRect();
 
-    friend class Motion;
+    friend class Game;
 
 private:
 
@@ -68,7 +66,6 @@ private:
     bool* d_CurrentMoveType = new bool[uint16_t(d_MoveType::d_NumberOfMoveType)];
     ImgProcess* d_Img = new ImgProcess[uint16_t(d_MoveType::d_NumberOfMoveType)];
     Mix_Chunk *landing;
-    Motion motion;
     pair <d_MoveType, int> move_event;/// = {0,0};
 };
 

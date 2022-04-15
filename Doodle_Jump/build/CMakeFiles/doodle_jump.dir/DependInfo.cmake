@@ -14,7 +14,6 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Game.cpp" "CMakeFiles/doodle_jump.dir/Game.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Game.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.cpp" "CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Item.cpp" "CMakeFiles/doodle_jump.dir/Item.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Item.cpp.obj.d"
-  "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Map.cpp" "CMakeFiles/doodle_jump.dir/Map.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Map.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Menu.cpp" "CMakeFiles/doodle_jump.dir/Menu.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Menu.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Motion.cpp" "CMakeFiles/doodle_jump.dir/Motion.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Motion.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Option.cpp" "CMakeFiles/doodle_jump.dir/Option.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Option.cpp.obj.d"
