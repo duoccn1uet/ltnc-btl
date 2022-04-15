@@ -2,10 +2,10 @@
 #define COMMONFUNC_H_INCLUDED
 
 #include <bits/stdc++.h>
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include <SDL_ttf.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL_ttf.h>
 
 #define foru(i, a, b) for(int i = a, _b = (b)+1; i < _b; ++i)
 #define ford(i, a, b) for(int i = a, _b = (b)-1; i > _b; --i)
@@ -41,14 +41,14 @@ const int SHORT_DELAY = 60;
 const int FPS = 70;
 
 /// Folder
-const string BACKGROUND_FOLDER = "img\\background\\";
-const string CHARACTER_FOLDER = "img\\character\\";
-const string PLATFORM_FOLDER = "img\\platform\\";
-const string FONT_FOLDER = "font\\";
-const string SOUND_FOLDER = "sound\\";
-const string MENU_FOLDER = "img\\menu\\";
-const string ICON_FOLDER = "img\\icon\\";
-const string ITEM_FOLDER = "img\\item\\";
+const string BACKGROUND_FOLDER = "img/background/";
+const string CHARACTER_FOLDER = "img/character/";
+const string PLATFORM_FOLDER = "img/platform/";
+const string FONT_FOLDER = "font/";
+const string SOUND_FOLDER = "sound/";
+const string MENU_FOLDER = "img/menu/";
+const string ICON_FOLDER = "img/icon/";
+const string ITEM_FOLDER = "img/item/";
 
 /// Character
 const float g = 0.4;
@@ -84,12 +84,13 @@ const int INFINITE_LOOP = -1;
 
 namespace CommonFunc
 {
-    /**void show() {}
-    template <typename T, typename... V> void show(T t, V... v)
+    // void show() {}
+    template <typename T, typename... V> 
+    void show(T t, V... v)
     {
      cerr << t; if (sizeof...(v)) cerr << ", "; show(v...);
     }
-    #define debug(...) cerr << '[' << #__VA_ARGS__ << "]   =   [", show(__VA_ARGS__), cerr << "]\n"*/
+    #define debug(...) cerr << '[' << #__VA_ARGS__ << "]   =   [", show(__VA_ARGS__), cerr << "]\n"
 
     template <class X>
     bool mini(X& a, const X& b)
