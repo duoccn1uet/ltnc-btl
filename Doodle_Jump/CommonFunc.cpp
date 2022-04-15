@@ -7,12 +7,12 @@ long long CommonFunc :: rand(long long Left, long long Right)
     return Left + rd() % (Right - Left + 1);
 }
 
-/**void CommonFunc :: show() {}
-template <typename T, typename... V>
-void CommonFunc :: show(T t, V... v)
-{
-    cerr << t; if (sizeof...(v)) cerr << ", "; show(v...);
-}*/
+// void CommonFunc :: show() {}
+// template <typename T, typename... V>
+// void CommonFunc :: show(T t, V... v)
+// {
+//     cerr << t; if (sizeof...(v)) cerr << ", "; show(v...);
+// }
 
 bool SoundOn = true;
 string MAP_NAME;

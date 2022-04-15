@@ -20,4 +20,4 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-target_link_libraries(doodle_jump ${SDL2_LIBRARY} -lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf)
+target_link_libraries(doodle_jump ${SDL2_LIBRARY}  -lSDL2main -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf)
