@@ -7,26 +7,43 @@
 
 enum class ItemType
 {
-    COIN, ROCKET, SPRINGS, nItemType
+    COIN, ROCKET, SPRINGS, nItemType, INVALID
 };
 
-const string ItemText[] = {"coin", "rocket", "springs"};
+enum class ItemStatus
+{
+    SHOW, APPLY, LEAVE, nItemStatus
+};
 
-class Item: public ImgProcess
+const string ItemTypeText[] = {"coin", "rocket", "springs"};
+const string ItemStatusText[] = {"show", "apply", "leave"};
+/// [type][status]
+const vector <vector<int>> ItemFrame = {{1, 0, 0},
+                                        {1, 1, 0},
+                                        {1, 1, 0}};
+
+class Item
 {
 public:
 
     Item();
     ~Item();
 
-    void SetItemType(const ItemType& _type) {type = _type;}
-    void LoadSound(const string& path);
-    void LoadItem(const string& path, SDL_Renderer*& renderer);
+    ItemType GetType() const {return static_cast <ItemType> (type);}
+    ItemStatus GetStatus() const {return static_cast <ItemStatus> (status);}
+    const SDL_Rect GetRect();
+    void SetRect(const int& x, const int& y);
+    void SetItem(const ItemType& _type, const ItemStatus& _status);
+    void RenderItem();
+    void RenderSound();
 
 private:
 
-    Mix_Chunk* collect_sound = nullptr;
-    ItemType type;
+    Mix_Chunk* apply_sound = nullptr;
+    vector <ImgProcess> img;
+    uint16_t type;
+    uint16_t status;
+    int frame_ptr = 0;
 };
 
 #endif ///ITEM_H

@@ -21,11 +21,11 @@ Character :: ~Character()
     Mix_FreeChunk(landing);
 }
 
-void Character :: Init(SDL_Renderer* renderer, const string& path)
+void Character :: Init(const string& path)
 {
     int i = 0;
     for(string s : d_MoveTypeImg)
-        d_Img[i++].LoadImg(path + s, renderer);
+        d_Img[i++].LoadImg(path + s);
     d_rect = d_Img[0].GetRect();
     LoadSound(landing, SOUND_FOLDER + "landing.wav");
 }
@@ -37,7 +37,7 @@ SDL_Rect Character :: GetLegsRect()
         SubR = 24, SubL = 17; else
     if (d_CurrentMoveType[int(d_MoveType::LEFT)])
         SubR = 17, SubL = 24;
-    SDL_Rect res = {d_rect.x + SubL, d_rect.y+d_rect.h-8, d_rect.w - SubR - SubL, 1};
+    SDL_Rect res = {d_rect.x + SubL, d_rect.y+d_rect.h-leg_height, d_rect.w - SubR - SubL, leg_height};
     return res;
 }
 
@@ -59,10 +59,10 @@ d_MoveType Character :: GetMoveType(const SDL_Event& event)
     return d_MoveType::INVALID;
 }
 
-void Character :: Render(SDL_Renderer* renderer)
+void Character :: Render()
 {
     d_Img[int(d_move)].SetRect(d_rect.x, d_rect.y);
-    d_Img[int(d_move)].Render(renderer, nullptr);
+    d_Img[int(d_move)].Render(nullptr);
 }
 
 void Character :: Cross(d_MoveType side)
@@ -143,6 +143,10 @@ bool Character :: DoOutOfFrame()
     return false;
 }
 
+bool Character :: CollectItem(Item& item)
+{
+    
+}
 
 #else
 
@@ -164,11 +168,11 @@ Character :: ~Character()
     Mix_FreeChunk(landing);
 }
 
-void Character :: Init(SDL_Renderer* renderer, const string& path)
+void Character :: Init(const string& path)
 {
     int i = 0;
     for(string s : d_MoveTypeImg)
-        d_Img[i++].LoadImg(path + s, renderer);
+        d_Img[i++].LoadImg(path + s);
     d_rect = d_Img[0].GetRect();
     LoadSound(landing, SOUND_FOLDER + "landing.wav");
 }
@@ -257,10 +261,10 @@ d_MoveType Character :: GetMoveType(const int& key)
     return d_MoveType::INVALID;
 }
 
-void Character :: Render(SDL_Renderer* renderer)
+void Character :: Render()
 {
     d_Img[int(d_move)].SetRect(d_rect.x, d_rect.y);
-    d_Img[int(d_move)].Render(renderer, nullptr);
+    d_Img[int(d_move)].Render(nullptr);
 }
 
 bool Character :: DoJump(Platform& platform)

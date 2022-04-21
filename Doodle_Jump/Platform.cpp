@@ -10,21 +10,21 @@ Platform :: ~Platform()
 
 }
 
-void Platform :: LoadPlatform(const PlatformType& _type, const string& MAP_NAME, SDL_Renderer*& renderer)
+void Platform :: LoadPlatform(const PlatformType& _type)
 {
     if (type != _type)
     {
         type = _type;
-        LoadImg(PLATFORM_FOLDER + MAP_NAME + PlatformText[uint16_t(type)] + ".png", renderer);
+        LoadImg(PLATFORM_FOLDER + PlatformText[uint16_t(type)] + ".png");
     }
 }
 
-void Platform :: Render(SDL_Renderer*& renderer)
+void Platform :: Render()
 {
     switch (type)
     {
         case PlatformType::NORMAL:
-            ImgProcess::Render(renderer, nullptr);
+            ImgProcess::Render(nullptr);
             break;
     }
 }

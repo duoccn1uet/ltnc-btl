@@ -20,9 +20,10 @@ using namespace std;
 ///#define COMMONFUNC_DEBUG
 #ifndef COMMONFUNC_DEBUG
 
-static SDL_Window* window = nullptr;
-static SDL_Renderer* renderer = nullptr;
-static SDL_Event event;
+extern SDL_Window* window;
+extern SDL_Renderer* renderer;
+extern SDL_Event event;
+extern string MAP_NAME;
 
 /// Screen
 const string WINDOW_TITLE = "WELCOME TO MY EMPIRE";
@@ -41,14 +42,14 @@ const int SHORT_DELAY = 60;
 const int FPS = 70;
 
 /// Folder
-const string BACKGROUND_FOLDER = "img\\background\\";
-const string CHARACTER_FOLDER = "img\\character\\";
-const string PLATFORM_FOLDER = "img\\platform\\";
-const string FONT_FOLDER = "font\\";
-const string SOUND_FOLDER = "sound\\";
-const string MENU_FOLDER = "img\\menu\\";
-const string ICON_FOLDER = "img\\icon\\";
-const string ITEM_FOLDER = "img\\item\\";
+const string BACKGROUND_FOLDER = MAP_NAME + "\\img\\background\\";
+const string CHARACTER_FOLDER = MAP_NAME + "\\img\\character\\";
+const string PLATFORM_FOLDER = MAP_NAME + "\\img\\platform\\";
+const string FONT_FOLDER = MAP_NAME + "\\font\\";
+const string SOUND_FOLDER = MAP_NAME + "\\sound\\";
+const string MENU_FOLDER = MAP_NAME + "\\img\\menu\\";
+const string ICON_FOLDER = MAP_NAME + "\\img\\icon\\";
+const string ITEM_FOLDER = MAP_NAME + "\\img\\item\\";
 
 /// Character
 const float g = 0.4;
@@ -82,16 +83,18 @@ const string OPTION_FONT = "KaneiwaAlpRegular-jEpG.ttf";
 ///const bool SoundOn = true;
 const int INFINITE_LOOP = -1;/// {} // end recursion
 
+/// other
+const int DECIMAL_DIGITS_X10 = 1e3;
 
 namespace CommonFunc
 {
-    template <typename... ArgTypes>
-    void show(ArgTypes... yeuha);
+    //template <typename... ArgTypes>
+    ////void show(ArgTypes... g);
+    void show();
     template <typename T, typename... V> void show(T t, V... v)
     {
         cerr << t; if (sizeof...(v)) {cerr << ", "; show(v...);}
     }
-    template <> void show();
     #define debug(...) cerr << '[' << #__VA_ARGS__ << "]   =   [", show(__VA_ARGS__), cerr << "]\n"
 
     template <class X>
@@ -145,9 +148,9 @@ namespace CommonFunc
 
 using namespace CommonFunc;
 
-static SDL_Window* window = nullptr;
-static SDL_Renderer* renderer = nullptr;
-static SDL_Event event;
+extern SDL_Window* window = nullptr;
+extern SDL_Renderer* renderer = nullptr;
+extern SDL_Event event;
 
 /// Screen
 const string WINDOW_TITLE = "WELCOME TO MY EMPIRE";

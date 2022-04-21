@@ -8,9 +8,8 @@ long long CommonFunc :: rand(long long Left, long long Right)
 }
 
 bool SoundOn = true;
-string MAP_NAME;
 
-template <> void CommonFunc :: show() {}
+void CommonFunc :: show() {}
 
 void CommonFunc :: SetMapName(const string& _MAP_NAME)
 {

@@ -1,23 +1,19 @@
 #include "CommonFunc.h"
 #include "Game.h"
 
-#define background game.background
-#define character game.character
-#define platform game.platform
-#define _map game._map
-#define timer game.timer
-#define MAP_NAME game.MAP_NAME
-#define show_score game.show_score
-#define menu game.menu
-
 using namespace std;
 
-Game game("");
+SDL_Window* window = nullptr;
+SDL_Renderer* renderer = nullptr;
+SDL_Event event;
+string MAP_NAME;
+
+Game game("ninja");
 
 void test()
 {
     ImgProcess c;
-    c.LoadImg(CHARACTER_FOLDER + "right.png", renderer);
+    c.LoadImg(CHARACTER_FOLDER + "right.png");
     int x = 100, y = 100;
     SDL_Event e;
     int deltaX = 5;
@@ -41,23 +37,25 @@ void test()
         }
         c.SetRect(x, y);
         SDL_RenderClear(renderer);
-        c.Render(renderer, nullptr);
+        c.Render(nullptr);
         SDL_RenderPresent(renderer);
     }
 }
 
 int main(int agrc, char* argv[])
 {
-    /**srand(time(0));
+    srand(time(0));
+    Item t;
     initSDL(window, renderer);
-    game.ShowMenu(renderer);*/
-    show(1,2, "Dfdds");
+    game.ShowMenu();
+    ///cout << MAP_NAME;
+    ///cout << BACKGROUND_FOLDER << endl;
     ///PlaySound(sound, 1);
    ///Khi thông thường chạy với môi trường bình thường ở nhà
-   /// SDL_RenderPresent(renderer);
+   /// SDL_RenderPresent();
    ///Khi chạy ở máy thực hành WinXP ở trường (máy ảo)
    ///SDL_UpdateWindowSurface(window);
     ///waitUntilKeyPressed();
-    ///quitSDL(window, renderer);
+    quitSDL(window, renderer);
     return 0;
 }

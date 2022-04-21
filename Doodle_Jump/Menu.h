@@ -38,15 +38,15 @@ public:
     Menu();
     ~Menu();
 
-    MenuOption HandleMenuEvent(SDL_Renderer*& renderer);
-    MenuOption ShowMenu(SDL_Renderer* renderer, const string& font_path, const string& menu_path);
-    MenuOption ShowMenu(SDL_Renderer*& renderer);
+    MenuOption HandleMenuEvent();
+    MenuOption ShowMenu(const string& font_path, const string& menu_path);
+    MenuOption ShowMenu();
 
-    void SetMenuOption(SDL_Renderer* renderer, const int& x, const int& y, const int& i, const string& content, const string& path, const int& font_size);
-    void OptionOn(SDL_Renderer* renderer, const CurrentOption& o, const int& i, string MAP_NAME = "");
-    void OptionOff(SDL_Renderer* renderer, const CurrentOption& o, const int& i, string MAP_NAME = "");
+    void SetMenuOption(const int& x, const int& y, const int& i, const string& content, const string& path, const int& font_size);
+    void OptionOn(const CurrentOption& o, const int& i, string MAP_NAME = "");
+    void OptionOff(const CurrentOption& o, const int& i, string MAP_NAME = "");
     bool PointToOption(const int& x_mouse, const int& y_mouse, auto& option);
-    HelpOption Help(const string& MAP_NAME, SDL_Renderer*& renderer);
+    HelpOption Help();
 
 private:
 

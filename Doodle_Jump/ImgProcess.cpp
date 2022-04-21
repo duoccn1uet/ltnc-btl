@@ -16,7 +16,7 @@ ImgProcess::~ImgProcess()
     Free();
 }
 
-bool ImgProcess::LoadImg(const std::string& path, SDL_Renderer* renderer)
+bool ImgProcess::LoadImg(const std::string& path)
 {
     Free();
     SDL_Surface* load_surface = IMG_Load(path.c_str());
@@ -42,9 +42,9 @@ bool ImgProcess::LoadImg(const std::string& path, SDL_Renderer* renderer)
     return d_object != nullptr;
 }
 
-void ImgProcess :: Render(SDL_Renderer* des, const SDL_Rect* clip)
+void ImgProcess :: Render(const SDL_Rect* clip)
 {
-    SDL_RenderCopy(des, d_object, clip, &d_rect);
+    SDL_RenderCopy(renderer, d_object, clip, &d_rect);
 }
 
 void ImgProcess :: Free()

@@ -10,6 +10,7 @@
 #include "CommonFunc.h"
 #include "ImgProcess.h"
 #include "Platform.h"
+#include "Item.h"
 #include "Motion.h"
 
 #define key_event first
@@ -36,6 +37,7 @@ const float d_VisibleRatio = 0.55;
 
 /// other constants
 const int d_SidesToLegs[] = {17, 24};
+const int leg_height = 20;
 
 ///#define CHARACTER_H_DEBUG
 #ifndef CHARACTER_H_DEBUG
@@ -47,12 +49,13 @@ public:
     Character();
     ~Character();
 
-    void Init(SDL_Renderer* renderer, const string& path);
+    void Init(const string& path);
     d_MoveType GetMoveType(const SDL_Event& event);
-    void Render(SDL_Renderer* renderer);
+    void Render();
     bool Jump();
     void Fall();
     void Cross(d_MoveType side);
+    bool CollectItem(Item& item);
     bool DoOutOfFrame();
     SDL_Rect GetLegsRect();
 
@@ -78,10 +81,10 @@ public:
     Character();
     ~Character();
 
-    void Init(SDL_Renderer* renderer, const string& path);
+    void Init(const string& path);
     d_MoveType GetMoveType(const SDL_Event& event);
     d_MoveType GetMoveType(const int& key);
-    void Render(SDL_Renderer* renderer);
+    void Render();
     void ChangePosition(d_MoveType MoveType, bool change_side);
     bool OnPlatform(Platform& platform);
     bool DoJump(Platform& platform);

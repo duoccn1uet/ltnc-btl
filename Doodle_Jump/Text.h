@@ -21,8 +21,8 @@ public:
     void SetContent(const string& text_content) {d_text_content = text_content;}
     void SetColor(d_Text_Color color);
     void SetFont(const string& path, int font_size);
-    void CreateText(SDL_Renderer* renderer);
-    void RenderText(SDL_Renderer* renderer);
+    void CreateText();
+    void RenderText();
 
 private:
 

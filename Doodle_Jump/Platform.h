@@ -18,8 +18,8 @@ public:
     Platform();
     ~Platform();
 
-    void LoadPlatform(const PlatformType& _type, const string& MAP_NAME, SDL_Renderer*& renderer);
-    void Render(SDL_Renderer*& renderer);
+    void LoadPlatform(const PlatformType& _type);
+    void Render();
 
 private:
 

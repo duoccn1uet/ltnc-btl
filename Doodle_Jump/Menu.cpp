@@ -13,18 +13,18 @@ Menu :: ~Menu()
 
 }
 
-void Menu :: SetMenuOption(SDL_Renderer* renderer, const int& x, const int& y, const int& i, const string& content, const string& path, const int& font_size)
+void Menu :: SetMenuOption(const int& x, const int& y, const int& i, const string& content, const string& path, const int& font_size)
 {
     d_menu_option_status[i] = OptionStatus::ON;
     d_menu_option[i].SetContent(content);
     d_menu_option[i].SetColor(d_Text_Color::WHITE_TEXT);
     d_menu_option[i].SetFont(path, font_size);
     d_menu_option[i].SetRect(x, y);
-    d_menu_option[i].CreateText(renderer);
-    d_menu_option[i].RenderText(renderer);
+    d_menu_option[i].CreateText();
+    d_menu_option[i].RenderText();
 }
 
-void Menu :: OptionOn(SDL_Renderer* renderer, const CurrentOption& o, const int& i, string MAP_NAME)
+void Menu :: OptionOn(const CurrentOption& o, const int& i, string MAP_NAME)
 {
     if (o == CurrentOption::MENU)
     {
@@ -32,20 +32,20 @@ void Menu :: OptionOn(SDL_Renderer* renderer, const CurrentOption& o, const int&
             return;
         d_menu_option_status[i] = OptionStatus::ON;
         d_menu_option[i].SetColor(d_Text_Color::RED_TEXT);
-        d_menu_option[i].CreateText(renderer);
-        d_menu_option[i].RenderText(renderer);
+        d_menu_option[i].CreateText();
+        d_menu_option[i].RenderText();
     } else
     if (o == CurrentOption::HELP)
     {
         if (d_help_option_status[i] == OptionStatus::ON)
             return;
         d_help_option_status[i] = OptionStatus::ON;
-        d_help_option[i].LoadImg(ICON_FOLDER + MAP_NAME + HelpImg[i] + "_on.png", renderer);
-        d_help_option[i].Render(renderer, nullptr);
+        d_help_option[i].LoadImg(ICON_FOLDER + HelpImg[i] + "_on.png");
+        d_help_option[i].Render(nullptr);
     }
 }
 
-void Menu :: OptionOff(SDL_Renderer* renderer, const CurrentOption& o, const int& i, string MAP_NAME)
+void Menu :: OptionOff(const CurrentOption& o, const int& i, string MAP_NAME)
 {
     if (o == CurrentOption::MENU)
     {
@@ -53,8 +53,8 @@ void Menu :: OptionOff(SDL_Renderer* renderer, const CurrentOption& o, const int
             return;
         d_menu_option_status[i] = OptionStatus::OFF;
         d_menu_option[i].SetColor(d_Text_Color::WHITE_TEXT);
-        d_menu_option[i].CreateText(renderer);
-        d_menu_option[i].RenderText(renderer);
+        d_menu_option[i].CreateText();
+        d_menu_option[i].RenderText();
     } else
     if (o == CurrentOption::HELP)
     {
@@ -62,8 +62,8 @@ void Menu :: OptionOff(SDL_Renderer* renderer, const CurrentOption& o, const int
             return;
         ///cout << "dfasd";
         d_help_option_status[i] = OptionStatus::OFF;
-        d_help_option[i].LoadImg(ICON_FOLDER + MAP_NAME + HelpImg[i] + ".png", renderer);
-        d_help_option[i].Render(renderer, nullptr);
+        d_help_option[i].LoadImg(ICON_FOLDER + HelpImg[i] + ".png");
+        d_help_option[i].Render(nullptr);
     }
 }
 
@@ -74,20 +74,20 @@ bool Menu :: PointToOption(const int& x_mouse, const int& y_mouse, auto& option)
         && rect.y <= y_mouse && y_mouse <= rect.y + rect.h;
 }
 
-HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
+HelpOption Menu :: Help()
 {
-    d_help.LoadImg(MENU_FOLDER + MAP_NAME + "help.png", renderer);
-    d_help.Render(renderer, nullptr);
+    d_help.LoadImg(MENU_FOLDER + "help.png");
+    d_help.Render(nullptr);
     for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
     {
-        d_help_option[i].LoadImg(ICON_FOLDER + MAP_NAME + HelpImg[i] + ".png", renderer);
-        d_help_option[i].Render(renderer, nullptr);
+        d_help_option[i].LoadImg(ICON_FOLDER + HelpImg[i] + ".png");
+        d_help_option[i].Render(nullptr);
         d_help_option_status[i] = OptionStatus::OFF;
     }
     SDL_Event event;
     while (true)
     {
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent();
         if (SDL_PollEvent(&event) != 0)
         {
             switch(event.type)
@@ -97,9 +97,9 @@ HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
             case SDL_MOUSEMOTION:
                 for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
                     if (PointToOption(event.x, event.y, d_help_option[i]))
-                        OptionOn(renderer, CurrentOption::HELP, i, MAP_NAME);
+                        OptionOn(CurrentOption::HELP, i);
                     else
-                        OptionOff(renderer, CurrentOption::HELP, i, MAP_NAME);
+                        OptionOff(CurrentOption::HELP, i);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
@@ -112,20 +112,20 @@ HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
     }
 }
 
-MenuOption Menu :: ShowMenu(SDL_Renderer* renderer, const string& font_path, const string& menu_path)
+MenuOption Menu :: ShowMenu(const string& font_path, const string& menu_path)
 {
-    LoadImg(menu_path, renderer);
-    Render(renderer, nullptr);
+    LoadImg(menu_path);
+    Render(nullptr);
     for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
-        SetMenuOption(renderer, MenuOptionX[i], MenuOptionY[i], i, MenuOptionText[i], font_path, OPTION_FONT_SIZE);
-    return HandleMenuEvent(renderer);
+        SetMenuOption(MenuOptionX[i], MenuOptionY[i], i, MenuOptionText[i], font_path, OPTION_FONT_SIZE);
+    return HandleMenuEvent();
 }
 
-MenuOption Menu :: HandleMenuEvent(SDL_Renderer*& renderer)
+MenuOption Menu :: HandleMenuEvent()
 {
     while (true)
     {
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent();
         while (SDL_PollEvent(&event) != 0)
         {
             switch (event.type)
@@ -138,9 +138,9 @@ MenuOption Menu :: HandleMenuEvent(SDL_Renderer*& renderer)
                 ///cout << event.x << ' ' << event.y << endl;
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
                     if (PointToOption(event.x, event.y, d_menu_option[i]))
-                        OptionOn(renderer, CurrentOption::MENU, i);
+                        OptionOn(CurrentOption::MENU, i);
                     else
-                        OptionOff(renderer, CurrentOption::MENU, i);
+                        OptionOff(CurrentOption::MENU, i);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
@@ -165,18 +165,18 @@ Menu :: ~Menu()
 
 }
 
-void Menu :: SetMenuOption(SDL_Renderer* renderer, const int& x, const int& y, const int& i, const string& content, const string& path, const int& font_size)
+void Menu :: SetMenuOption(const int& x, const int& y, const int& i, const string& content, const string& path, const int& font_size)
 {
     d_menu_option_status[i] = OptionStatus::ON;
     d_menu_option[i].SetContent(content);
     d_menu_option[i].SetColor(d_Text_Color::WHITE_TEXT);
     d_menu_option[i].SetFont(path, font_size);
     d_menu_option[i].SetRect(x, y);
-    d_menu_option[i].CreateText(renderer);
-    d_menu_option[i].RenderText(renderer);
+    d_menu_option[i].CreateText();
+    d_menu_option[i].RenderText();
 }
 
-void Menu :: OptionOn(SDL_Renderer* renderer, const CurrentOption& o, const int& i, string MAP_NAME)
+void Menu :: OptionOn(const CurrentOption& o, const int& i, string MAP_NAME)
 {
     if (o == CurrentOption::MENU)
     {
@@ -184,12 +184,12 @@ void Menu :: OptionOn(SDL_Renderer* renderer, const CurrentOption& o, const int&
             return;
         d_menu_option_status[i] = OptionStatus::ON;
         d_menu_option[i].SetColor(d_Text_Color::RED_TEXT);
-        d_menu_option[i].CreateText(renderer);
-        d_menu_option[i].RenderText(renderer);
+        d_menu_option[i].CreateText();
+        d_menu_option[i].RenderText();
     }
 }
 
-void Menu :: OptionOff(SDL_Renderer* renderer, const CurrentOption& o, const int& i, string MAP_NAME)
+void Menu :: OptionOff(const CurrentOption& o, const int& i, string MAP_NAME)
 {
     if (o == CurrentOption::MENU)
     {
@@ -197,8 +197,8 @@ void Menu :: OptionOff(SDL_Renderer* renderer, const CurrentOption& o, const int
             return;
         d_menu_option_status[i] = OptionStatus::OFF;
         d_menu_option[i].SetColor(d_Text_Color::WHITE_TEXT);
-        d_menu_option[i].CreateText(renderer);
-        d_menu_option[i].RenderText(renderer);
+        d_menu_option[i].CreateText();
+        d_menu_option[i].RenderText();
     }
 }
 
@@ -209,14 +209,14 @@ bool Menu :: PointToOption(const int& x_mouse, const int& y_mouse, auto& option)
         && rect.y <= y_mouse && y_mouse <= rect.y + rect.h;
 }
 
-HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
+HelpOption Menu :: Help()
 {
-    d_help.LoadImg(MENU_FOLDER + MAP_NAME + "help.png", renderer);
-    d_help.Render(renderer, nullptr);
+    d_help.LoadImg(MENU_FOLDER + "help.png");
+    d_help.Render(nullptr);
     for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
     {
-        d_help_option[i].CreateOption(ICON_FOLDER + MAP_NAME, HelpImg[i], HelpOptionX[i], HelpOptionY[i], renderer);
-        d_help_option[i].SetStatus(OptionStatus::OFF, renderer);
+        d_help_option[i].CreateOption(ICON_FOLDER +  MAP_NAME, HelpImg[i], HelpOptionX[i], HelpOptionY[i]);
+        d_help_option[i].SetStatus(OptionStatus::OFF);
     }
     SDL_Event event;
     while (true)
@@ -231,9 +231,9 @@ HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
             case SDL_MOUSEMOTION:
                 for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
                     if (PointToOption(event.motion.x, event.motion.y, d_help_option[i]))
-                        d_help_option[i].SetStatus(OptionStatus::ON, renderer);
+                        d_help_option[i].SetStatus(OptionStatus::ON);
                     else
-                        d_help_option[i].SetStatus(OptionStatus::OFF, renderer);
+                        d_help_option[i].SetStatus(OptionStatus::OFF);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
@@ -246,25 +246,25 @@ HelpOption Menu :: Help(const string& MAP_NAME, SDL_Renderer*& renderer)
     }
 }
 
-MenuOption Menu :: ShowMenu(SDL_Renderer* renderer, const string& font_path, const string& menu_path)
+MenuOption Menu :: ShowMenu(const string& font_path, const string& menu_path)
 {
-    LoadImg(menu_path, renderer);
-    Render(renderer, nullptr);
+    LoadImg(menu_path);
+    Render(nullptr);
     for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
-        SetMenuOption(renderer, MenuOptionX[i], MenuOptionY[i], i, MenuOptionText[i], font_path, OPTION_FONT_SIZE);
-    return HandleMenuEvent(renderer);
+        SetMenuOption(MenuOptionX[i], MenuOptionY[i], i, MenuOptionText[i], font_path, OPTION_FONT_SIZE);
+    return HandleMenuEvent();
 }
 
-MenuOption Menu :: ShowMenu(SDL_Renderer*& renderer)
+MenuOption Menu :: ShowMenu()
 {
-    Render(renderer, nullptr);
+    Render(nullptr);
     for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
-        d_menu_option[i].RenderText(renderer);
-    return HandleMenuEvent(renderer);
+        d_menu_option[i].RenderText();
+    return HandleMenuEvent();
 }
 
 
-MenuOption Menu :: HandleMenuEvent(SDL_Renderer*& renderer)
+MenuOption Menu :: HandleMenuEvent()
 {
     while (true)
     {
@@ -281,9 +281,9 @@ MenuOption Menu :: HandleMenuEvent(SDL_Renderer*& renderer)
                 ///cout << event.x << ' ' << event.y << endl;
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)
                     if (PointToOption(event.motion.x, event.motion.y, d_menu_option[i]))
-                        OptionOn(renderer, CurrentOption::MENU, i);
+                        OptionOn(CurrentOption::MENU, i);
                     else
-                        OptionOff(renderer, CurrentOption::MENU, i);
+                        OptionOff(CurrentOption::MENU, i);
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 for(int i = 0; i < short(MenuOption::nMenuOption); ++i)

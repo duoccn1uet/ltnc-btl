@@ -11,8 +11,14 @@
 #include "Motion.h"
 #include "Item.h"
 
+/// Platforms
 const int MAX_PLATFORMS_PER_FRAME = 20;
 const int MIN_PLATFORMS_PER_FRAME = 10;
+const int MAX_PLATFOMRS_DIST = d_JumpHeight;
+const int SQR_MAX_PLATFOMRS_DIST = MAX_PLATFOMRS_DIST * MAX_PLATFOMRS_DIST;
+
+/// Items
+const int MAX_ITEMS_PER_FRAME = 5;
 
 const int DIFFICULTY = 5000;
 
@@ -28,7 +34,7 @@ public:
     Game(const string& _MAP_NAME);
     ~Game();
 
-    void ShowMenu(SDL_Renderer*& renderer);
+    void ShowMenu();
 
 private:
 
@@ -38,9 +44,27 @@ private:
     
     /// Platform
     Platform platforms[MAX_PLATFORMS_PER_FRAME];
-    int low_dist = 10;
-    int high_dist = d_JumpHeight/3;
-    int n_platforms;
+    bool has_item[MAX_PLATFORMS_PER_FRAME];
+    int low_y_dist = 20;
+    int high_y_dist = d_JumpHeight/5;
+    int n_platforms = 0;
+
+    PlatformType GenPlatformType();
+    void GenPlatform(int i);
+    int Gen_nplatforms(int cnt);
+    void InitPlatforms();
+
+    /// Items
+
+    Item items[MAX_ITEMS_PER_FRAME];
+    int cnt_item[size_t(ItemType::nItemType)];
+    int on_platform[MAX_ITEMS_PER_FRAME];
+    int n_items = 0;
+
+    ItemType GenItemType();
+    bool GenItem(int i);
+    int Gen_nitems(int cnt);
+    void InitItems();
 
     Timer timer;
 
@@ -52,17 +76,15 @@ private:
     Menu menu;
     Mix_Music *menu_sound = nullptr;
 
-    string MAP_NAME;
+    ///string MAP_NAME;
 
     /// Functions
-    void Init(SDL_Renderer*& renderer);
-    void GenPlatform(int i, SDL_Renderer*& renderer);
-    void InitPlatform(SDL_Renderer*& renderer);
-    void ShowScore(SDL_Renderer*& renderer);
-    bool LoadOption(SDL_Renderer*& renderer, const MenuOption& option);
-    int ScrollMap(SDL_Renderer*& renderer);
-    void PlayGame(SDL_Renderer*& renderer);
-    void EndGame(SDL_Renderer*& renderer);
+    void Init();
+    void ShowScore();
+    bool LoadOption(const MenuOption& option);
+    int ScrollMap();
+    void PlayGame();
+    void EndGame();
 };
 
 #endif // GAME_H

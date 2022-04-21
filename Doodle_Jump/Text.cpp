@@ -20,7 +20,7 @@ void Text :: SetColor(d_Text_Color color)
         d_text_color = WHITE_RGBA;
 }
 
-void Text :: CreateText(SDL_Renderer* renderer)
+void Text :: CreateText()
 {
     Free();
     SDL_Surface* text_surface = TTF_RenderText_Solid(d_font, d_text_content.c_str(), d_text_color);
@@ -48,7 +48,7 @@ void Text :: SetFont(const string& path, int font_size)
         cout << "Failed to load font from " << path << "! SDL_ttf Error: " << TTF_GetError() << '\n';
 }
 
-void Text :: RenderText(SDL_Renderer* renderer)
+void Text :: RenderText()
 {
-    Render(renderer, nullptr);
+    Render(nullptr);
 }

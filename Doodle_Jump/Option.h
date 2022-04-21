@@ -19,8 +19,8 @@ public:
     ~Option();
 
     SDL_Rect GetRect() {return d_option_img[0].GetRect();}
-    void CreateOption(const string& path, const string& name, const int& x, const int& y, SDL_Renderer*& renderer);
-    void SetStatus(const OptionStatus& status, SDL_Renderer*& renderer);
+    void CreateOption(const string& path, const string& name, const int& x, const int& y);
+    void SetStatus(const OptionStatus& status);
 
 private:
 
