@@ -59,7 +59,7 @@ void Item :: RenderItem()
         return;
     ///cout << frame_ptr << endl;
     ///img[frame_ptr].LoadImg(ITEM_FOLDER + "coin_show_0.png");
-    ///img[frame_ptr].LoadImg(ITEM_FOLDER + ItemTypeText[type] + '_' + ItemStatusText[status] + '_' + to_string(frame_ptr) + ".png");
+    img[frame_ptr].LoadImg(ITEM_FOLDER + ItemTypeText[type] + '_' + ItemStatusText[status] + '_' + to_string(frame_ptr) + ".png");
     img[frame_ptr].Render();
     if (++frame_ptr == img.size())
         frame_ptr = 0;

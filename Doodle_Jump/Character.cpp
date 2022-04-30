@@ -145,7 +145,22 @@ bool Character :: DoOutOfFrame()
 
 bool Character :: CollectItem(Item& item)
 {
-    
+    if (item.GetStatus() != ItemStatus::SHOW)
+        return false;
+    switch (item.GetType())
+    {
+        case ItemType::COIN:
+            if (CheckCollision(d_rect, item.GetRect()))
+            {
+                item.SetItem(item.GetType(), ItemStatus::APPLY);
+                item.RenderSound();
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    return false;
 }
 
 #else

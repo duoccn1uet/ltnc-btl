@@ -28,4 +28,7 @@
 +) **Item has bug, image was loaded but can not render, not fixed.** <br>
 +) **Incremental usage memory, not fixed.**<br>
 +) **Game exit when score > 20000, fixed.**<br>
-+) **Coin coinciding with platform, not fixed.** <br>
++) **Coin coinciding with platform, fixed.** <br>
+
+1h00, 1/5/2022: <br>
++) Has coin 

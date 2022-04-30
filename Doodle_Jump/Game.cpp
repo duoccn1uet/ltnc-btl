@@ -40,14 +40,14 @@ PlatformType Game :: GenPlatformType()
 /// platforms
 void Game :: GenPlatform(int i)
 {
-    Platform& pl = platforms[i];
+    Platform& pl = platforms[i];    
     pl.LoadPlatform(GenPlatformType());
 
     SDL_Rect rect = platforms[i].GetRect();
     SDL_Rect pr_rect = platforms[i-1].GetRect();
-    low_y_dist += d_score / DIFFICULTY;
-    high_y_dist += d_score / DIFFICULTY;
-    mini(high_y_dist, d_JumpHeight-rect.h);
+    low_y_dist = 20 + d_score / DIFFICULTY;
+    high_y_dist = d_JumpHeight/5 + d_score / DIFFICULTY;
+    mini(high_y_dist, d_JumpHeight-rect.h-character.GetLegsRect().h);
     mini(low_y_dist, high_y_dist);
     
     int y_dist = rand(low_y_dist, high_y_dist);
@@ -57,16 +57,14 @@ void Game :: GenPlatform(int i)
     pl.SetRect(rect.x, rect.y);
 }
 
-int Game :: Gen_nplatforms(int cnt)
+int Game :: Gen_nplatforms()
 {
-    return rand(cnt, rand(0,7) == 0 ? MAX_PLATFORMS_PER_FRAME : n_platforms);
+    return rand(n_platforms, rand(0,7) == 0 ? MAX_PLATFORMS_PER_FRAME : n_platforms);
 }
 
 void Game :: InitPlatforms()
 {
     n_platforms = rand(MIN_PLATFORMS_PER_FRAME, MAX_PLATFORMS_PER_FRAME);
-    for(int i = 0; i < MAX_PLATFORMS_PER_FRAME; ++i)
-        has_item[i] = false;
     /// avoid ending the game at the beginning
 
     platforms[0].LoadPlatform(GenPlatformType());
@@ -86,12 +84,34 @@ ItemType Game :: GenItemType()
 
 bool Game :: GenItem(int i)
 {
-    
+    vector <int> id;
+    for(int j = highest_free_platform; j < n_platforms-1; ++j)
+        if (platforms[j].GetRect().y < 0)
+            id.eb(j);
+    if (id.empty())
+        return false;
+    shuffle(all(id), rd);
+    Item& item = items[i];
+    item.SetItem(GenItemType(), ItemStatus::SHOW);
+    SDL_Rect i_rect = item.GetRect();
+    for(int j : id)
+    {
+        SDL_Rect p_rect = platforms[j].GetRect();
+        if (platforms[j+1].GetRect().y + platforms[j+1].GetRect().h + i_rect.h < p_rect.y)
+        {
+            int x = rand(p_rect.x, p_rect.x + p_rect.w - i_rect.w);
+            int y = p_rect.y - i_rect.h;
+            item.SetRect(x, y);
+            highest_free_platform = j+1;
+            return true;
+        }
+    }
+    return false;
 }
 
-int Game :: Gen_nitems(int cnt)
+int Game :: Gen_nitems()
 {
-    return rand(cnt, MAX_ITEMS_PER_FRAME);
+    return rand(n_items, MAX_ITEMS_PER_FRAME);
 }
 
 void Game :: InitItems()
@@ -130,7 +150,7 @@ int Game :: ScrollMap()
     {
         int diff = SCROLL_LINE - c_rect.y;
         character.SetRect(c_rect.x, SCROLL_LINE);
-        auto ScrollPlatforms = [&]() -> void /// scroll platforms, and gen more
+        auto ScrollPlatforms = [&]() -> void /// scroll platforms
         {
             int cnt = 0;
             for(int i = 0; i < n_platforms; ++i)
@@ -141,14 +161,11 @@ int Game :: ScrollMap()
                     pl = platforms[i];
                     auto p_rect = pl.GetRect();
                     pl.SetRect(p_rect.x, p_rect.y + diff);
-                    has_item[cnt] = has_item[i];
-                    has_item[i] = false;
                     ++cnt;
                 }
             }
-            n_platforms = Gen_nplatforms(cnt);
-            for(int i = cnt; i < n_platforms; ++i)
-                GenPlatform(i);
+            highest_free_platform -= n_platforms - cnt;
+            n_platforms = cnt;
         };
         auto ScrollItems = [&]() -> void /// scroll items, and gen more
         {
@@ -163,26 +180,29 @@ int Game :: ScrollMap()
                     ++cnt;
                 }
             }
-            n_items = Gen_nitems(cnt);
-            ///cout << cnt << ' ' << n_items << ' ';;
-            for(int i = cnt; i < n_items; ++i)
-                if (GenItem(i) == false)
-                {
-                    --n_items;
-                    --i;
-                }
-            ///cout << n_items << ' ';
-            /**for(int i = 0; i < n_items; ++i)
-                if (items[i].GetStatus() != ItemStatus::SHOW)
-                    cout << ItemStatusText[uint16_t(items[i].GetStatus())] << endl;*/
-            ////cout << n_items << endl;
+            n_items = cnt;
         };
-        
         ScrollPlatforms();
         ScrollItems();
         return diff;
     }
     return 0;
+}
+
+void Game :: GenObjects()
+{
+    int c = n_platforms;
+    n_platforms = Gen_nplatforms();
+    for(int i = c; i < n_platforms; ++i)
+        GenPlatform(i);
+    c = n_items;
+    n_items = Gen_nitems();
+    for(int i = c; i < n_items; ++i)
+        if (GenItem(i) == false)
+        {
+            --i;
+            --n_items;
+        }
 }
 
 void Game :: PlayGame()
@@ -245,11 +265,13 @@ void Game :: PlayGame()
             {
                 background.Render();
                 for(int i = 0; i < n_platforms; ++i)
-                    platforms[i].Render();
+                    if (platforms[i].GetRect().y + platforms[i].GetRect().h > 0)
+                        platforms[i].Render();
                 int cnt = 0;
                 for(int i = 0; i < n_items; ++i)
                 {
-                    items[i].RenderItem(); 
+                    if (items[i].GetRect().y + items[i].GetRect().h > 0)
+                        items[i].RenderItem(); 
                     /**ImgProcess p;
                     p.LoadImg(ITEM_FOLDER + "coin_show_0.png");
                     p.SetRect(items[i].GetRect().x, items[i].GetRect().y);
@@ -265,10 +287,27 @@ void Game :: PlayGame()
             };    
             auto CollectItem = [&]() -> void
             {
-                
+                int cnt = 0;
+                for(int i = 0; i < n_items; ++i)
+                    if (character.CollectItem(items[i]))
+                    {
+                        switch (items[i].GetType())
+                        {
+                            case ItemType::COIN:
+                                break;
+                            default:
+                                items[cnt] = items[i];
+                                ++cnt;
+                                break;
+                        }
+                    }
+                    else
+                        items[cnt++] = items[i];
+                n_items = cnt;
             };
             DoChar();
             old_y += ScrollMap();
+            GenObjects();
             CollectItem();
             UpdateScore();
             Render();

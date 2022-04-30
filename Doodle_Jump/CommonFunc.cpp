@@ -1,7 +1,5 @@
 #include "CommonFunc.h"
 
-mt19937 rd(chrono :: steady_clock :: now().time_since_epoch().count());
-
 long long CommonFunc :: rand(long long Left, long long Right)
 {
     return Left + rd() % (Right - Left + 1);

@@ -43,27 +43,26 @@ private:
     Character character;
     
     /// Platform
+
     Platform platforms[MAX_PLATFORMS_PER_FRAME];
-    bool has_item[MAX_PLATFORMS_PER_FRAME];
-    int low_y_dist = 20;
-    int high_y_dist = d_JumpHeight/5;
+    int low_y_dist;
+    int high_y_dist;
     int n_platforms = 0;
+    int highest_free_platform = 0;
 
     PlatformType GenPlatformType();
     void GenPlatform(int i);
-    int Gen_nplatforms(int cnt);
+    int Gen_nplatforms();
     void InitPlatforms();
 
     /// Items
-
     Item items[MAX_ITEMS_PER_FRAME];
     int cnt_item[size_t(ItemType::nItemType)];
-    int on_platform[MAX_ITEMS_PER_FRAME];
     int n_items = 0;
 
     ItemType GenItemType();
     bool GenItem(int i);
-    int Gen_nitems(int cnt);
+    int Gen_nitems();
     void InitItems();
 
     Timer timer;
@@ -83,6 +82,7 @@ private:
     void ShowScore();
     bool LoadOption(const MenuOption& option);
     int ScrollMap();
+    void GenObjects();
     void PlayGame();
     void EndGame();
 };

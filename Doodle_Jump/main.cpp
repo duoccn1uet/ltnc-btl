@@ -8,6 +8,8 @@ SDL_Renderer* renderer = nullptr;
 SDL_Event event;
 string MAP_NAME;
 
+mt19937 rd(chrono :: steady_clock :: now().time_since_epoch().count());
+
 Game game("ninja");
 
 void test()
@@ -45,7 +47,6 @@ void test()
 int main(int agrc, char* argv[])
 {
     srand(time(0));
-    Item t;
     initSDL(window, renderer);
     game.ShowMenu();
     ///cout << MAP_NAME;

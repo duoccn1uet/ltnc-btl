@@ -16,6 +16,7 @@
         "utility": "cpp",
         "*.tcc": "cpp",
         "cmath": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "chrono": "cpp"
     }
 }

@@ -24,6 +24,7 @@ extern SDL_Window* window;
 extern SDL_Renderer* renderer;
 extern SDL_Event event;
 extern string MAP_NAME;
+extern mt19937 rd;
 
 /// Screen
 const string WINDOW_TITLE = "WELCOME TO MY EMPIRE";
