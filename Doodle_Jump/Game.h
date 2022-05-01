@@ -40,6 +40,7 @@ private:
 
     /// Variables
     ImgProcess background;
+    ImgProcess top_frame;
     Character character;
     
     /// Platform

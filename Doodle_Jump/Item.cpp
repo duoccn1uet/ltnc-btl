@@ -8,7 +8,7 @@ Item :: Item()
 
 Item :: ~Item()
 {
-    Mix_FreeChunk(apply_sound);
+    FreeItem();
 }
 
 const SDL_Rect Item :: GetRect()
@@ -77,3 +77,13 @@ void Item :: RenderSound()
     }
 }
 
+void Item :: FreeItem()
+{
+    Mix_FreeChunk(apply_sound);
+    for(auto& x : img)
+        x.Free();
+    img.clear();
+    type = uint16_t(ItemType :: nItemType);
+    status = uint16_t(ItemStatus::nItemStatus);
+    frame_ptr = 0;
+}

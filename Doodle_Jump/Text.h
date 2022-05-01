@@ -21,6 +21,7 @@ public:
     void SetContent(const string& text_content) {d_text_content = text_content;}
     void SetColor(d_Text_Color color);
     void SetFont(const string& path, int font_size);
+    void SetFontSType(int type);
     void CreateText();
     void RenderText();
 

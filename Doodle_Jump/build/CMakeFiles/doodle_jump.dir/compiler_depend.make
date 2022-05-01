@@ -423,7 +423,6 @@ CMakeFiles/doodle_jump.dir/Character.cpp.obj: ../Character.cpp \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
   ../ImgProcess.h \
-  ../CreateWindow.h \
   ../Platform.h \
   ../Item.h \
   ../Motion.h
@@ -1693,7 +1692,6 @@ CMakeFiles/doodle_jump.dir/Game.cpp.obj: ../Game.cpp \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
   ../ImgProcess.h \
-  ../CreateWindow.h \
   ../Platform.h \
   ../Character.h \
   ../Item.h \
@@ -2123,8 +2121,7 @@ CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj: ../ImgProcess.cpp \
   D:/SDL/include/SDL_image.h \
   D:/SDL/include/SDL.h \
   D:/SDL/include/SDL_mixer.h \
-  D:/SDL/include/SDL_ttf.h \
-  ../CreateWindow.h
+  D:/SDL/include/SDL_ttf.h
 
 CMakeFiles/doodle_jump.dir/Item.cpp.obj: ../Item.cpp \
   ../Item.h \
@@ -2548,7 +2545,6 @@ CMakeFiles/doodle_jump.dir/Item.cpp.obj: ../Item.cpp \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
   ../ImgProcess.h \
-  ../CreateWindow.h \
   ../Motion.h
 
 CMakeFiles/doodle_jump.dir/Menu.cpp.obj: ../Menu.cpp \
@@ -2973,7 +2969,6 @@ CMakeFiles/doodle_jump.dir/Menu.cpp.obj: ../Menu.cpp \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
   ../ImgProcess.h \
-  ../CreateWindow.h \
   ../Text.h \
   ../Option.h
 
@@ -3820,8 +3815,7 @@ CMakeFiles/doodle_jump.dir/Option.cpp.obj: ../Option.cpp \
   D:/SDL/include/SDL.h \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
-  ../ImgProcess.h \
-  ../CreateWindow.h
+  ../ImgProcess.h
 
 CMakeFiles/doodle_jump.dir/Platform.cpp.obj: ../Platform.cpp \
   ../Platform.h \
@@ -4244,8 +4238,7 @@ CMakeFiles/doodle_jump.dir/Platform.cpp.obj: ../Platform.cpp \
   D:/SDL/include/SDL.h \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
-  ../ImgProcess.h \
-  ../CreateWindow.h
+  ../ImgProcess.h
 
 CMakeFiles/doodle_jump.dir/Text.cpp.obj: ../Text.cpp \
   ../Text.h \
@@ -4668,8 +4661,7 @@ CMakeFiles/doodle_jump.dir/Text.cpp.obj: ../Text.cpp \
   D:/SDL/include/SDL.h \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
-  ../ImgProcess.h \
-  ../CreateWindow.h
+  ../ImgProcess.h
 
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: ../Timer.cpp \
   ../Timer.h \
@@ -5513,9 +5505,9 @@ CMakeFiles/doodle_jump.dir/main.cpp.obj: ../main.cpp \
   D:/SDL/include/SDL.h \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
+  ../CreateWindow.h \
   ../Game.h \
   ../ImgProcess.h \
-  ../CreateWindow.h \
   ../Platform.h \
   ../Character.h \
   ../Item.h \

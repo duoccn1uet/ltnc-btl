@@ -36,6 +36,7 @@ public:
     void SetItem(const ItemType& _type, const ItemStatus& _status);
     void RenderItem();
     void RenderSound();
+    void FreeItem();
 
 private:
 

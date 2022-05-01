@@ -2,7 +2,6 @@
 #define IMGPROCESS_H_INCLUDED
 
 #include "CommonFunc.h"
-#include "CreateWindow.h"
 
 class ImgProcess
 {

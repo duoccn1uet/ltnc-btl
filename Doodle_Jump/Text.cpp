@@ -23,7 +23,7 @@ void Text :: SetColor(d_Text_Color color)
 void Text :: CreateText()
 {
     Free();
-    SDL_Surface* text_surface = TTF_RenderText_Solid(d_font, d_text_content.c_str(), d_text_color);
+    SDL_Surface* text_surface = TTF_RenderText_Blended(d_font, d_text_content.c_str(), d_text_color);
     ///SDL_Surface* text_surface = TTF_RenderText_Blended(d_font, d_text_content.c_str(), d_text_color);
     if (text_surface == nullptr)
         cout << "Unable to render text surface! SDL_ttf Error: " << TTF_GetError() << '\n';
@@ -46,6 +46,11 @@ void Text :: SetFont(const string& path, int font_size)
     d_font = TTF_OpenFont(path.c_str(), font_size);
     if (d_font == nullptr)
         cout << "Failed to load font from " << path << "! SDL_ttf Error: " << TTF_GetError() << '\n';
+}
+
+void Text :: SetFontSType(int type)
+{
+    TTF_SetFontStyle(d_font, type);
 }
 
 void Text :: RenderText()

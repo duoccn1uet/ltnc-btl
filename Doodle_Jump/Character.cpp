@@ -48,10 +48,11 @@ d_MoveType Character :: GetMoveType(const SDL_Event& event)
         switch (event.key.keysym.sym)
         {
         case SDLK_RIGHT:
-                return d_MoveType::RIGHT;
+            return d_MoveType::RIGHT;
 
         case SDLK_LEFT:
-                return d_MoveType::LEFT;
+            return d_MoveType::LEFT;
+            
         default:
             return d_MoveType::INVALID;
         }

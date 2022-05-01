@@ -73,12 +73,13 @@ const int MAX_RANDOM_TIMES = 15;
 #define BLACK_RGBA {0, 0, 0, 255}
 
 /// Score
-const int SCORE_FONT_SIZE = 25;
-const string SCORE_FONT = "Minecraft Evenings.ttf";
+const int SCORE_FONT_SIZE = 35;
+const string SCORE_FONT = "DoodleJump.ttf";
 
 /// Menu
 const int OPTION_FONT_SIZE = 30;
-const string OPTION_FONT = "KaneiwaAlpRegular-jEpG.ttf";
+///const string OPTION_FONT = "KaneiwaAlpRegular-jEpG.ttf";
+const string OPTION_FONT = "DoodleJump.ttf";
 
 /// Sound
 ///const bool SoundOn = true;

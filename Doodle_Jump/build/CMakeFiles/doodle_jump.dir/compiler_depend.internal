@@ -424,7 +424,6 @@ CMakeFiles/doodle_jump.dir/Character.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Platform.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Item.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Motion.h
@@ -1697,7 +1696,6 @@ CMakeFiles/doodle_jump.dir/Game.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Platform.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Character.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Item.h
@@ -2129,7 +2127,6 @@ CMakeFiles/doodle_jump.dir/ImgProcess.cpp.obj
  D:/SDL/include/SDL.h
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
 
 CMakeFiles/doodle_jump.dir/Item.cpp.obj
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Item.cpp
@@ -2554,7 +2551,6 @@ CMakeFiles/doodle_jump.dir/Item.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Motion.h
 
 CMakeFiles/doodle_jump.dir/Menu.cpp.obj
@@ -2980,7 +2976,6 @@ CMakeFiles/doodle_jump.dir/Menu.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Text.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Option.h
 
@@ -3830,7 +3825,6 @@ CMakeFiles/doodle_jump.dir/Option.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
 
 CMakeFiles/doodle_jump.dir/Platform.cpp.obj
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Platform.cpp
@@ -4255,7 +4249,6 @@ CMakeFiles/doodle_jump.dir/Platform.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
 
 CMakeFiles/doodle_jump.dir/Text.cpp.obj
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Text.cpp
@@ -4680,7 +4673,6 @@ CMakeFiles/doodle_jump.dir/Text.cpp.obj
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
 
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Timer.cpp
@@ -5526,9 +5518,9 @@ CMakeFiles/doodle_jump.dir/main.cpp.obj
  D:/SDL/include/SDL.h
  D:/SDL/include/SDL_mixer.h
  D:/SDL/include/SDL_ttf.h
+ C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Game.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/ImgProcess.h
- C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Platform.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Character.h
  C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Item.h

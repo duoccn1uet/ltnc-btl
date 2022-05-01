@@ -1,4 +1,5 @@
 #include "CommonFunc.h"
+#include "CreateWindow.h"
 #include "Game.h"
 
 using namespace std;

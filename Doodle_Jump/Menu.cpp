@@ -215,7 +215,7 @@ HelpOption Menu :: Help()
     d_help.Render(nullptr);
     for(int i = 0; i < uint16_t(HelpOption::nHelpOption); ++i)
     {
-        d_help_option[i].CreateOption(ICON_FOLDER +  MAP_NAME, HelpImg[i], HelpOptionX[i], HelpOptionY[i]);
+        d_help_option[i].CreateOption(ICON_FOLDER, HelpImg[i], HelpOptionX[i], HelpOptionY[i]);
         d_help_option[i].SetStatus(OptionStatus::OFF);
     }
     SDL_Event event;

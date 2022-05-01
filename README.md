@@ -31,4 +31,7 @@
 +) **Coin coinciding with platform, fixed.** <br>
 
 1h00, 1/5/2022: <br>
-+) Has coin 
++) Has coin. <br>
+
+11h30, 1/5/2022:<br>
++) **Doodler is delayed when key is pressed down continuously, fixed**<br>

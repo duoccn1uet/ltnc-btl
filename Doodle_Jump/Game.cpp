@@ -124,15 +124,17 @@ void Game :: Init()
 {
     /// load image for background, character, platforms
     background.LoadImg(BACKGROUND_FOLDER + "background.png");
+    top_frame.LoadImg(BACKGROUND_FOLDER + "top_frame.png");
     character.Init(CHARACTER_FOLDER);
     character.SetRect(SCREEN_WIDTH/2 - character.GetRect().w/2, SCREEN_HEIGHT - character.GetRect().h - 50);
     InitPlatforms();
     InitItems();
 
     /// init score
-    show_score.SetRect(5, 5);
-    show_score.SetColor(d_Text_Color::WHITE_TEXT);
+    show_score.SetRect(5, 2);
+    show_score.SetColor(d_Text_Color::BLACK_TEXT);
     show_score.SetFont(FONT_FOLDER + SCORE_FONT, SCORE_FONT_SIZE);
+    ///show_score.SetFontSType(TTF_STYLE_BOLD);
 }
 
 void Game :: ShowScore()
@@ -180,6 +182,8 @@ int Game :: ScrollMap()
                     ++cnt;
                 }
             }
+            for(int i = cnt; i < n_items; ++i)
+                items[i].FreeItem();
             n_items = cnt;
         };
         ScrollPlatforms();
@@ -215,104 +219,93 @@ void Game :: PlayGame()
 
     int old_y = character.GetRect().y;
 
+    d_MoveType move_type = d_MoveType::INVALID;
     while (!quit)
     {
         ///timer.Start();
-        d_MoveType move_type = d_MoveType::INVALID;
         if (SDL_PollEvent(&event) != 0)
         {
             if (event.type == SDL_QUIT)
                 quit = true;
             move_type = character.GetMoveType(event);
         }
-        if (event.type != SDL_KEYUP)
+        auto DoChar = [&]() -> void
         {
-            auto DoChar = [&]() -> void
+            if (!character.Jump())
             {
-                if (!character.Jump())
-                {
-                    bool jump = false;
-                    SDL_Rect cl_rect = character.GetLegsRect();
-                    for(int i = 0; i < n_platforms; ++i)
-                        if (platforms[i].GetRect().y > cl_rect.y && CheckCollision(platforms[i].GetRect(), cl_rect))
-                        {
-                            ///cout << i << endl;
-                            jump = true;
-                            break;
-                        }
-                    if (jump)
-                    {
-                        character.d_CurrentMoveType[uint16_t(d_MoveType::JUMP)] = true;
-                        character.d_JumpTimes = 0;
-                        character.Jump();
-                    }
-                    else
-                        character.Fall();
-                }
-                character.Cross(move_type);
-                character.DoOutOfFrame();
-            };
-            auto UpdateScore = [&]()
-            {
-                int current_y = character.GetRect().y;
-                if (old_y > current_y)
-                {
-                    d_score += old_y - current_y;
-                    old_y = current_y;
-                }
-            };
-            auto Render = [&]()
-            {
-                background.Render();
+                bool jump = false;
+                SDL_Rect cl_rect = character.GetLegsRect();
                 for(int i = 0; i < n_platforms; ++i)
-                    if (platforms[i].GetRect().y + platforms[i].GetRect().h > 0)
-                        platforms[i].Render();
-                int cnt = 0;
-                for(int i = 0; i < n_items; ++i)
-                {
-                    if (items[i].GetRect().y + items[i].GetRect().h > 0)
-                        items[i].RenderItem(); 
-                    /**ImgProcess p;
-                    p.LoadImg(ITEM_FOLDER + "coin_show_0.png");
-                    p.SetRect(items[i].GetRect().x, items[i].GetRect().y);
-                    p.Render();*/
-                    /**if (items[i].GetStatus() != ItemStatus::SHOW)
-                        debug(items[i].GetRect().x, items[i].GetRect().y);*/
-                        ///cout << ItemStatusText[uint16_t(items[i].GetStatus())] << endl;
-                }
-                ///cout << cnt << ' ' << n_items << endl;
-                ///cout << endl;
-                character.Render(); 
-                ShowScore();
-            };    
-            auto CollectItem = [&]() -> void
-            {
-                int cnt = 0;
-                for(int i = 0; i < n_items; ++i)
-                    if (character.CollectItem(items[i]))
+                    if (platforms[i].GetRect().y > cl_rect.y && CheckCollision(platforms[i].GetRect(), cl_rect))
                     {
-                        switch (items[i].GetType())
-                        {
-                            case ItemType::COIN:
-                                break;
-                            default:
-                                items[cnt] = items[i];
-                                ++cnt;
-                                break;
-                        }
+                        ///cout << i << endl;
+                        jump = true;
+                        break;
                     }
-                    else
-                        items[cnt++] = items[i];
-                n_items = cnt;
-            };
-            DoChar();
-            old_y += ScrollMap();
-            GenObjects();
-            CollectItem();
-            UpdateScore();
-            Render();
-            SDL_RenderPresent(renderer);
-        }
+                if (jump)
+                {
+                    character.d_CurrentMoveType[uint16_t(d_MoveType::JUMP)] = true;
+                    character.d_JumpTimes = 0;
+                    character.Jump();
+                }
+                else
+                    character.Fall();
+            }
+            character.Cross(move_type);
+            character.DoOutOfFrame();
+        };
+        auto UpdateScore = [&]()
+        {
+            int current_y = character.GetRect().y;
+            if (old_y > current_y)
+            {
+                d_score += old_y - current_y;
+                old_y = current_y;
+            }
+        };
+        auto Render = [&]()
+        {
+            background.Render();
+            for(int i = 0; i < n_platforms; ++i)
+                if (platforms[i].GetRect().y + platforms[i].GetRect().h > 0)
+                    platforms[i].Render();
+            int cnt = 0;
+            for(int i = 0; i < n_items; ++i)
+                if (items[i].GetRect().y + items[i].GetRect().h > 0)
+                    items[i].RenderItem(); 
+            character.Render(); 
+            top_frame.Render();
+            ShowScore();
+        };    
+        auto CollectItem = [&]() -> void
+        {
+            int cnt = 0;
+            for(int i = 0; i < n_items; ++i)
+                if (character.CollectItem(items[i]))
+                {
+                    switch (items[i].GetType())
+                    {
+                        case ItemType::COIN:
+                            break;
+                        default:
+                            items[cnt] = items[i];
+                            ++cnt;
+                            break;
+                    }
+                }
+                else
+                    items[cnt++] = items[i];
+            for(int i = cnt; i < n_items; ++i)
+                items[i].FreeItem();
+            n_items = cnt;
+        };
+        DoChar();
+        old_y += ScrollMap();
+        GenObjects();
+        CollectItem();
+        UpdateScore();
+        Render();
+        SDL_RenderPresent(renderer);
 
         /**int frame_passed = timer.GetTicks();
         int delay_time = times_per_frame - frame_passed;
