@@ -3,13 +3,19 @@
 
 #include "CommonFunc.h"
 #include "ImgProcess.h"
+#include "Text.h"
 
 enum class OptionStatus : short
 {
     ON = 0, OFF = 1, nOptionStatus
 };
 
-const string OptionText[] = {"on", "off"};
+enum class RenderOptionType: short
+{
+    TEXT, IMAGE, nRenderOptionType
+};
+
+const string OptionStatusText[] = {"on", "off"};
 
 class Option
 {
@@ -18,16 +24,28 @@ public:
     Option();
     ~Option();
 
-    SDL_Rect GetRect() {return d_option_img[0].GetRect();}
-    void CreateOption(const string& path, const string& name, const int& x, const int& y);
-    void SetStatus(const OptionStatus& status);
+    SDL_Rect GetRect() {return option_img[0].GetRect();}
+    ///void SetRenderType(RenderOptionType _type) {type = _type;}
+    void SetRect(const int& x, const int& y);
+    void CreateOption(const OPTION& name, const int& x = 0, const int& y = 0);
+    void SetStatus(const OptionStatus& _status);
+    bool PointedTo(const SDL_Event& event);
+    bool IsChosen(const SDL_Event& event);
+    void Render();
 
 private:
 
-    bool d_status[uint16_t(OptionStatus::nOptionStatus)];
-    string d_name;
-    string d_path;
-    ImgProcess d_option_img[uint16_t(OptionStatus::nOptionStatus)];
+    ImgProcess option_img[uint16_t(OptionStatus::nOptionStatus)];
+    ///Text* option_text;
+    OptionStatus status;
+    ///RenderOptionType type;
 };
+
+namespace OptionFunc
+{
+    OPTION GetChosenOption(ImgProcess& background, const vector <OPTION>& option_pack);
+}
+
+using namespace OptionFunc;
 
 #endif // OPTION_H

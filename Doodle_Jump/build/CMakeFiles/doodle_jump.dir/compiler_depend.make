@@ -3815,7 +3815,8 @@ CMakeFiles/doodle_jump.dir/Option.cpp.obj: ../Option.cpp \
   D:/SDL/include/SDL.h \
   D:/SDL/include/SDL_mixer.h \
   D:/SDL/include/SDL_ttf.h \
-  ../ImgProcess.h
+  ../ImgProcess.h \
+  ../Text.h
 
 CMakeFiles/doodle_jump.dir/Platform.cpp.obj: ../Platform.cpp \
   ../Platform.h \

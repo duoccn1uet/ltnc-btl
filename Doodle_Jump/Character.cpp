@@ -3,21 +3,24 @@
 ///#define CHARACTER_DEBUG
 #ifndef CHARACTER_DEBUG
 
+int max_jump_times;
+float jump_speed;
+
 Character :: Character()
 {
-    d_JumpTimes = 0;
-    d_FallTimes = 0;
-    d_move = d_MoveType::RIGHT;
-    for(int i = 0; i < int(d_MoveType::d_NumberOfMoveType); ++i)
-        d_CurrentMoveType[i] = false;
-    d_CurrentMoveType[short(d_MoveType::RIGHT)] = true;
-    d_CurrentMoveType[int(d_MoveType::JUMP)] = true;
+    jump_times = 0;
+    fall_times = 0;
+    d_move = CharacterMoveType::RIGHT;
+    for(int i = 0; i < int(CharacterMoveType::d_NumberOfMoveType); ++i)
+        current_move_type[i] = false;
+    current_move_type[short(CharacterMoveType::RIGHT)] = true;
+    current_move_type[int(CharacterMoveType::JUMP)] = true;
 }
 
 Character :: ~Character()
 {
     delete[] d_Img;
-    delete[] d_CurrentMoveType;
+    delete[] current_move_type;
     Mix_FreeChunk(landing);
 }
 
@@ -33,31 +36,31 @@ void Character :: Init(const string& path)
 SDL_Rect Character :: GetLegsRect()
 {
     int SubR, SubL;
-    if (d_CurrentMoveType[int(d_MoveType::RIGHT)])
+    if (current_move_type[int(CharacterMoveType::RIGHT)])
         SubR = 24, SubL = 17; else
-    if (d_CurrentMoveType[int(d_MoveType::LEFT)])
+    if (current_move_type[int(CharacterMoveType::LEFT)])
         SubR = 17, SubL = 24;
     SDL_Rect res = {d_rect.x + SubL, d_rect.y+d_rect.h-leg_height, d_rect.w - SubR - SubL, leg_height};
     return res;
 }
 
-d_MoveType Character :: GetMoveType(const SDL_Event& event)
+CharacterMoveType Character :: GetMoveType(const SDL_Event& event)
 {
     if (event.type == SDL_KEYDOWN)
     {
         switch (event.key.keysym.sym)
         {
         case SDLK_RIGHT:
-            return d_MoveType::RIGHT;
+            return CharacterMoveType::RIGHT;
 
         case SDLK_LEFT:
-            return d_MoveType::LEFT;
+            return CharacterMoveType::LEFT;
             
         default:
-            return d_MoveType::INVALID;
+            return CharacterMoveType::INVALID;
         }
     }
-    return d_MoveType::INVALID;
+    return CharacterMoveType::INVALID;
 }
 
 void Character :: Render()
@@ -66,67 +69,77 @@ void Character :: Render()
     d_Img[int(d_move)].Render(nullptr);
 }
 
-void Character :: Cross(d_MoveType side)
+void Character :: Cross(CharacterMoveType side)
 {
     if (move_event.times != 0)
         side = move_event.key_event;
-    if (side != d_MoveType::INVALID)
+    if (side != CharacterMoveType::INVALID)
     {
-        int sign = (d_CurrentMoveType[uint16_t(d_MoveType::JUMP)] ? 1 : -1);
+        int sign = (current_move_type[uint16_t(CharacterMoveType::JUMP)] ? 1 : -1);
         float alpha = sign * pi/2;
         if (move_event.times == 0)
             move_event = {side, PRESS_FRAME};
         --move_event.times;
         d_move = side;
-        if (side == d_MoveType::RIGHT)
+        if (side == CharacterMoveType::RIGHT)
         {
             alpha -= sign * delta_alpha;
-            d_CurrentMoveType[short(side)] = true;
-            if (d_CurrentMoveType[short(d_MoveType::LEFT)])
+            current_move_type[short(side)] = true;
+            if (current_move_type[short(CharacterMoveType::LEFT)])
             {
                 d_rect.x += d_MoveStep;
-                d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
+                current_move_type[short(CharacterMoveType::LEFT)] = false; 
             }
         }
-        if (side == d_MoveType::LEFT)
+        if (side == CharacterMoveType::LEFT)
         {
             alpha += sign * delta_alpha;
-            d_CurrentMoveType[short(side)] = true;
-            if (d_CurrentMoveType[short(d_MoveType::RIGHT)])
+            current_move_type[short(side)] = true;
+            if (current_move_type[short(CharacterMoveType::RIGHT)])
             {
                 d_rect.x -= d_MoveStep;
-                d_CurrentMoveType[short(d_MoveType::RIGHT)] = false; 
+                current_move_type[short(CharacterMoveType::RIGHT)] = false; 
             }
             
         }
         if (sign == 1)
-            Motion::Cross(d_rect.x, v0, alpha, d_JumpTimes);
+            Motion::Cross(d_rect.x, jump_speed, alpha, jump_times);
         else
-            Motion::Cross(d_rect.x, 0, alpha, d_FallTimes);
+            Motion::Cross(d_rect.x, 0, alpha, fall_times);
     }
+}
+
+void Character :: Jump(int v0)
+{
+    current_move_type[etoi(CharacterMoveType::JUMP)] = true;
+    jump_speed = v0;
+    max_jump_times = jump_speed / g;
 }
 
 void Character :: Fall()
 {
-    JumpUp(d_rect.y, 0, ++d_FallTimes);
+    JumpUp(d_rect.y, 0, ++fall_times);
 }
 
-bool Character :: Jump()
+void Character :: Move()
 {
-    if (!d_CurrentMoveType[int(d_MoveType::JUMP)])
-        return false;
-    int& t = ++d_JumpTimes;
-    if (t == 1)
-        PlaySound(landing, 1);
-    if (t > d_MaxJumpTimes)
+    if (current_move_type[etoi(CharacterMoveType::JUMP)] == true)
     {
-        d_CurrentMoveType[int(d_MoveType::JUMP)] = false;
-        d_FallTimes = 0;
-        return false;
+        int t = ++jump_times;
+        if (t > max_jump_times)
+        {
+            current_move_type[int(CharacterMoveType::JUMP)] = false;
+            fall_times = 0;
+            jump_times = 0;
+            Fall();
+        }
+        else
+            JumpUp(d_rect.y, jump_speed, t);
     }
     else
-        JumpUp(d_rect.y, v0, t);
-    return true;
+    {
+        Fall();
+    }
 }
 
 bool Character :: DoOutOfFrame()
@@ -158,6 +171,17 @@ bool Character :: CollectItem(Item& item)
                 return true;
             }
             break;
+        case ItemType::SPRINGS:
+            if (current_move_type[etoi(CharacterMoveType::JUMP)] == false && CheckCollision(GetLegsRect(), item.GetRect()))
+            {
+                SDL_Rect show_rect = item.GetRect();
+                item.SetItem(item.GetType(), ItemStatus::APPLY);
+                SDL_Rect apply_rect = item.GetRect();
+                item.SetRect(show_rect.x, show_rect.y - (apply_rect.h - show_rect.h));
+                item.RenderSound();
+                Jump(HighSpeed);
+                return true;
+            }
         default:
             break;
     }
@@ -168,19 +192,19 @@ bool Character :: CollectItem(Item& item)
 
 Character :: Character()
 {
-    d_JumpTimes = 0;
-    d_FallTimes = 0;
-    d_move = d_MoveType::RIGHT;
-    for(int i = 0; i < int(d_MoveType::d_NumberOfMoveType); ++i)
-        d_CurrentMoveType[i] = false;
-    d_CurrentMoveType[short(d_MoveType::RIGHT)] = true;
-    d_CurrentMoveType[int(d_MoveType::JUMP)] = true;
+    jump_times = 0;
+    fall_times = 0;
+    d_move = CharacterMoveType::RIGHT;
+    for(int i = 0; i < int(CharacterMoveType::d_NumberOfMoveType); ++i)
+        current_move_type[i] = false;
+    current_move_type[short(CharacterMoveType::RIGHT)] = true;
+    current_move_type[int(CharacterMoveType::JUMP)] = true;
 }
 
 Character :: ~Character()
 {
     delete[] d_Img;
-    delete[] d_CurrentMoveType;
+    delete[] current_move_type;
     Mix_FreeChunk(landing);
 }
 
@@ -196,13 +220,13 @@ void Character :: Init(const string& path)
 SDL_Rect Character :: GetLegsRect()
 {
     int SubR, SubL;
-    if (d_CurrentMoveType[int(d_MoveType::RIGHT)])
+    if (current_move_type[int(CharacterMoveType::RIGHT)])
         SubR = 24, SubL = 17; else
-    if (d_CurrentMoveType[int(d_MoveType::LEFT)])
+    if (current_move_type[int(CharacterMoveType::LEFT)])
         SubR = 17, SubL = 24;
-    /**if (d_CurrentMoveType[int(d_MoveType::LEFT)])
+    /**if (current_move_type[int(CharacterMoveType::LEFT)])
         cout << "left\n";
-    if (d_CurrentMoveType[d_MoveType : : RIGHT])
+    if (current_move_type[CharacterMoveType : : RIGHT])
         cout << "right\n";*/
     SDL_Rect res = {d_rect.x + SubL, d_rect.y+d_rect.h-8, d_rect.w - SubR - SubL, 1};
     return res;
@@ -210,29 +234,29 @@ SDL_Rect Character :: GetLegsRect()
 
 bool Character :: OnPlatform(Platform& platform)
 {
-    /**int d_LeftToLegs = d_SidesToLegs[int(d_MoveType::LEFT)];
-    int d_RightToLegs = d_SidesToLegs[d_MoveType : : RIGHT];
-    if (d_CurrentMoveType[int(d_MoveType::LEFT)] == true)
+    /**int d_LeftToLegs = d_SidesToLegs[int(CharacterMoveType::LEFT)];
+    int d_RightToLegs = d_SidesToLegs[CharacterMoveType : : RIGHT];
+    if (current_move_type[int(CharacterMoveType::LEFT)] == true)
         swap(d_LeftToLegs, d_RightToLegs);
     SDL_Rect g = {d_rect.x + d_LeftToLegs, d_rect.y+d_rect.h-8, d_rect.w - d_RightToLegs - d_LeftToLegs, 1};*/
     ///cout << g.x << ' ' << g.y << ' ' << g.w << ' ' << g.h << endl;
     return platform.CharacterStandOn(GetLegsRect());
 }
 
-void Character :: ChangePosition(d_MoveType MoveType, bool change_side)
+void Character :: ChangePosition(CharacterMoveType MoveType, bool change_side)
 {
-    /**int t = (d_CurrentMoveType[int(d_MoveType::JUMP)] == true ? d_JumpTimes : d_FallTimes);
-    int vy = (d_CurrentMoveType[int(d_MoveType::JUMP)] == true ? v0 - g*t : g*t);
+    /**int t = (current_move_type[int(CharacterMoveType::JUMP)] == true ? jump_times : fall_times);
+    int vy = (current_move_type[int(CharacterMoveType::JUMP)] == true ? v0 - g*t : g*t);
     int deltaX = (vy + 10) * cosa;
     ///deltaX = 10;
     ///if (change_side) cout << deltaX << endl;
-    if (MoveType == d_MoveType::RIGHT)
+    if (MoveType == CharacterMoveType::RIGHT)
     {
         if (change_side)
             d_rect.x += d_MoveStep;
         d_rect.x += deltaX;
     } else
-    if (MoveType == d_MoveType::LEFT)
+    if (MoveType == CharacterMoveType::LEFT)
     {
         if (change_side)
             d_rect.x -= d_MoveStep;
@@ -240,41 +264,41 @@ void Character :: ChangePosition(d_MoveType MoveType, bool change_side)
     }*/
 }
 
-d_MoveType Character :: GetMoveType(const SDL_Event& event)
+CharacterMoveType Character :: GetMoveType(const SDL_Event& event)
 {
     if (event.type == SDL_KEYDOWN)
     {
         switch (event.key.keysym.sym)
         {
         case SDLK_RIGHT:
-                return d_MoveType::RIGHT;
+                return CharacterMoveType::RIGHT;
 
         case SDLK_LEFT:
-                return d_MoveType::LEFT;
+                return CharacterMoveType::LEFT;
         default:
-            return d_MoveType::INVALID;
+            return CharacterMoveType::INVALID;
         }
     }
-    return d_MoveType::INVALID;
+    return CharacterMoveType::INVALID;
 }
 
-d_MoveType Character :: GetMoveType(const int& key)
+CharacterMoveType Character :: GetMoveType(const int& key)
 {
     /**switch (int(key))
         {
         case SDLK_RIGHT:
-                return d_MoveType::RIGHT;
+                return CharacterMoveType::RIGHT;
 
         case SDLK_LEFT:
-                return d_MoveType::LEFT;
+                return CharacterMoveType::LEFT;
         default:
-            return d_MoveType::INVALID;
+            return CharacterMoveType::INVALID;
         }*/
     if (key == SDLK_RIGHT)
-        return d_MoveType::RIGHT;
+        return CharacterMoveType::RIGHT;
     if (key == SDLK_LEFT)
-        return d_MoveType::LEFT;
-    return d_MoveType::INVALID;
+        return CharacterMoveType::LEFT;
+    return CharacterMoveType::INVALID;
 }
 
 void Character :: Render()
@@ -287,57 +311,57 @@ bool Character :: DoJump(Platform& platform)
 {
     bool move = false;
     float alpha = pi/2;
-    d_MoveType side = d_MoveType::INVALID;
+    CharacterMoveType side = CharacterMoveType::INVALID;
     if (event_queue.size())
     {
         side = GetMoveType(event_queue.front().key_event);
         if (!--event_queue.front().times)
             event_queue.pop();
     }
-    if (side != d_MoveType::INVALID)
+    if (side != CharacterMoveType::INVALID)
     {
         d_move = side;
-        if (side == d_MoveType::RIGHT)
+        if (side == CharacterMoveType::RIGHT)
         {
             alpha -= delta_alpha, move = true;
-            d_CurrentMoveType[short(side)] = true;
-            if (d_CurrentMoveType[short(d_MoveType::LEFT)])
+            current_move_type[short(side)] = true;
+            if (current_move_type[short(CharacterMoveType::LEFT)])
             {
                 d_rect.x += d_MoveStep;
-                d_CurrentMoveType[short(d_MoveType::LEFT)] = false; 
+                current_move_type[short(CharacterMoveType::LEFT)] = false; 
             }
         }
-        if (side == d_MoveType::LEFT)
+        if (side == CharacterMoveType::LEFT)
         {
             alpha += delta_alpha, move = true;
-            d_CurrentMoveType[short(side)] = true;
-            if (d_CurrentMoveType[short(d_MoveType::RIGHT)])
+            current_move_type[short(side)] = true;
+            if (current_move_type[short(CharacterMoveType::RIGHT)])
             {
                 d_rect.x -= d_MoveStep;
-                d_CurrentMoveType[short(d_MoveType::RIGHT)] = false; 
+                current_move_type[short(CharacterMoveType::RIGHT)] = false; 
             }
             
         }
     }
-    if (d_CurrentMoveType[int(d_MoveType::JUMP)])
+    if (current_move_type[int(CharacterMoveType::JUMP)])
     {
-        ++d_JumpTimes;
-        JumpUp(d_rect.x, d_rect.y, v0, alpha, d_JumpTimes, move);
-        if (d_JumpTimes > d_MaxJumpTimes)
+        ++jump_times;
+        JumpUp(d_rect.x, d_rect.y, v0, alpha, jump_times, move);
+        if (jump_times > max_jump_times)
         {
-            d_CurrentMoveType[int(d_MoveType::JUMP)] = false;
-            d_FallTimes = 0;
+            current_move_type[int(CharacterMoveType::JUMP)] = false;
+            fall_times = 0;
         }
     }
     else
     {
-        FallDown(d_rect.x, d_rect.y, alpha, ++d_FallTimes, move);
+        FallDown(d_rect.x, d_rect.y, alpha, ++fall_times, move);
         if (OnPlatform(platform))
         {
             SDL_Delay(SHORT_DELAY);
             PlaySound(landing, 1);
-            d_CurrentMoveType[int(d_MoveType::JUMP)] = true;
-            d_JumpTimes = 0;
+            current_move_type[int(CharacterMoveType::JUMP)] = true;
+            jump_times = 0;
             return true;
         }
     }

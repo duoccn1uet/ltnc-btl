@@ -13,43 +13,11 @@ mt19937 rd(chrono :: steady_clock :: now().time_since_epoch().count());
 
 Game game("ninja");
 
-void test()
-{
-    ImgProcess c;
-    c.LoadImg(CHARACTER_FOLDER + "right.png");
-    int x = 100, y = 100;
-    SDL_Event e;
-    int deltaX = 5;
-    while (true)
-    {
-        if (SDL_PollEvent(&e) != 0)
-        {
-            if (e.type == SDL_QUIT)
-                return;
-            if (e.type == SDL_KEYDOWN)
-            {
-                switch (e.key.keysym.sym)
-                {
-                    case SDLK_RIGHT:
-                        x += deltaX;
-                        break;
-                    case SDLK_LEFT:
-                        x -= deltaX;
-                }
-            }
-        }
-        c.SetRect(x, y);
-        SDL_RenderClear(renderer);
-        c.Render(nullptr);
-        SDL_RenderPresent(renderer);
-    }
-}
-
 int main(int agrc, char* argv[])
 {
     srand(time(0));
     initSDL(window, renderer);
-    game.ShowMenu();
+    game.Start();
     ///cout << MAP_NAME;
     ///cout << BACKGROUND_FOLDER << endl;
     ///PlaySound(sound, 1);

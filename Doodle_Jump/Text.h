@@ -23,6 +23,8 @@ public:
     void SetFont(const string& path, int font_size);
     void SetFontSType(int type);
     void CreateText();
+    void CreateText(const string& FONT_NAME, const int& font_size, const string& text_content, 
+                    d_Text_Color color = d_Text_Color::WHITE_TEXT, int style = TTF_STYLE_NORMAL);
     void RenderText();
 
 private:

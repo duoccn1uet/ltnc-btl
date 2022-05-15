@@ -19,6 +19,8 @@ const int SQR_MAX_PLATFOMRS_DIST = MAX_PLATFOMRS_DIST * MAX_PLATFOMRS_DIST;
 
 /// Items
 const int MAX_ITEMS_PER_FRAME = 5;
+///const string ItemTypeText[] = {"coin", "rocket", "springs"};
+const int MAX_ITEM_TYPE_PER_FRAME[] = {4, 0, 2};
 
 const int DIFFICULTY = 5000;
 
@@ -28,13 +30,13 @@ class Game
 {
 public:
 
-    /// whenever adding an element, please add new defition in main.cp
-
     Game();
     Game(const string& _MAP_NAME);
     ~Game();
 
-    void ShowMenu();
+    void Start();
+    OPTION PlayGame();
+    void EndGame(); 
 
 private:
 
@@ -46,8 +48,8 @@ private:
     /// Platform
 
     Platform platforms[MAX_PLATFORMS_PER_FRAME];
-    int low_y_dist;
-    int high_y_dist;
+    int low_y_dist = 0;
+    int high_y_dist = 0;
     int n_platforms = 0;
     int highest_free_platform = 0;
 
@@ -76,16 +78,12 @@ private:
     Menu menu;
     Mix_Music *menu_sound = nullptr;
 
-    ///string MAP_NAME;
-
     /// Functions
+    void InitOptions();
     void Init();
     void ShowScore();
-    bool LoadOption(const MenuOption& option);
     int ScrollMap();
     void GenObjects();
-    void PlayGame();
-    void EndGame();
 };
 
 #endif // GAME_H

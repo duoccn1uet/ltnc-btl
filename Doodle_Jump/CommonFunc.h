@@ -49,7 +49,7 @@ const string PLATFORM_FOLDER = MAP_NAME + "\\img\\platform\\";
 const string FONT_FOLDER = MAP_NAME + "\\font\\";
 const string SOUND_FOLDER = MAP_NAME + "\\sound\\";
 const string MENU_FOLDER = MAP_NAME + "\\img\\menu\\";
-const string ICON_FOLDER = MAP_NAME + "\\img\\icon\\";
+const string OPTION_FOLDER = MAP_NAME + "\\img\\option\\";
 const string ITEM_FOLDER = MAP_NAME + "\\img\\item\\";
 
 /// Character
@@ -59,7 +59,7 @@ const float pi = acos(-1);
 const float delta_alpha = pi/6;
 const int d_JumpHeight = v0*v0/(2*g);
 const int PRESS_FRAME = 5;
-const float push_force = 11;
+const float push_force = 9;
 
 /// Platforms
 const int d_min_dist = 60;
@@ -78,12 +78,26 @@ const string SCORE_FONT = "DoodleJump.ttf";
 
 /// Menu
 const int OPTION_FONT_SIZE = 30;
-///const string OPTION_FONT = "KaneiwaAlpRegular-jEpG.ttf";
-const string OPTION_FONT = "DoodleJump.ttf";
+const string OPTION_FONT = "AssassinNinja-7BYyR.ttf";
+///const string OPTION_FONT = "DoodleJump.ttf";
 
 /// Sound
 ///const bool SoundOn = true;
 const int INFINITE_LOOP = -1;/// {} // end recursion
+
+/// Option
+
+enum class OPTION: short
+{
+    HOME, 
+    PLAY_TEXT, HELP, EXIT_TEXT, 
+    PAUSE_BUTTON, RESUME_GAME, PLAY_BUTTON, REPLAY_GAME,
+    nOPTION, EXIT_GAME, NO_OPTION
+};
+
+const string OptionText[] = {"home", 
+                             "play_text", "help", "exit_text", 
+                             "pause_button", "resume_game", "play_button", "replay_game"};
 
 /// other
 const int DECIMAL_DIGITS_X10 = 1e3;
@@ -119,6 +133,7 @@ namespace CommonFunc
     void PlaySound(Mix_Music*& sound, int loop);
     void PlaySound(Mix_Chunk*& sound, int loop);
     void SetMapName(const string& _MAP_NAME);
+    template <class E> int etoi(const E& x) {return int(x);}
 }
 
 using namespace CommonFunc;

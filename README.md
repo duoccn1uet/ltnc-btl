@@ -26,7 +26,7 @@
 
 15h30, 20/4/2022: <br>
 +) **Item has bug, image was loaded but can not render, not fixed.** <br>
-+) **Incremental usage memory, not fixed.**<br>
++) **Incremental usage memory, fixed.**<br>
 +) **Game exit when score > 20000, fixed.**<br>
 +) **Coin coinciding with platform, fixed.** <br>
 

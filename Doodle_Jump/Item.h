@@ -29,6 +29,8 @@ public:
     Item();
     ~Item();
 
+    ///Item& operator = (const Item& other);
+
     ItemType GetType() const {return static_cast <ItemType> (type);}
     ItemStatus GetStatus() const {return static_cast <ItemStatus> (status);}
     const SDL_Rect GetRect();
@@ -38,13 +40,15 @@ public:
     void RenderSound();
     void FreeItem();
 
+    friend class Game;
+
 private:
 
     Mix_Chunk* apply_sound = nullptr;
     vector <ImgProcess> img;
     uint16_t type;
     uint16_t status;
-    int frame_ptr = 0;
+    int cur_frame = 0;
 };
 
 #endif ///ITEM_H

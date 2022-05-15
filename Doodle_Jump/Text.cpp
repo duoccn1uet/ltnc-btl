@@ -53,6 +53,16 @@ void Text :: SetFontSType(int type)
     TTF_SetFontStyle(d_font, type);
 }
 
+void Text :: CreateText(const string& FONT_NAME, const int& font_size, const string& text_content, 
+                        d_Text_Color color, int style)
+{
+    SetFont(FONT_FOLDER+FONT_NAME, font_size);
+    SetContent(text_content);
+    SetColor(color);
+    SetFontSType(style);
+    CreateText();
+}
+
 void Text :: RenderText()
 {
     Render(nullptr);

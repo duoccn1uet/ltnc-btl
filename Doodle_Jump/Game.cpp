@@ -3,6 +3,8 @@
 ///#define GAME_DEBUG
 #ifndef GAME_DEBUG
 
+vector <Option> options;
+
 Game :: Game()
 {
 
@@ -79,7 +81,16 @@ void Game :: InitPlatforms()
 ItemType Game :: GenItemType()
 {
     ///return rand(1, 3) == 1 ? ItemType::INVALID : ItemType::COIN;
-    return ItemType::COIN;
+    vector <int> cnt_type(etoi(ItemType::nItemType));
+    for(int i = 0; i < n_items; ++i)
+        ++cnt_type[etoi(items[i].GetType())];
+    vector <int> v(etoi(ItemType::nItemType));
+    iota(all(v), 0);
+    shuffle(all(v), rd);
+    for(int item_type : v)
+        if (cnt_type[item_type] < MAX_ITEM_TYPE_PER_FRAME[item_type])
+            return static_cast <ItemType> (item_type);
+    return ItemType::INVALID;
 }
 
 bool Game :: GenItem(int i)
@@ -100,7 +111,7 @@ bool Game :: GenItem(int i)
         if (platforms[j+1].GetRect().y + platforms[j+1].GetRect().h + i_rect.h < p_rect.y)
         {
             int x = rand(p_rect.x, p_rect.x + p_rect.w - i_rect.w);
-            int y = p_rect.y - i_rect.h;
+            int y = p_rect.y - i_rect.h + 2;
             item.SetRect(x, y);
             highest_free_platform = j+1;
             return true;
@@ -118,6 +129,16 @@ void Game :: InitItems()
 {
     for(auto& x : cnt_item)
         x = 0;
+}
+
+void Game :: InitOptions()
+{
+    options.resize(etoi(OPTION::nOPTION));
+    for(int i = 0; i < options.size(); ++i)
+    {
+        
+        options[i].CreateOption(static_cast <OPTION>(i));
+    }
 }
 
 void Game :: Init()
@@ -169,7 +190,7 @@ int Game :: ScrollMap()
             highest_free_platform -= n_platforms - cnt;
             n_platforms = cnt;
         };
-        auto ScrollItems = [&]() -> void /// scroll items, and gen more
+        auto ScrollItems = [&]() -> void /// scroll items
         {
             int cnt = 0;
             for(int i = 0; i < n_items; ++i)
@@ -209,7 +230,7 @@ void Game :: GenObjects()
         }
 }
 
-void Game :: PlayGame()
+OPTION Game :: PlayGame()
 {
     Mix_HaltMusic();
     Init();
@@ -219,7 +240,7 @@ void Game :: PlayGame()
 
     int old_y = character.GetRect().y;
 
-    d_MoveType move_type = d_MoveType::INVALID;
+    CharacterMoveType move_type = CharacterMoveType::INVALID;
     while (!quit)
     {
         ///timer.Start();
@@ -231,26 +252,18 @@ void Game :: PlayGame()
         }
         auto DoChar = [&]() -> void
         {
-            if (!character.Jump())
+            if (character.current_move_type[uint16_t(CharacterMoveType::JUMP)] == false) /// is falling down
             {
-                bool jump = false;
                 SDL_Rect cl_rect = character.GetLegsRect();
                 for(int i = 0; i < n_platforms; ++i)
                     if (platforms[i].GetRect().y > cl_rect.y && CheckCollision(platforms[i].GetRect(), cl_rect))
                     {
-                        ///cout << i << endl;
-                        jump = true;
+                        PlaySound(character.landing, 1);
+                        character.Jump(NormalSpeed);
                         break;
                     }
-                if (jump)
-                {
-                    character.d_CurrentMoveType[uint16_t(d_MoveType::JUMP)] = true;
-                    character.d_JumpTimes = 0;
-                    character.Jump();
-                }
-                else
-                    character.Fall();
             }
+            character.Move();
             character.Cross(move_type);
             character.DoOutOfFrame();
         };
@@ -312,37 +325,41 @@ void Game :: PlayGame()
         if (delay_time > 0)
             SDL_Delay(delay_time);*/
     }
+    return OPTION::EXIT_GAME;
 }
 
-/// check if choosen option is home
-
-bool Game :: LoadOption(const MenuOption& option)
-{
-    if (option == MenuOption::EXIT)
-        return false;
-    if (option == MenuOption::PLAY)
-    {
-        PlayGame();
-        return false;
-    }
-    if (option == MenuOption::HELP)
-    {
-        HelpOption h_option = menu.Help();
-        return (h_option == HelpOption::HOME);
-    }
-}
-
-void Game :: ShowMenu()
+void Game :: Start()
 {
     LoadSound(menu_sound, SOUND_FOLDER + "menu.mp3");
     PlaySound(menu_sound, INFINITE_LOOP);
-    MenuOption m_option = menu.ShowMenu(FONT_FOLDER + OPTION_FONT, MENU_FOLDER + "menu.png");
-    bool back_home = LoadOption(m_option);
-    while (back_home)
+    InitOptions();
+    OPTION current_option = menu.ShowMenu();
+    do
     {
-        m_option = menu.ShowMenu();
-        back_home = LoadOption(m_option);
-    }
+        switch (current_option)
+            {
+                case OPTION::HOME:
+                    current_option = menu.ShowMenu();
+                    break;
+
+                case OPTION::EXIT_GAME:
+                case OPTION::EXIT_TEXT:
+                    return;
+                
+                case OPTION::HELP:
+                    current_option = menu.Help();
+                    break;
+
+                case OPTION::PLAY_BUTTON:
+                case OPTION::PLAY_TEXT:
+                    current_option = PlayGame();
+                    break;
+
+                default:
+                    current_option = OPTION::EXIT_GAME;
+                    break;
+            }
+    } while (true);
 }
 
 #else
@@ -414,7 +431,7 @@ void Game :: PlayGame()
         while (!quit)
         {
             timer.Start();
-            d_MoveType move_type = d_MoveType::INVALID;
+            CharacterMoveType move_type = CharacterMoveType::INVALID;
             if (SDL_PollEvent(&event) != 0)
             {
                 if (event.type == SDL_QUIT)
@@ -447,19 +464,19 @@ void Game :: PlayGame()
 
 /// check if choosen option is home
 
-bool Game :: LoadOption(const MenuOption& option)
+bool Game :: LoadOption(const OPTION& option)
 {
-    if (option == MenuOption::EXIT)
+    if (option == OPTION::EXIT)
         return false;
-    if (option == MenuOption::PLAY)
+    if (option == OPTION::PLAY)
     {
         PlayGame();
         return false;
     }
-    if (option == MenuOption::HELP)
+    if (option == OPTION::HELP)
     {
-        HelpOption h_option = menu.Help();
-        return (h_option == HelpOption::HOME);
+        HelpOptions h_option = menu.Help();
+        return (h_option == HelpOptions::HOME);
     }
 }
 
@@ -467,9 +484,9 @@ void Game :: ShowMenu(const string& font_path, const string& menu_path)
 {
     LoadSound(menu_sound, SOUND_FOLDER + "menu.mp3");
     PlaySound(menu_sound, INFINITE_LOOP);
-    /**MenuOption option = menu.ShowMenu(font_path, menu_path);
+    /**OPTION option = menu.ShowMenu(font_path, menu_path);
     LoadOption(option, font_path, menu_path);*/
-    MenuOption m_option = menu.ShowMenu(font_path, menu_path);
+    OPTION m_option = menu.ShowMenu(font_path, menu_path);
     bool back_home = LoadOption(m_option);
     while (back_home)
     {

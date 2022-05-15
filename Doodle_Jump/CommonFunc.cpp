@@ -35,7 +35,7 @@ bool CommonFunc :: LoadSound(Mix_Music*& sound, const string& path)
     sound = Mix_LoadMUS(path.c_str());
     if (sound == nullptr)
     {
-        cout << "Failed to load beat music! SDL_mixer Error: " << Mix_GetError() << '\n';
+        cout << "Failed to load beat music from " << path << " ! SDL_mixer Error: " << Mix_GetError() << '\n';
         return false;
     }
     return true;
@@ -44,11 +44,14 @@ bool CommonFunc :: LoadSound(Mix_Music*& sound, const string& path)
 bool CommonFunc :: LoadSound(Mix_Chunk*& sound, const string& path)
 {
     if (sound != nullptr)
+    {
         Mix_FreeChunk(sound);
+        sound = nullptr;
+    }
     sound = Mix_LoadWAV(path.c_str());
     if (sound == nullptr)
     {
-        cout << "Failed to load beat music! SDL_mixer Error: " << Mix_GetError() << '\n';
+        cout << "Failed to load beat music " << path << " ! SDL_mixer Error: " << Mix_GetError() << '\n';
         return false;
     }
     return true;

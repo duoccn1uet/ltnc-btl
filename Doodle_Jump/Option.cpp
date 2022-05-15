@@ -1,33 +1,100 @@
 #include "Option.h"
 
+extern vector <Option> options;
+
 Option :: Option()
 {
-
+    
 }
 
 Option :: ~Option()
 {
-
+    /**if (option_img != nullptr)
+    {
+        delete[] option_img;
+        option_img = nullptr;
+    }
+    if (option_text != nullptr)
+    {
+        delete[] option_text;
+        option_text = nullptr;
+    }*/
 }
 
-void Option :: CreateOption(const string& path, const string& name, const int& x, const int& y)
+void Option :: SetRect(const int& x, const int& y)
 {
-    d_path = path;
-    d_name = name;
+    for(int i = 0; i < etoi(OptionStatus::nOptionStatus); ++i)
+        option_img[i].SetRect(x, y);
+}
+
+void Option :: CreateOption(const OPTION& name, const int& x, const int& y)
+{
+    string s = OptionText[etoi(name)];
     for(int i = 0; i < uint16_t(OptionStatus::nOptionStatus); ++i)
     {
-        d_option_img[i].LoadImg(path + name + '_' + OptionText[i] + ".png");
-        d_option_img[i].SetRect(x, y);
+        option_img[i].LoadImg(OPTION_FOLDER + s + '_' + OptionStatusText[i] + ".png");
+        option_img[i].SetRect(x, y);
     }
     SetStatus(OptionStatus::OFF);
 }
 
-void Option :: SetStatus(const OptionStatus& status)
+void Option :: SetStatus(const OptionStatus& _status)
 {
-    if (d_status[uint16_t(status)] == true)
-        return;
-    for(int i = 0; i < uint16_t(OptionStatus::nOptionStatus); ++i)
-        d_status[i] = false;
-    d_status[uint16_t(status)] = true;
-    d_option_img[uint16_t(status)].Render(nullptr);
+    status = _status;
+}
+
+bool Option :: PointedTo(const SDL_Event& event)
+{
+    if (event.type != SDL_MOUSEMOTION)
+        return false;
+    SDL_Rect rect = GetRect();
+    int x = event.motion.x;
+    int y = event.motion.y;
+    return rect.x <= x && x <= rect.x + rect.w
+        && rect.y <= y && y <= rect.y + rect.h;
+}
+
+bool Option :: IsChosen(const SDL_Event& event)
+{
+    if (event.type != SDL_MOUSEBUTTONDOWN)
+        return false;
+    SDL_Rect rect = GetRect();
+    int x = event.motion.x;
+    int y = event.motion.y;
+    return rect.x <= x && x <= rect.x + rect.w
+        && rect.y <= y && y <= rect.y + rect.h;
+}
+
+void Option :: Render()
+{
+    option_img[etoi(status)].Render();
+}
+
+OPTION OptionFunc :: GetChosenOption(ImgProcess& background, const vector <OPTION>& option_pack)
+{
+    SDL_Event event;
+    while (true)
+    {
+        background.Render();
+        if (SDL_PollEvent(&event) != 0)
+        {
+            if (event.type == SDL_QUIT)
+                return OPTION::EXIT_GAME;
+            for(auto option : option_pack)
+            {
+                int id = etoi(option);
+                if (options[id].IsChosen(event))
+                    return option;
+                if (options[id].PointedTo(event))
+                    options[id].SetStatus(OptionStatus::ON);
+                else
+                    options[id].SetStatus(OptionStatus::OFF);
+                options[id].Render();
+            }
+        }
+        for(auto option : option_pack)
+            options[etoi(option)].Render();
+        SDL_RenderPresent(renderer);
+        SDL_Delay(20);
+    }
 }

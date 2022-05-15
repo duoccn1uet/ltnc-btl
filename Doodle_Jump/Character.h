@@ -16,7 +16,7 @@
 #define key_event first
 #define times second
 
-enum class d_MoveType
+enum class CharacterMoveType
 {
     LEFT = 0, RIGHT, FLY, JUMP, d_NumberOfMoveType, INVALID
 };
@@ -29,12 +29,11 @@ const int d_MoveSpeed = 15;
 const int d_JumpSpeed = 5;
 const int d_FallSpeed = 3;
 const int d_FlySpeed = 30;
-
-/// Jump
-/// T = v0sina/g
-const int d_MaxJumpTimes = v0 / g;
 const float d_VisibleRatio = 0.55;
 
+/// speed
+const float NormalSpeed = v0;
+const float HighSpeed = NormalSpeed * 1.7;
 /// other constants
 const int d_SidesToLegs[] = {17, 24};
 const int leg_height = 20;
@@ -50,11 +49,12 @@ public:
     ~Character();
 
     void Init(const string& path);
-    d_MoveType GetMoveType(const SDL_Event& event);
+    CharacterMoveType GetMoveType(const SDL_Event& event);
     void Render();
-    bool Jump();
+    void Move();
+    void Jump(int v0);
     void Fall();
-    void Cross(d_MoveType side);
+    void Cross(CharacterMoveType side);
     bool CollectItem(Item& item);
     bool DoOutOfFrame();
     SDL_Rect GetLegsRect();
@@ -63,13 +63,13 @@ public:
 
 private:
 
-    d_MoveType d_move;
-    int d_JumpTimes;
-    int d_FallTimes;
-    bool* d_CurrentMoveType = new bool[uint16_t(d_MoveType::d_NumberOfMoveType)];
-    ImgProcess* d_Img = new ImgProcess[uint16_t(d_MoveType::d_NumberOfMoveType)];
+    CharacterMoveType d_move;
+    int jump_times;
+    int fall_times;
+    bool* current_move_type = new bool[uint16_t(CharacterMoveType::d_NumberOfMoveType)];
+    ImgProcess* d_Img = new ImgProcess[uint16_t(CharacterMoveType::d_NumberOfMoveType)];
     Mix_Chunk *landing;
-    pair <d_MoveType, int> move_event;/// = {0,0};
+    pair <CharacterMoveType, int> move_event;/// = {0,0};
 };
 
 #else
@@ -82,10 +82,10 @@ public:
     ~Character();
 
     void Init(const string& path);
-    d_MoveType GetMoveType(const SDL_Event& event);
-    d_MoveType GetMoveType(const int& key);
+    CharacterMoveType GetMoveType(const SDL_Event& event);
+    CharacterMoveType GetMoveType(const int& key);
     void Render();
-    void ChangePosition(d_MoveType MoveType, bool change_side);
+    void ChangePosition(CharacterMoveType MoveType, bool change_side);
     bool OnPlatform(Platform& platform);
     bool DoJump(Platform& platform);
     void DoActions(Platform& platform);
@@ -97,11 +97,11 @@ public:
 
 private:
 
-    d_MoveType d_move;
-    int d_JumpTimes;
-    int d_FallTimes;
-    bool* d_CurrentMoveType = new bool[uint16_t(d_MoveType::d_NumberOfMoveType)];
-    ImgProcess* d_Img = new ImgProcess[uint16_t(d_MoveType::d_NumberOfMoveType)];
+    CharacterMoveType d_move;
+    int jump_times;
+    int fall_times;
+    bool* current_move_type = new bool[uint16_t(CharacterMoveType::d_NumberOfMoveType)];
+    ImgProcess* d_Img = new ImgProcess[uint16_t(CharacterMoveType::d_NumberOfMoveType)];
     Mix_Chunk *landing;
     Motion motion;
     queue <pair<int,int>> event_queue;
