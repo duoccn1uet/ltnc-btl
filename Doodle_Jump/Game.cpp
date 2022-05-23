@@ -5,6 +5,10 @@
 
 vector <Option> options;
 
+/// score
+const int NUMBER_OF_HIGH_SCORES = 6;
+set <int, greater <int>> high_scores;
+
 Game :: Game()
 {
 
@@ -27,6 +31,14 @@ Game :: Game(const string& _MAP_NAME)
         cout << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << '\n';
     MAP_NAME = _MAP_NAME;
 
+    BACKGROUND_FOLDER = MAP_NAME + "\\img\\background\\";
+    CHARACTER_FOLDER = MAP_NAME + "\\img\\character\\";
+    PLATFORM_FOLDER = MAP_NAME + "\\img\\platform\\";
+    FONT_FOLDER = MAP_NAME + "\\font\\";
+    SOUND_FOLDER = MAP_NAME + "\\sound\\";
+    MENU_FOLDER = MAP_NAME + "\\img\\menu\\";
+    OPTION_FOLDER = MAP_NAME + "\\img\\option\\";
+    ITEM_FOLDER = MAP_NAME + "\\img\\item\\";
 }
 
 Game :: ~Game()
@@ -69,7 +81,7 @@ void Game :: InitPlatforms()
     n_platforms = rand(MIN_PLATFORMS_PER_FRAME, MAX_PLATFORMS_PER_FRAME);
     /// avoid ending the game at the beginning
 
-    platforms[0].LoadPlatform(GenPlatformType());
+    platforms[0].LoadPlatform(PlatformType::NORMAL);
     SDL_Rect c_rect = character.GetRect();
     platforms[0].SetRect(c_rect.x, c_rect.y + c_rect.h);
     platforms[0].Render();
@@ -95,6 +107,9 @@ ItemType Game :: GenItemType()
 
 bool Game :: GenItem(int i)
 {
+    ItemType type = GenItemType();
+    if (type == ItemType::INVALID)
+        return false;
     vector <int> id;
     for(int j = highest_free_platform; j < n_platforms-1; ++j)
         if (platforms[j].GetRect().y < 0)
@@ -103,7 +118,7 @@ bool Game :: GenItem(int i)
         return false;
     shuffle(all(id), rd);
     Item& item = items[i];
-    item.SetItem(GenItemType(), ItemStatus::SHOW);
+    item.SetItem(type, ItemStatus::SHOW);
     SDL_Rect i_rect = item.GetRect();
     for(int j : id)
     {
@@ -146,7 +161,6 @@ void Game :: Init()
     /// load image for background, character, platforms
     background.LoadImg(BACKGROUND_FOLDER + "background.png");
     top_frame.LoadImg(BACKGROUND_FOLDER + "top_frame.png");
-    character.Init(CHARACTER_FOLDER);
     character.SetRect(SCREEN_WIDTH/2 - character.GetRect().w/2, SCREEN_HEIGHT - character.GetRect().h - 50);
     InitPlatforms();
     InitItems();
@@ -162,7 +176,7 @@ void Game :: ShowScore()
 {
     show_score.SetContent("Score: " + to_string(d_score));
     show_score.CreateText();
-    show_score.RenderText();
+    show_score.Render();
 }
 
 int Game :: ScrollMap()
@@ -248,7 +262,7 @@ OPTION Game :: PlayGame()
         {
             if (event.type == SDL_QUIT)
                 quit = true;
-            move_type = character.GetMoveType(event);
+            move_type = character.GetMoveType();
         }
         auto DoChar = [&]() -> void
         {
@@ -272,7 +286,7 @@ OPTION Game :: PlayGame()
             int current_y = character.GetRect().y;
             if (old_y > current_y)
             {
-                d_score += old_y - current_y;
+                d_score += (old_y - current_y)/PIXEL_PER_SCORE;
                 old_y = current_y;
             }
         };
@@ -325,27 +339,63 @@ OPTION Game :: PlayGame()
         if (delay_time > 0)
             SDL_Delay(delay_time);*/
     }
+    ifstream high_scores_file(MENU_FOLDER + "high_scores.txt");
+    for(int x; high_scores_file >> x; high_scores.insert(x));
+    high_scores.insert(d_score);
+    if (high_scores.size() > NUMBER_OF_HIGH_SCORES)
+        high_scores.erase(prev(high_scores.end()));
+    ofstream g(MENU_FOLDER + "high_scores.txt");
+    for(int x : high_scores)
+        g << x << ' ';
     return OPTION::EXIT_GAME;
+}
+
+OPTION Game :: ShowMenu()
+{
+    /// make character animation
+    character.Init();
+    character.SetRect(55, 500);
+    ///character.Jump(NormalSpeed);
+    platforms[0].LoadPlatform(PlatformType::NORMAL);
+    SDL_Rect c_rect = character.GetRect();
+    platforms[0].SetRect(c_rect.x, c_rect.y + c_rect.h);
+    SDL_Rect p_rect = platforms[0].GetRect();
+
+    menu.Init();
+    OPTION res;
+    do
+    {
+        menu.Render();
+        res = GetChosenOption(MenuOption);
+        platforms[0].Render();
+        if (CheckCollision(character.GetLegsRect(), p_rect))
+            character.Jump(NormalSpeed);
+        character.Move();
+        character.Render();
+        SDL_RenderPresent(renderer);
+    } while (res == OPTION::NO_OPTION);
+    return res;
 }
 
 void Game :: Start()
 {
     LoadSound(menu_sound, SOUND_FOLDER + "menu.mp3");
     PlaySound(menu_sound, INFINITE_LOOP);
+
     InitOptions();
-    OPTION current_option = menu.ShowMenu();
+    OPTION current_option = ShowMenu();
     do
     {
         switch (current_option)
             {
-                case OPTION::HOME:
-                    current_option = menu.ShowMenu();
-                    break;
-
                 case OPTION::EXIT_GAME:
                 case OPTION::EXIT_TEXT:
                     return;
-                
+
+                case OPTION::HOME:
+                    current_option = ShowMenu();
+                    break;
+
                 case OPTION::HELP:
                     current_option = menu.Help();
                     break;
@@ -353,6 +403,10 @@ void Game :: Start()
                 case OPTION::PLAY_BUTTON:
                 case OPTION::PLAY_TEXT:
                     current_option = PlayGame();
+                    break;
+
+                case OPTION::HIGH_SCORES:
+                    current_option = menu.ShowHighScores();
                     break;
 
                 default:

@@ -12,9 +12,10 @@ public:
     void SetRect(const int& x, const int& y) {d_rect.x = x, d_rect.y = y;}
     SDL_Rect GetRect() const {return d_rect;}
     SDL_Texture* GetTexture() const {return d_object;}
+    bool Initialized() {return d_object != nullptr;}
 
     bool LoadImg(const std::string& path);
-    void Render(const SDL_Rect* clip = nullptr);
+    virtual void Render(const SDL_Rect* clip = nullptr);
     void Free();
 
 protected:

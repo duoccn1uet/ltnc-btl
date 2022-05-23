@@ -4,6 +4,16 @@
 
 using namespace std;
 
+/// Folder
+string BACKGROUND_FOLDER;
+string CHARACTER_FOLDER;
+string PLATFORM_FOLDER;
+string FONT_FOLDER;
+string SOUND_FOLDER;
+string MENU_FOLDER;
+string OPTION_FOLDER;
+string ITEM_FOLDER;
+
 SDL_Window* window = nullptr;
 SDL_Renderer* renderer = nullptr;
 SDL_Event event;

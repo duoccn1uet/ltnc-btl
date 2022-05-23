@@ -48,8 +48,8 @@ public:
     Character();
     ~Character();
 
-    void Init(const string& path);
-    CharacterMoveType GetMoveType(const SDL_Event& event);
+    void Init();
+    CharacterMoveType GetMoveType();
     void Render();
     void Move();
     void Jump(int v0);
@@ -82,7 +82,7 @@ public:
     ~Character();
 
     void Init(const string& path);
-    CharacterMoveType GetMoveType(const SDL_Event& event);
+    CharacterMoveType GetMoveType();
     CharacterMoveType GetMoveType(const int& key);
     void Render();
     void ChangePosition(CharacterMoveType MoveType, bool change_side);
@@ -90,7 +90,7 @@ public:
     bool DoJump(Platform& platform);
     void DoActions(Platform& platform);
     bool DoOutOfFrame();
-    void PushAction(const SDL_Event& event);
+    void PushAction();
     SDL_Rect GetLegsRect();
 
     friend class Motion;

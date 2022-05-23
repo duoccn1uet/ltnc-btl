@@ -1,6 +1,6 @@
 #include "Item.h"
 
-#define ITEM_DEBUG
+///#define ITEM_DEBUG
 #ifndef ITEM_DEBUG
 
 Item :: Item()
@@ -43,14 +43,7 @@ void Item :: SetItem(const ItemType& _type, const ItemStatus& _status)
             img[i].LoadImg(ITEM_FOLDER + ItemTypeText[type] + '_' + ItemStatusText[status] + '_' + to_string(i) + ".png");
         cur_frame = 0;
         if (_status == ItemStatus::APPLY)
-        {
             LoadSound(apply_sound, SOUND_FOLDER + ItemTypeText[type] + "_apply.wav");
-        }
-        else
-        {
-            Mix_FreeChunk(apply_sound);
-            apply_sound = nullptr;
-        }
     }
     ///for(int i = 0; i < img.size(); ++i)
     ///    img[i].LoadImg(ITEM_FOLDER + ItemTypeText[type] + '_' + ItemStatusText[status] + '_' + to_string(i) + ".png");
@@ -84,6 +77,7 @@ void Item :: RenderSound()
 void Item :: FreeItem()
 {
     Mix_FreeChunk(apply_sound);
+    apply_sound = nullptr;
     for(auto& x : img)
         x.Free();
     img.clear();
@@ -104,19 +98,6 @@ Item :: ~Item()
 {
     FreeItem();
 }
-
-/**Item& Item :: operator = (const Item& other)
-{
-    if (this == &other)
-        return *this;
-    Mix_FreeChunk(apply_sound);
-    LoadSound(apply_sound, SOUND_FOLDER + ItemTypeText[other.type] + "_apply.wav");
-    img = other.img;
-    type = other.type;
-    status = other.status;
-    cur_frame = other.cur_frame;
-    return *this;
-}*/
 
 const SDL_Rect Item :: GetRect()
 {

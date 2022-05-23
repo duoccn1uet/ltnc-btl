@@ -14,7 +14,7 @@ file(GLOB cpp_file *.cpp)
 #                           ImgProcess.cpp Menu.cpp Platform.cpp Text.cpp Timer.cpp 
 #                           Motion.cpp Option.cpp Item.cpp)
 
-add_executable(doodle_jump ${cpp_file})
+add_executable(doodle_jump ${cpp_file}) 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

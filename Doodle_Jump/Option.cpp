@@ -43,7 +43,7 @@ void Option :: SetStatus(const OptionStatus& _status)
     status = _status;
 }
 
-bool Option :: PointedTo(const SDL_Event& event)
+bool Option :: PointedTo()
 {
     if (event.type != SDL_MOUSEMOTION)
         return false;
@@ -54,7 +54,7 @@ bool Option :: PointedTo(const SDL_Event& event)
         && rect.y <= y && y <= rect.y + rect.h;
 }
 
-bool Option :: IsChosen(const SDL_Event& event)
+bool Option :: IsChosen()
 {
     if (event.type != SDL_MOUSEBUTTONDOWN)
         return false;
@@ -70,31 +70,25 @@ void Option :: Render()
     option_img[etoi(status)].Render();
 }
 
-OPTION OptionFunc :: GetChosenOption(ImgProcess& background, const vector <OPTION>& option_pack)
+OPTION OptionFunc :: GetChosenOption(const vector <OPTION>& option_pack)
 {
-    SDL_Event event;
-    while (true)
+    if (SDL_PollEvent(&event) != 0)
     {
-        background.Render();
-        if (SDL_PollEvent(&event) != 0)
-        {
-            if (event.type == SDL_QUIT)
-                return OPTION::EXIT_GAME;
-            for(auto option : option_pack)
-            {
-                int id = etoi(option);
-                if (options[id].IsChosen(event))
-                    return option;
-                if (options[id].PointedTo(event))
-                    options[id].SetStatus(OptionStatus::ON);
-                else
-                    options[id].SetStatus(OptionStatus::OFF);
-                options[id].Render();
-            }
-        }
+        if (event.type == SDL_QUIT)
+            return OPTION::EXIT_GAME;
         for(auto option : option_pack)
-            options[etoi(option)].Render();
-        SDL_RenderPresent(renderer);
-        SDL_Delay(20);
+        {
+            int id = etoi(option);
+            if (options[id].IsChosen())
+                return option;
+            if (options[id].PointedTo())
+                options[id].SetStatus(OptionStatus::ON);
+            else
+                options[id].SetStatus(OptionStatus::OFF);
+        }
     }
+    for(auto option : option_pack)
+        options[etoi(option)].Render();
+    ///SDL_Delay(20);
+    return OPTION::NO_OPTION;
 }

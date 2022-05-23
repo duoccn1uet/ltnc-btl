@@ -76,15 +76,15 @@ bool Menu :: PointToOption(const int& x_mouse, const int& y_mouse, auto& option)
 
 HelpOptions Menu :: Help()
 {
-    d_help.LoadImg(MENU_FOLDER + "help.png");
-    d_help.Render(nullptr);
+    help_background.LoadImg(MENU_FOLDER + "help.png");
+    help_background.Render(nullptr);
     for(int i = 0; i < uint16_t(HelpOptions::nHelpOptions); ++i)
     {
         d_help_option[i].LoadImg(OPTION_FOLDER + HelpImg[i] + ".png");
         d_help_option[i].Render(nullptr);
         d_help_option_status[i] = OptionStatus::OFF;
     }
-    SDL_Event event;
+    ;
     while (true)
     {
         SDL_RenderPresent();
@@ -165,10 +165,23 @@ Menu :: ~Menu()
 
 }
 
+void Menu :: Init()
+{
+    LoadImg(MENU_FOLDER + "menu.png");
+    for(int i = 0; i < MenuOption.size(); ++i)
+    {
+        int id = etoi(MenuOption[i]);
+        options[id].SetRect(MenuOptionX[i], MenuOptionY[i]);
+        ///options[id].SetStatus(OptionStatus::OFF);
+        ///options[id].Render();
+    }
+}
+
 OPTION Menu :: Help()
 {
-    d_help.LoadImg(MENU_FOLDER + "help.png");
-    d_help.Render(nullptr);
+    if (help_background.Initialized() == false)
+        help_background.LoadImg(MENU_FOLDER + "help.png");
+    help_background.Render();
     for(int i = 0; i < HelpOptions.size(); ++i)
     {
         int id = etoi(HelpOptions[i]);
@@ -176,21 +189,53 @@ OPTION Menu :: Help()
         options[id].SetStatus(OptionStatus::OFF);
         options[id].Render();
     }
-    OPTION res = GetChosenOption(d_help, HelpOptions);
+    OPTION res;
+    do
+    {
+        help_background.Render();
+        res = GetChosenOption(HelpOptions);
+        SDL_RenderPresent(renderer);
+    } while (res == OPTION::NO_OPTION);
     return res;
 }
 
-OPTION Menu :: ShowMenu()
+OPTION Menu :: ShowHighScores()
 {
-    LoadImg(MENU_FOLDER + "menu.png");
-    Render();
-    for(int i = 0; i < MenuOption.size(); ++i)
+    if (high_scores_img.Initialized() == false)
+        high_scores_img.LoadImg(MENU_FOLDER + "high_scores.png");
+    high_scores_img.Render();
+    
+    /// Show Options
+    for(int i = 0; i < HighScoresOptions.size(); ++i)
     {
-        int id = etoi(MenuOption[i]);
-        options[id].SetRect(MenuOptionX[i], MenuOptionY[i]);
+        int id = etoi(HighScoresOptions[i]);
+        options[id].SetRect(HighScoresOptionsX[i], HighScoresOptionsY[i]);
         options[id].SetStatus(OptionStatus::OFF);
     }
-    return GetChosenOption(*this, MenuOption);
+
+    /// Show high scores
+    ifstream high_scores_file(MENU_FOLDER + "high_scores.txt");
+    for(int x; high_scores_file >> x; high_scores.insert(x));
+
+    score.CreateText(SCORE_FONT, SCORE_FONT_SIZE, "dump_value", d_Text_Color::BLACK_TEXT);
+
+    OPTION res;
+    do
+    {
+        high_scores_img.Render();
+        int y = HighScoreY;
+        for(int s : high_scores)
+        {
+            score.SetContent(to_string(s));
+            score.CreateText();
+            score.SetRect(SCREEN_WIDTH-score.GetRect().w-20, y);
+            y += 60;
+            score.Render();
+        }
+        res = GetChosenOption(HighScoresOptions);
+        SDL_RenderPresent(renderer);
+    } while (res == OPTION::NO_OPTION);
+    return res;
 }
 
 #endif /// MENU_DEBUG

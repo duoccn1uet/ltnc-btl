@@ -14,15 +14,17 @@
 /// Platforms
 const int MAX_PLATFORMS_PER_FRAME = 20;
 const int MIN_PLATFORMS_PER_FRAME = 10;
-const int MAX_PLATFOMRS_DIST = d_JumpHeight;
+const int MAX_PLATFOMRS_DIST = 1.5*d_JumpHeight;
 const int SQR_MAX_PLATFOMRS_DIST = MAX_PLATFOMRS_DIST * MAX_PLATFOMRS_DIST;
 
 /// Items
 const int MAX_ITEMS_PER_FRAME = 5;
 ///const string ItemTypeText[] = {"coin", "rocket", "springs"};
-const int MAX_ITEM_TYPE_PER_FRAME[] = {4, 0, 2};
+const int MAX_ITEM_TYPE_PER_FRAME[] = {3, 0, 2};
 
-const int DIFFICULTY = 5000;
+/// Score
+const float PIXEL_PER_SCORE = 3;
+const int DIFFICULTY = 1000 / PIXEL_PER_SCORE;
 
 const int SCROLL_LINE = SCREEN_HEIGHT / 4;
 
@@ -77,6 +79,7 @@ private:
     /// menu
     Menu menu;
     Mix_Music *menu_sound = nullptr;
+    OPTION ShowMenu();
 
     /// Functions
     void InitOptions();

@@ -24,11 +24,11 @@ Character :: ~Character()
     Mix_FreeChunk(landing);
 }
 
-void Character :: Init(const string& path)
+void Character :: Init()
 {
     int i = 0;
     for(string s : d_MoveTypeImg)
-        d_Img[i++].LoadImg(path + s);
+        d_Img[i++].LoadImg(CHARACTER_FOLDER + s);
     d_rect = d_Img[0].GetRect();
     LoadSound(landing, SOUND_FOLDER + "landing.wav");
 }
@@ -44,7 +44,7 @@ SDL_Rect Character :: GetLegsRect()
     return res;
 }
 
-CharacterMoveType Character :: GetMoveType(const SDL_Event& event)
+CharacterMoveType Character :: GetMoveType()
 {
     if (event.type == SDL_KEYDOWN)
     {
@@ -264,7 +264,7 @@ void Character :: ChangePosition(CharacterMoveType MoveType, bool change_side)
     }*/
 }
 
-CharacterMoveType Character :: GetMoveType(const SDL_Event& event)
+CharacterMoveType Character :: GetMoveType()
 {
     if (event.type == SDL_KEYDOWN)
     {
@@ -389,7 +389,7 @@ void Character :: DoActions(Platform& platform)
     DoOutOfFrame();
 }
 
-void Character :: PushAction(const SDL_Event& event)
+void Character :: PushAction()
 {
     event_queue.emplace(event.key.keysym.sym, PRESS_FRAME);
 }

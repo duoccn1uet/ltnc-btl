@@ -5,7 +5,7 @@ long long CommonFunc :: rand(long long Left, long long Right)
     return Left + rd() % (Right - Left + 1);
 }
 
-bool SoundOn = true;
+bool SoundOn = false;
 
 void CommonFunc :: show() {}
 

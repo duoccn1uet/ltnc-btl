@@ -43,14 +43,14 @@ const int SHORT_DELAY = 60;
 const int FPS = 70;
 
 /// Folder
-const string BACKGROUND_FOLDER = MAP_NAME + "\\img\\background\\";
-const string CHARACTER_FOLDER = MAP_NAME + "\\img\\character\\";
-const string PLATFORM_FOLDER = MAP_NAME + "\\img\\platform\\";
-const string FONT_FOLDER = MAP_NAME + "\\font\\";
-const string SOUND_FOLDER = MAP_NAME + "\\sound\\";
-const string MENU_FOLDER = MAP_NAME + "\\img\\menu\\";
-const string OPTION_FOLDER = MAP_NAME + "\\img\\option\\";
-const string ITEM_FOLDER = MAP_NAME + "\\img\\item\\";
+extern string BACKGROUND_FOLDER;
+extern string CHARACTER_FOLDER;
+extern string PLATFORM_FOLDER;
+extern string FONT_FOLDER;
+extern string SOUND_FOLDER;
+extern string MENU_FOLDER;
+extern string OPTION_FOLDER;
+extern string ITEM_FOLDER;
 
 /// Character
 const float g = 0.4;
@@ -59,7 +59,7 @@ const float pi = acos(-1);
 const float delta_alpha = pi/6;
 const int d_JumpHeight = v0*v0/(2*g);
 const int PRESS_FRAME = 5;
-const float push_force = 9;
+const float push_force = 10;
 
 /// Platforms
 const int d_min_dist = 60;
@@ -90,13 +90,13 @@ const int INFINITE_LOOP = -1;/// {} // end recursion
 enum class OPTION: short
 {
     HOME, 
-    PLAY_TEXT, HELP, EXIT_TEXT, 
+    PLAY_TEXT, HELP, EXIT_TEXT, HIGH_SCORES, SETTINGS, 
     PAUSE_BUTTON, RESUME_GAME, PLAY_BUTTON, REPLAY_GAME,
     nOPTION, EXIT_GAME, NO_OPTION
 };
 
 const string OptionText[] = {"home", 
-                             "play_text", "help", "exit_text", 
+                             "play_text", "help", "exit_text", "high_scores", "settings",
                              "pause_button", "resume_game", "play_button", "replay_game"};
 
 /// other
