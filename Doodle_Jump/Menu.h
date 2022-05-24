@@ -5,6 +5,7 @@
 #include "ImgProcess.h"
 #include "Text.h"
 #include "Option.h"
+#include "OptionsPack.h"
 
 /// Option
 
@@ -28,6 +29,23 @@ const int HighScoresOptionsX[] = {10, SCREEN_WIDTH-50, 430};
 const int HighScoresOptionsY[] = {10, 10, 645};
 const int HighScoreY = 230;
 
+/// Settings
+extern bool SoundOn;
+extern int DIFFICULTY;
+extern const int HardnessValue[];
+extern set <int, greater <int>> high_scores;
+const vector <OPTION> SettingsOptions = {OPTION::HOME, OPTION::PLAY_BUTTON, OPTION::RESET_HIGH_SCORES};
+const int SettingsOptionsX[] = {10, SCREEN_WIDTH-50, 300};
+const int SettingsOptionsY[] = {10, 10, SCREEN_HEIGHT-150};
+enum class SettingsOptionsPack: short
+{
+    SOUND, HARDNESS, nSettingsOptionsPack
+};
+const vector <string> OptionsPackText = {"sound", "hardness"};
+const int OptionsPackX[] = {143, 300};
+const int OptionsPackY[] = {164, 323};
+const vector <vector<OPTION>> OptionsInOptionsPack = {{OPTION::ON_TEXT, OPTION::OFF_TEXT}, 
+                                                       {OPTION::EASY_TEXT, OPTION::MEDIUM_TEXT, OPTION::HARD_TEXT}};
 
 class Menu : public ImgProcess
 {
@@ -39,6 +57,7 @@ public:
     void Init();
     OPTION Help();
     OPTION ShowHighScores();
+    OPTION ShowSettings();
 
 private:
 
@@ -47,6 +66,11 @@ private:
     /// High scores
     ImgProcess high_scores_img;
     Text score;
+
+    /// Settings
+    ImgProcess settings_img;
+    bool settings_initialized = false;
+    vector <OptionsPack> options_pack;
 };
 
 #endif // MENU_H

@@ -31,7 +31,7 @@ private:
 
     string d_text_content;
     SDL_Color d_text_color;
-    TTF_Font *d_font;
+    TTF_Font *d_font = nullptr;
 };
 
 #endif // TEXT_H

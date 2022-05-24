@@ -193,7 +193,7 @@ OPTION Menu :: Help()
     do
     {
         help_background.Render();
-        res = GetChosenOption(HelpOptions);
+        res = GetChosenOption(HelpOptions, SDL_PollEvent(&event));
         SDL_RenderPresent(renderer);
     } while (res == OPTION::NO_OPTION);
     return res;
@@ -204,6 +204,8 @@ OPTION Menu :: ShowHighScores()
     if (high_scores_img.Initialized() == false)
         high_scores_img.LoadImg(MENU_FOLDER + "high_scores.png");
     high_scores_img.Render();
+
+    options[etoi(OPTION::HIGH_SCORES)].SetStatus(OptionStatus::OFF);
     
     /// Show Options
     for(int i = 0; i < HighScoresOptions.size(); ++i)
@@ -216,6 +218,7 @@ OPTION Menu :: ShowHighScores()
     /// Show high scores
     ifstream high_scores_file(MENU_FOLDER + "high_scores.txt");
     for(int x; high_scores_file >> x; high_scores.insert(x));
+    high_scores_file.close();
 
     score.CreateText(SCORE_FONT, SCORE_FONT_SIZE, "dump_value", d_Text_Color::BLACK_TEXT);
 
@@ -232,7 +235,97 @@ OPTION Menu :: ShowHighScores()
             y += 60;
             score.Render();
         }
-        res = GetChosenOption(HighScoresOptions);
+        res = GetChosenOption(HighScoresOptions, SDL_PollEvent(&event) != 0);
+        SDL_RenderPresent(renderer);
+    } while (res == OPTION::NO_OPTION);
+    return res;
+}
+
+
+OPTION Menu :: ShowSettings()
+{
+    if (settings_initialized == false)
+    {
+        options_pack.resize(OptionsPackText.size());
+        for(int i = 0; i < options_pack.size(); ++i)
+        {
+            options_pack[i].SetRect(OptionsPackX[i], OptionsPackY[i]);
+            options_pack[i].header_name.CreateText(OPTION_FONT, OPTION_FONT_SIZE, OptionsPackText[i], d_Text_Color::BLACK_TEXT);
+            for(OPTION o : OptionsInOptionsPack[i])
+                options_pack[i].AddOption(o);
+        }
+        auto g = options[etoi(OPTION::EASY_TEXT)].GetRect();
+        options[etoi(OPTION::EASY_TEXT)].SetRect(g.x, g.y+9);
+        settings_img.LoadImg(MENU_FOLDER + "settings.png");
+        settings_initialized = true;
+    }
+    for(int i = 0; i < SettingsOptions.size(); ++i)
+    {
+        int id = etoi(SettingsOptions[i]);
+        options[id].SetRect(SettingsOptionsX[i], SettingsOptionsY[i]);
+        options[id].SetStatus(OptionStatus::OFF);
+    }
+
+    options[etoi(OPTION::SETTINGS)].SetStatus(OptionStatus::OFF);
+        
+    OPTION res;
+    do
+    {
+        settings_img.Render();
+        bool has_event = SDL_PollEvent(&event) != 0;
+        res = GetChosenOption(SettingsOptions, has_event);
+        if (res == OPTION::RESET_HIGH_SCORES)
+        {
+            ofstream high_scores_file(MENU_FOLDER + "high_scores.txt");
+            high_scores_file << "";
+            high_scores_file.close();
+            high_scores.clear();
+            ///SDL_Delay(1000);
+            res = OPTION::HOME;
+        }
+        if (res == OPTION::NO_OPTION)
+        {
+            for(int i = 0; i < OptionsInOptionsPack.size(); ++i)
+                {
+                    res = GetChosenOption(OptionsInOptionsPack[i], has_event);
+                    for(auto o : OptionsInOptionsPack[i])
+                        options[etoi(o)].SetStatus(OptionStatus::OFF);
+                    switch (res)
+                    {
+                        case OPTION::ON_TEXT:
+                            SoundOn = true;
+                            Mix_ResumeMusic();
+                            break;
+                        
+                        case OPTION::OFF_TEXT:
+                            SoundOn = false;
+                            Mix_PauseMusic();
+                            break;
+                        
+                        case OPTION::EASY_TEXT:
+                        case OPTION::MEDIUM_TEXT:
+                        case OPTION::HARD_TEXT:
+                            int i = etoi(SettingsOptionsPack::HARDNESS);
+                            for(int j = 0; j < OptionsInOptionsPack[i].size(); ++j)
+                                if (OptionsInOptionsPack[i][j] == res)
+                                    DIFFICULTY = HardnessValue[j];
+                            break;
+                    }
+                }
+            if (SoundOn) 
+                options[etoi(OPTION::ON_TEXT)].SetStatus(OptionStatus::ON);
+            if (SoundOn == false) 
+                options[etoi(OPTION::OFF_TEXT)].SetStatus(OptionStatus::ON);
+
+            for(int i = 0; i < OptionsInOptionsPack[etoi(SettingsOptionsPack::HARDNESS)].size(); ++i)
+                if (DIFFICULTY == HardnessValue[i])
+                    options[etoi(OptionsInOptionsPack[etoi(SettingsOptionsPack::HARDNESS)][i])].SetStatus(OptionStatus::ON);
+            res = OPTION::NO_OPTION;
+        }
+        for(int i = 0; i < SettingsOptions.size(); ++i)
+            options[etoi(SettingsOptions[i])].Render();
+        for(int i = 0; i < options_pack.size(); ++i)
+            options_pack[i].Render();
         SDL_RenderPresent(renderer);
     } while (res == OPTION::NO_OPTION);
     return res;

@@ -20,6 +20,7 @@ public:
 
     void LoadPlatform(const PlatformType& _type);
     void Render();
+    void FreePlatform();
 
 private:
 

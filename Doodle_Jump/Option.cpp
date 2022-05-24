@@ -70,9 +70,9 @@ void Option :: Render()
     option_img[etoi(status)].Render();
 }
 
-OPTION OptionFunc :: GetChosenOption(const vector <OPTION>& option_pack)
+OPTION OptionFunc :: GetChosenOption(const vector <OPTION>& option_pack, bool has_event)
 {
-    if (SDL_PollEvent(&event) != 0)
+    if (has_event)
     {
         if (event.type == SDL_QUIT)
             return OPTION::EXIT_GAME;

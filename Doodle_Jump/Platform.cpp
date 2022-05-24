@@ -7,7 +7,7 @@ Platform :: Platform()
 
 Platform :: ~Platform()
 {
-
+    FreePlatform();
 }
 
 void Platform :: LoadPlatform(const PlatformType& _type)
@@ -27,4 +27,10 @@ void Platform :: Render()
             ImgProcess::Render(nullptr);
             break;
     }
+}
+
+void Platform :: FreePlatform()
+{
+    Free();
+    type = PlatformType::nPlatformType;
 }

@@ -17,6 +17,8 @@
         "*.tcc": "cpp",
         "cmath": "cpp",
         "iostream": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "vector": "cpp",
+        "thread": "cpp"
     }
 }

@@ -17,6 +17,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Menu.cpp" "CMakeFiles/doodle_jump.dir/Menu.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Menu.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Motion.cpp" "CMakeFiles/doodle_jump.dir/Motion.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Motion.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Option.cpp" "CMakeFiles/doodle_jump.dir/Option.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Option.cpp.obj.d"
+  "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/OptionsPack.cpp" "CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Platform.cpp" "CMakeFiles/doodle_jump.dir/Platform.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Platform.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Text.cpp" "CMakeFiles/doodle_jump.dir/Text.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Text.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Timer.cpp" "CMakeFiles/doodle_jump.dir/Timer.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Timer.cpp.obj.d"

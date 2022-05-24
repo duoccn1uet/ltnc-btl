@@ -4,7 +4,8 @@
 #ifndef GAME_DEBUG
 
 vector <Option> options;
-
+const int HardnessValue[] = {700/ PIXEL_PER_SCORE, 400 / PIXEL_PER_SCORE, 100 / PIXEL_PER_SCORE};
+int DIFFICULTY = HardnessValue[0];
 /// score
 const int NUMBER_OF_HIGH_SCORES = 6;
 set <int, greater <int>> high_scores;
@@ -151,7 +152,6 @@ void Game :: InitOptions()
     options.resize(etoi(OPTION::nOPTION));
     for(int i = 0; i < options.size(); ++i)
     {
-        
         options[i].CreateOption(static_cast <OPTION>(i));
     }
 }
@@ -166,10 +166,27 @@ void Game :: Init()
     InitItems();
 
     /// init score
+    d_score = 0;
     show_score.SetRect(5, 2);
     show_score.SetColor(d_Text_Color::BLACK_TEXT);
     show_score.SetFont(FONT_FOLDER + SCORE_FONT, SCORE_FONT_SIZE);
     ///show_score.SetFontSType(TTF_STYLE_BOLD);
+
+    /// Load options
+    for(int i = 0; i < InGameOptions.size(); ++i)
+    {
+        int id = etoi(InGameOptions[i]);
+        options[id].SetRect(InGameOptionsX[i], InGameOptionsY[i]);
+    }
+    in_game_options_pack.resize(etoi(InGameOptionsPack::nInGameOptionsPack));
+    for(int i = 0; i < in_game_options_pack.size(); ++i)
+    {
+        in_game_options_pack[i].background.LoadImg(BACKGROUND_FOLDER + InGameOptionsPackText[i] + ".png");
+        in_game_options_pack[i].header_name.CreateText(OPTION_FONT, OPTION_FONT_SIZE, InGameOptionsPackText[i], d_Text_Color::BLACK_TEXT);
+        in_game_options_pack[i].SetRect(InGameOptionsPackX[i], InGameOptionsPackY[i]);
+        for(OPTION o : OptionsInInGameOptionsPack[i])
+            in_game_options_pack[i].AddOption(o);
+    }
 }
 
 void Game :: ShowScore()
@@ -187,6 +204,16 @@ int Game :: ScrollMap()
     {
         int diff = SCROLL_LINE - c_rect.y;
         character.SetRect(c_rect.x, SCROLL_LINE);
+        auto ScrollBackground = [&]() -> void
+        {   
+            background.SetRect(0, background.GetRect().y + diff);
+            auto rect = background.GetRect();
+            if (rect.y > SCREEN_HEIGHT)
+            {
+                rect.y -= SCREEN_HEIGHT;
+                background.SetRect(0, rect.y);
+            }
+        };
         auto ScrollPlatforms = [&]() -> void /// scroll platforms
         {
             int cnt = 0;
@@ -221,6 +248,7 @@ int Game :: ScrollMap()
                 items[i].FreeItem();
             n_items = cnt;
         };
+        ///ScrollBackground();
         ScrollPlatforms();
         ScrollItems();
         return diff;
@@ -258,7 +286,8 @@ OPTION Game :: PlayGame()
     while (!quit)
     {
         ///timer.Start();
-        if (SDL_PollEvent(&event) != 0)
+        bool has_event = SDL_PollEvent(&event) != 0;
+        if (has_event)
         {
             if (event.type == SDL_QUIT)
                 quit = true;
@@ -290,9 +319,33 @@ OPTION Game :: PlayGame()
                 old_y = current_y;
             }
         };
+        auto DoOptions = [&]() -> OPTION
+        {
+            auto option = GetChosenOption(InGameOptions, has_event);
+            switch (option)
+            {
+                case OPTION::PAUSE_BUTTON:
+                    int i = etoi(InGameOptionsPack::GAME_PAUSED);
+                    ////in_game_options_pack[etoi(InGameOptionsPack::GAME_PAUSED)].background.Render();
+                    while (true)
+                    {
+                        option = GetChosenOption(OptionsInInGameOptionsPack[i], SDL_PollEvent(&event));
+                        if (option != OPTION::NO_OPTION)
+                            return option;
+                        in_game_options_pack[i].Render();
+                        SDL_RenderPresent(renderer);
+                    }
+                    break;
+            }
+            return OPTION::NO_OPTION;
+        };
         auto Render = [&]()
         {
             background.Render();
+            /**auto tmp = background.GetRect();
+            background.SetRect(tmp.x, tmp.y - tmp.h);
+            background.Render();
+            background.SetRect(tmp.x, tmp.y);*/
             for(int i = 0; i < n_platforms; ++i)
                 if (platforms[i].GetRect().y + platforms[i].GetRect().h > 0)
                     platforms[i].Render();
@@ -302,6 +355,8 @@ OPTION Game :: PlayGame()
                     items[i].RenderItem(); 
             character.Render(); 
             top_frame.Render();
+            for(auto o : InGameOptions)
+                options[etoi(o)].Render();
             ShowScore();
         };    
         auto CollectItem = [&]() -> void
@@ -331,9 +386,13 @@ OPTION Game :: PlayGame()
         GenObjects();
         CollectItem();
         UpdateScore();
+        OPTION o = DoOptions();
+        if (o != OPTION::RESUME_BUTTON && o != OPTION::NO_OPTION)
+            return o;
         Render();
         SDL_RenderPresent(renderer);
-
+        if (character.GetRect().y > SCREEN_HEIGHT)
+            return EndGame();
         /**int frame_passed = timer.GetTicks();
         int delay_time = times_per_frame - frame_passed;
         if (delay_time > 0)
@@ -344,14 +403,38 @@ OPTION Game :: PlayGame()
     high_scores.insert(d_score);
     if (high_scores.size() > NUMBER_OF_HIGH_SCORES)
         high_scores.erase(prev(high_scores.end()));
+    high_scores_file.close();
     ofstream g(MENU_FOLDER + "high_scores.txt");
     for(int x : high_scores)
         g << x << ' ';
+    g.close();
+    return OPTION::EXIT_GAME;
+}
+
+void Game :: ResetGame()
+{
+    d_score = 0;
+    n_platforms = 0;
+    n_items = 0;
+    in_game_options_pack.clear();
+    /**for(int i = 0; i < MAX_PLATFORMS_PER_FRAME; ++i)
+        platforms[i].FreePlatform();
+    for(int i = 0; i < MAX_ITEMS_PER_FRAME; ++i)
+        items[i].FreeItem();*/
+}
+
+OPTION Game :: EndGame()
+{
     return OPTION::EXIT_GAME;
 }
 
 OPTION Game :: ShowMenu()
 {
+    if (Mix_PlayingMusic() == false)
+    {
+        LoadSound(menu_sound, SOUND_FOLDER + "menu.mp3");
+        PlaySound(menu_sound, INFINITE_LOOP);
+    }
     /// make character animation
     character.Init();
     character.SetRect(55, 500);
@@ -366,7 +449,7 @@ OPTION Game :: ShowMenu()
     do
     {
         menu.Render();
-        res = GetChosenOption(MenuOption);
+        res = GetChosenOption(MenuOption, SDL_PollEvent(&event) != 0);        
         platforms[0].Render();
         if (CheckCollision(character.GetLegsRect(), p_rect))
             character.Jump(NormalSpeed);
@@ -379,40 +462,43 @@ OPTION Game :: ShowMenu()
 
 void Game :: Start()
 {
-    LoadSound(menu_sound, SOUND_FOLDER + "menu.mp3");
-    PlaySound(menu_sound, INFINITE_LOOP);
-
     InitOptions();
     OPTION current_option = ShowMenu();
     do
     {
         switch (current_option)
-            {
-                case OPTION::EXIT_GAME:
-                case OPTION::EXIT_TEXT:
-                    return;
+        {
+            case OPTION::EXIT_GAME:
+            case OPTION::EXIT_TEXT:
+                return;
 
-                case OPTION::HOME:
-                    current_option = ShowMenu();
-                    break;
+            case OPTION::HOME:
+                current_option = ShowMenu();
+                break;
 
-                case OPTION::HELP:
-                    current_option = menu.Help();
-                    break;
+            case OPTION::HELP:
+                current_option = menu.Help();
+                break;
 
-                case OPTION::PLAY_BUTTON:
-                case OPTION::PLAY_TEXT:
-                    current_option = PlayGame();
-                    break;
+            case OPTION::PLAY_BUTTON:
+            case OPTION::PLAY_TEXT:
+            case OPTION::REPLAY_BUTTON:
+                ResetGame();
+                current_option = PlayGame();
+                break;
 
-                case OPTION::HIGH_SCORES:
-                    current_option = menu.ShowHighScores();
-                    break;
+            case OPTION::HIGH_SCORES:
+                current_option = menu.ShowHighScores();
+                break;
 
-                default:
-                    current_option = OPTION::EXIT_GAME;
-                    break;
-            }
+            case OPTION::SETTINGS:
+                current_option = menu.ShowSettings();
+                break;
+            
+            default:
+                current_option = OPTION::EXIT_GAME;
+                break;
+        }
     } while (true);
 }
 

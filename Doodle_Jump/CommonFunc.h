@@ -77,8 +77,8 @@ const int SCORE_FONT_SIZE = 35;
 const string SCORE_FONT = "DoodleJump.ttf";
 
 /// Menu
-const int OPTION_FONT_SIZE = 30;
-const string OPTION_FONT = "AssassinNinja-7BYyR.ttf";
+const int OPTION_FONT_SIZE = 40;
+const string OPTION_FONT = "DoodleJump.ttf";
 ///const string OPTION_FONT = "DoodleJump.ttf";
 
 /// Sound
@@ -90,14 +90,16 @@ const int INFINITE_LOOP = -1;/// {} // end recursion
 enum class OPTION: short
 {
     HOME, 
-    PLAY_TEXT, HELP, EXIT_TEXT, HIGH_SCORES, SETTINGS, 
-    PAUSE_BUTTON, RESUME_GAME, PLAY_BUTTON, REPLAY_GAME,
+    PLAY_TEXT, HELP, EXIT_TEXT, HIGH_SCORES, SETTINGS,
+    ON_TEXT, OFF_TEXT, EASY_TEXT, MEDIUM_TEXT, HARD_TEXT, RESET_HIGH_SCORES,
+    PAUSE_BUTTON, RESUME_BUTTON, PLAY_BUTTON, REPLAY_BUTTON,
     nOPTION, EXIT_GAME, NO_OPTION
 };
 
 const string OptionText[] = {"home", 
                              "play_text", "help", "exit_text", "high_scores", "settings",
-                             "pause_button", "resume_game", "play_button", "replay_game"};
+                             "on_text", "off_text", "easy_text", "medium_text", "hard_text", "reset_high_scores",
+                             "pause_button", "resume_button", "play_button", "replay_button"};
 
 /// other
 const int DECIMAL_DIGITS_X10 = 1e3;

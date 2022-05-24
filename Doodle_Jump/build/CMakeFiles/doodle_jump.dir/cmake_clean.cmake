@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/doodle_jump.dir/Motion.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Option.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Option.cpp.obj.d"
+  "CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj"
+  "CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Platform.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Platform.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Text.cpp.obj"

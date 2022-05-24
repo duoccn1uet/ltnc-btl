@@ -24,7 +24,19 @@ const int MAX_ITEM_TYPE_PER_FRAME[] = {3, 0, 2};
 
 /// Score
 const float PIXEL_PER_SCORE = 3;
-const int DIFFICULTY = 1000 / PIXEL_PER_SCORE;
+
+/// In game
+const vector <OPTION> InGameOptions = {OPTION::PAUSE_BUTTON};
+const int InGameOptionsX[] = {SCREEN_WIDTH-50};
+const int InGameOptionsY[] = {0};
+enum class InGameOptionsPack: short
+{
+    GAME_PAUSED, nInGameOptionsPack
+};
+const vector <string> InGameOptionsPackText = {"Game Paused"};
+const int InGameOptionsPackX[] = {SCREEN_WIDTH/2 - 85};
+const int InGameOptionsPackY[] = {SCREEN_HEIGHT/2 - 70};
+const vector <vector<OPTION>> OptionsInInGameOptionsPack = {{OPTION::REPLAY_BUTTON, OPTION::RESUME_BUTTON, OPTION::HOME}};
 
 const int SCROLL_LINE = SCREEN_HEIGHT / 4;
 
@@ -37,8 +49,6 @@ public:
     ~Game();
 
     void Start();
-    OPTION PlayGame();
-    void EndGame(); 
 
 private:
 
@@ -80,6 +90,12 @@ private:
     Menu menu;
     Mix_Music *menu_sound = nullptr;
     OPTION ShowMenu();
+
+    /// In game
+    vector <OptionsPack> in_game_options_pack;
+    OPTION PlayGame();
+    void ResetGame();
+    OPTION EndGame(); 
 
     /// Functions
     void InitOptions();

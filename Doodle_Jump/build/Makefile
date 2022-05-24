@@ -364,6 +364,30 @@ Option.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Option.cpp.s
 .PHONY : Option.cpp.s
 
+OptionsPack.obj: OptionsPack.cpp.obj
+.PHONY : OptionsPack.obj
+
+# target to build an object file
+OptionsPack.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj
+.PHONY : OptionsPack.cpp.obj
+
+OptionsPack.i: OptionsPack.cpp.i
+.PHONY : OptionsPack.i
+
+# target to preprocess a source file
+OptionsPack.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/OptionsPack.cpp.i
+.PHONY : OptionsPack.cpp.i
+
+OptionsPack.s: OptionsPack.cpp.s
+.PHONY : OptionsPack.s
+
+# target to generate assembly for a file
+OptionsPack.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/OptionsPack.cpp.s
+.PHONY : OptionsPack.cpp.s
+
 Platform.obj: Platform.cpp.obj
 .PHONY : Platform.obj
 
@@ -498,6 +522,9 @@ help:
 	@echo ... Option.obj
 	@echo ... Option.i
 	@echo ... Option.s
+	@echo ... OptionsPack.obj
+	@echo ... OptionsPack.i
+	@echo ... OptionsPack.s
 	@echo ... Platform.obj
 	@echo ... Platform.i
 	@echo ... Platform.s

@@ -36,7 +36,7 @@ private:
 
 namespace OptionFunc
 {
-    OPTION GetChosenOption(const vector <OPTION>& option_pack);
+    OPTION GetChosenOption(const vector <OPTION>& option_pack, bool has_event);
 }
 
 using namespace OptionFunc;
