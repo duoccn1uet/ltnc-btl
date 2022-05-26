@@ -51,13 +51,14 @@ extern string SOUND_FOLDER;
 extern string MENU_FOLDER;
 extern string OPTION_FOLDER;
 extern string ITEM_FOLDER;
+extern string THREAT_FOLDER;
 
 /// Character
-const float g = 0.4;
-const float v0 = 15;
+const float Character_g = 0.4;
+const float Character_v0 = 15;
 const float pi = acos(-1);
 const float delta_alpha = pi/6;
-const int d_JumpHeight = v0*v0/(2*g);
+const int d_JumpHeight = Character_v0*Character_v0/(2*Character_g);
 const int PRESS_FRAME = 5;
 const float push_force = 10;
 

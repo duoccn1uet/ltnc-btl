@@ -248,11 +248,26 @@ CMakeFiles/doodle_jump.dir/Text.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/doodle_jump.dir/Text.cpp.s"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Text.cpp -o CMakeFiles\doodle_jump.dir\Text.cpp.s
 
+CMakeFiles/doodle_jump.dir/Threat.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
+CMakeFiles/doodle_jump.dir/Threat.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
+CMakeFiles/doodle_jump.dir/Threat.cpp.obj: ../Threat.cpp
+CMakeFiles/doodle_jump.dir/Threat.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/doodle_jump.dir/Threat.cpp.obj"
+	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Threat.cpp.obj -MF CMakeFiles\doodle_jump.dir\Threat.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Threat.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Threat.cpp
+
+CMakeFiles/doodle_jump.dir/Threat.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/doodle_jump.dir/Threat.cpp.i"
+	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Threat.cpp > CMakeFiles\doodle_jump.dir\Threat.cpp.i
+
+CMakeFiles/doodle_jump.dir/Threat.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/doodle_jump.dir/Threat.cpp.s"
+	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Threat.cpp -o CMakeFiles\doodle_jump.dir\Threat.cpp.s
+
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: ../Timer.cpp
 CMakeFiles/doodle_jump.dir/Timer.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/doodle_jump.dir/Timer.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/doodle_jump.dir/Timer.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/Timer.cpp.obj -MF CMakeFiles\doodle_jump.dir\Timer.cpp.obj.d -o CMakeFiles\doodle_jump.dir\Timer.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\Timer.cpp
 
 CMakeFiles/doodle_jump.dir/Timer.cpp.i: cmake_force
@@ -267,7 +282,7 @@ CMakeFiles/doodle_jump.dir/main.cpp.obj: CMakeFiles/doodle_jump.dir/flags.make
 CMakeFiles/doodle_jump.dir/main.cpp.obj: CMakeFiles/doodle_jump.dir/includes_CXX.rsp
 CMakeFiles/doodle_jump.dir/main.cpp.obj: ../main.cpp
 CMakeFiles/doodle_jump.dir/main.cpp.obj: CMakeFiles/doodle_jump.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/doodle_jump.dir/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/doodle_jump.dir/main.cpp.obj"
 	C:\PROGRA~1\CODEBL~1\MinGW\bin\X86_64~2.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/doodle_jump.dir/main.cpp.obj -MF CMakeFiles\doodle_jump.dir\main.cpp.obj.d -o CMakeFiles\doodle_jump.dir\main.cpp.obj -c C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\main.cpp
 
 CMakeFiles/doodle_jump.dir/main.cpp.i: cmake_force
@@ -292,6 +307,7 @@ doodle_jump_OBJECTS = \
 "CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Platform.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Text.cpp.obj" \
+"CMakeFiles/doodle_jump.dir/Threat.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/Timer.cpp.obj" \
 "CMakeFiles/doodle_jump.dir/main.cpp.obj"
 
@@ -310,13 +326,14 @@ doodle_jump.exe: CMakeFiles/doodle_jump.dir/Option.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/OptionsPack.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Platform.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Text.cpp.obj
+doodle_jump.exe: CMakeFiles/doodle_jump.dir/Threat.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/Timer.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/main.cpp.obj
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/build.make
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/linklibs.rsp
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/objects1.rsp
 doodle_jump.exe: CMakeFiles/doodle_jump.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable doodle_jump.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\LENOVO\OneDrive\Desktop\ltnc-btl\Doodle_Jump\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable doodle_jump.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\doodle_jump.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -10,6 +10,7 @@
 #include "Menu.h"
 #include "Motion.h"
 #include "Item.h"
+#include "Threat.h"
 
 /// Platforms
 const int MAX_PLATFORMS_PER_FRAME = 20;
@@ -21,6 +22,11 @@ const int SQR_MAX_PLATFOMRS_DIST = MAX_PLATFOMRS_DIST * MAX_PLATFOMRS_DIST;
 const int MAX_ITEMS_PER_FRAME = 5;
 ///const string ItemTypeText[] = {"coin", "rocket", "springs"};
 const int MAX_ITEM_TYPE_PER_FRAME[] = {3, 0, 2};
+
+/// Threats
+const int MAX_THREATS_PER_FRAME = 3;
+/// const string ThreatTypeText[] = {"fly", "move_on_platform", "jump"};
+const int MAX_THREAT_TYPE_PER_FRAME[] = {1, 1, 1};
 
 /// Score
 const float PIXEL_PER_SCORE = 3;
@@ -79,6 +85,16 @@ private:
     bool GenItem(int i);
     int Gen_nitems();
     void InitItems();
+
+    /// Threats
+    Threat threats[MAX_THREATS_PER_FRAME];
+    int cnt_threat[size_t(ThreatType::nThreatType)];
+    int n_threats = 0;
+
+    ThreatType GenThreatType();
+    bool GenThreat(int i);
+    int Gen_nThreats();
+    void InitThreats();
 
     Timer timer;
 

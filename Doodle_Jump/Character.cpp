@@ -103,9 +103,9 @@ void Character :: Cross(CharacterMoveType side)
             
         }
         if (sign == 1)
-            Motion::Cross(d_rect.x, jump_speed, alpha, jump_times);
+            Motion::Cross(d_rect.x, jump_speed, alpha, jump_times, Character_g);
         else
-            Motion::Cross(d_rect.x, 0, alpha, fall_times);
+            Motion::Cross(d_rect.x, 0, alpha, fall_times, Character_g);
     }
 }
 
@@ -113,12 +113,12 @@ void Character :: Jump(int v0)
 {
     current_move_type[etoi(CharacterMoveType::JUMP)] = true;
     jump_speed = v0;
-    max_jump_times = jump_speed / g;
+    max_jump_times = jump_speed / Character_g;
 }
 
 void Character :: Fall()
 {
-    JumpUp(d_rect.y, 0, ++fall_times);
+    JumpUp(d_rect.y, 0, ++fall_times, Character_g);
 }
 
 void Character :: Move()
@@ -134,7 +134,7 @@ void Character :: Move()
             Fall();
         }
         else
-            JumpUp(d_rect.y, jump_speed, t);
+            JumpUp(d_rect.y, jump_speed, t, Character_g);
     }
     else
     {

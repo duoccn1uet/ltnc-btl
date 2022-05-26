@@ -436,6 +436,30 @@ Text.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Text.cpp.s
 .PHONY : Text.cpp.s
 
+Threat.obj: Threat.cpp.obj
+.PHONY : Threat.obj
+
+# target to build an object file
+Threat.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Threat.cpp.obj
+.PHONY : Threat.cpp.obj
+
+Threat.i: Threat.cpp.i
+.PHONY : Threat.i
+
+# target to preprocess a source file
+Threat.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Threat.cpp.i
+.PHONY : Threat.cpp.i
+
+Threat.s: Threat.cpp.s
+.PHONY : Threat.s
+
+# target to generate assembly for a file
+Threat.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Threat.cpp.s
+.PHONY : Threat.cpp.s
+
 Timer.obj: Timer.cpp.obj
 .PHONY : Timer.obj
 
@@ -531,6 +555,9 @@ help:
 	@echo ... Text.obj
 	@echo ... Text.i
 	@echo ... Text.s
+	@echo ... Threat.obj
+	@echo ... Threat.i
+	@echo ... Threat.s
 	@echo ... Timer.obj
 	@echo ... Timer.i
 	@echo ... Timer.s

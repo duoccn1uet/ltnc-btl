@@ -32,7 +32,7 @@ const int d_FlySpeed = 30;
 const float d_VisibleRatio = 0.55;
 
 /// speed
-const float NormalSpeed = v0;
+const float NormalSpeed = Character_v0;
 const float HighSpeed = NormalSpeed * 1.7;
 /// other constants
 const int d_SidesToLegs[] = {17, 24};

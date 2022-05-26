@@ -23,6 +23,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/doodle_jump.dir/Platform.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Text.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Text.cpp.obj.d"
+  "CMakeFiles/doodle_jump.dir/Threat.cpp.obj"
+  "CMakeFiles/doodle_jump.dir/Threat.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Timer.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Timer.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/main.cpp.obj"
