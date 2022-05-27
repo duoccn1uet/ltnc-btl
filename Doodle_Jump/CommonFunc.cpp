@@ -23,6 +23,13 @@ bool CommonFunc :: CheckCollision(const SDL_Rect& a, const SDL_Rect& b)
     return true;
 }
 
+int CommonFunc :: OverlapArea(const SDL_Rect& a, const SDL_Rect& b)
+{
+    int x_dist = min(a.x+a.w, b.x+b.w) - max(a.x, b.x);
+    int y_dist = min(a.y+a.h, b.y+b.h) - max(a.y, b.y);
+    return x_dist * y_dist;
+}
+
 int CommonFunc :: SqrDist(const SDL_Rect& a, const SDL_Rect& b)
 {
     return (b.y-a.y)*(b.y-a.y) + (b.x-a.x)*(b.x-a.x);
@@ -67,4 +74,15 @@ void CommonFunc :: PlaySound(Mix_Chunk*& sound, int loop)
 {
     if (SoundOn)
         Mix_PlayChannel(-1, sound, loop-1);
+}
+void CommonFunc :: FreeSound(Mix_Music*& sound)
+{
+    Mix_FreeMusic(sound);
+    sound = nullptr;
+}
+
+void CommonFunc :: FreeSound(Mix_Chunk*& sound)
+{
+    Mix_FreeChunk(sound);
+    sound = nullptr;
 }

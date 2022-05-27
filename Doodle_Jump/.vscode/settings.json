@@ -19,6 +19,10 @@
         "iostream": "cpp",
         "chrono": "cpp",
         "vector": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "array": "cpp",
+        "functional": "cpp",
+        "ratio": "cpp",
+        "scoped_allocator": "cpp"
     }
 }

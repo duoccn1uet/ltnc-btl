@@ -93,14 +93,14 @@ enum class OPTION: short
     HOME, 
     PLAY_TEXT, HELP, EXIT_TEXT, HIGH_SCORES, SETTINGS,
     ON_TEXT, OFF_TEXT, EASY_TEXT, MEDIUM_TEXT, HARD_TEXT, RESET_HIGH_SCORES,
-    PAUSE_BUTTON, RESUME_BUTTON, PLAY_BUTTON, REPLAY_BUTTON,
+    PAUSE_BUTTON, RESUME_BUTTON, PLAY_BUTTON, REPLAY_BUTTON, SOUND_BUTTON,
     nOPTION, EXIT_GAME, NO_OPTION
 };
 
 const string OptionText[] = {"home", 
                              "play_text", "help", "exit_text", "high_scores", "settings",
                              "on_text", "off_text", "easy_text", "medium_text", "hard_text", "reset_high_scores",
-                             "pause_button", "resume_button", "play_button", "replay_button"};
+                             "pause_button", "resume_button", "play_button", "replay_button", "sound_button"};
 
 /// other
 const int DECIMAL_DIGITS_X10 = 1e3;
@@ -130,11 +130,14 @@ namespace CommonFunc
 
     long long rand(long long Left, long long Right);
     bool CheckCollision(const SDL_Rect& a, const SDL_Rect& b);
+    int OverlapArea(const SDL_Rect& a, const SDL_Rect& b);
     int SqrDist(const SDL_Rect& a, const SDL_Rect& b);
     bool LoadSound(Mix_Music*& sound, const string& path);
     bool LoadSound(Mix_Chunk*& sound, const string& path);
     void PlaySound(Mix_Music*& sound, int loop);
     void PlaySound(Mix_Chunk*& sound, int loop);
+    void FreeSound(Mix_Music*& sound);
+    void FreeSound(Mix_Chunk*& sound);
     void SetMapName(const string& _MAP_NAME);
     template <class E> int etoi(const E& x) {return int(x);}
 }

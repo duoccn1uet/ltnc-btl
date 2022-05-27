@@ -4,14 +4,15 @@
 #ifndef GAME_DEBUG
 
 vector <Option> options;
-const int HardnessValue[] = {3/ PIXEL_PER_SCORE, 400 / PIXEL_PER_SCORE, 100 / PIXEL_PER_SCORE};
+const int HardnessValue[] = {100/ PIXEL_PER_SCORE, 400 / PIXEL_PER_SCORE, 100 / PIXEL_PER_SCORE};
 int DIFFICULTY = HardnessValue[0];
 /// score
 const int NUMBER_OF_HIGH_SCORES = 6;
 set <int, greater <int>> high_scores;
 
-/// Threat
-vector <ImgProcess> ThreatsImg;
+
+/// character
+extern int character_max_jump_height;
 
 Game :: Game()
 {
@@ -48,7 +49,8 @@ Game :: Game(const string& _MAP_NAME)
 
 Game :: ~Game()
 {
-    Mix_FreeMusic(menu_sound);
+    FreeSound(monster_appear);
+    FreeSound(menu_sound);
 }
 
 PlatformType Game :: GenPlatformType()
@@ -153,7 +155,6 @@ void Game :: InitItems()
 
 ThreatType Game :: GenThreatType()
 {
-    return ThreatType::JUMP;
     vector <int> cnt_type(etoi(ThreatType::nThreatType));
     for(int i = 0; i < n_threats; ++i)
         ++cnt_type[etoi(threats[i].GetType())];
@@ -184,27 +185,50 @@ bool Game :: GenThreat(int i)
     SDL_Rect t_rect = threat.GetRect();
     for(int j : id)
     {
+        assert(j >= 1);
         SDL_Rect p_rect = platforms[j].GetRect();
         int above_bound = platforms[j+1].GetRect().y + platforms[j+1].GetRect().h;
-        if (above_bound + 1.5*t_rect.h < p_rect.y)
+        if (above_bound + 1.2*t_rect.h < p_rect.y)
         {
-            highest_free_platform = j+1;
+            bool ok = false;
             switch (t_type)
             {
                 case ThreatType::FLY:
-                    threat.SetRect(0, rand(above_bound+5, p_rect.y-t_rect.h-5));
+                    ok = true;
+                    threat.SetRect(0, rand(above_bound+15, p_rect.y-t_rect.h-15));
                     break;
 
                 case ThreatType::JUMP:
-                    threat.SetRect(rand(p_rect.x, p_rect.x+p_rect.w-t_rect.w), p_rect.y-t_rect.h);
+                    if (p_rect.y - t_rect.h > platforms[j-1].GetRect().y + character_max_jump_height)
+                    {
+                        ok = true;
+                        threat.SetRect(rand(p_rect.x, p_rect.x+p_rect.w-t_rect.w), p_rect.y-t_rect.h);
+                    }
                     ///debug(p_rect.y, threat.GetRect().y + threat.GetRect().h);
                     break;
 
                 case ThreatType::MOVE_ON_PLATFORM:
-                    threat.SetRect(rand(p_rect.x, p_rect.x+p_rect.w-t_rect.w), p_rect.y-t_rect.h);
+                    if (p_rect.y - t_rect.h > platforms[j-1].GetRect().y + character_max_jump_height)
+                    {
+                        ok = true;
+                        threat.SetRect(rand(p_rect.x, p_rect.x+p_rect.w-t_rect.w), p_rect.y-t_rect.h);
+                    }
+                    break;
+
+                case ThreatType::TRAP:
+                    ///debug(platforms[j-1].GetRect().y, character_max_jump_height, p_rect.y - t_rect.h);
+                    if (p_rect.y - t_rect.h > platforms[j-1].GetRect().y - character_max_jump_height)
+                    {
+                        ok = true;
+                        threat.SetRect(rand(p_rect.x, p_rect.x+p_rect.w-t_rect.w), p_rect.y-t_rect.h);
+                    }
                     break;
             }
-            return true;
+            if (ok)
+            {
+                highest_free_platform = j+1; 
+                return true;
+            }
         }
     }
     return false;
@@ -262,6 +286,9 @@ void Game :: Init()
         for(OPTION o : OptionsInInGameOptionsPack[i])
             in_game_options_pack[i].AddOption(o);
     }
+
+    /// Load Sound
+    LoadSound(monster_appear, SOUND_FOLDER + "monster_appear.mp3");
 }
 
 void Game :: ShowScore()
@@ -375,6 +402,17 @@ void Game :: GenObjects()
         }
 }
 
+void Game :: UpdateSound()
+{
+    if (SoundOn)
+        options[etoi(OPTION::SOUND_BUTTON)].SetStatus(OptionStatus::ON);
+    else
+    {
+        Mix_PauseMusic();
+        options[etoi(OPTION::SOUND_BUTTON)].SetStatus(OptionStatus::OFF);
+    }
+}
+
 OPTION Game :: PlayGame()
 {
     Mix_HaltMusic();
@@ -384,11 +422,12 @@ OPTION Game :: PlayGame()
     int times_per_frame = 1000 / FPS;
 
     int old_y = character.GetRect().y;
-
+    bool music_playing = false;
     CharacterMoveType move_type = CharacterMoveType::INVALID;
     while (!quit)
     {
         ///timer.Start();
+        bool end_game = false;
         bool has_event = SDL_PollEvent(&event) != 0;
         if (has_event)
         {
@@ -407,7 +446,10 @@ OPTION Game :: PlayGame()
                     while (true)
                     {
                         option = GetChosenOption(OptionsInInGameOptionsPack[i], SDL_PollEvent(&event));
-                        if (option != OPTION::NO_OPTION)
+                        if (option == OPTION::SOUND_BUTTON)
+                            SoundOn ^= 1;
+                        UpdateSound();
+                        if (option != OPTION::NO_OPTION && option != OPTION::SOUND_BUTTON)
                             return option;
                         in_game_options_pack[i].Render();
                         SDL_RenderPresent(renderer);
@@ -432,41 +474,146 @@ OPTION Game :: PlayGame()
                         break;
                     }
             }
+            old_y += ScrollMap();
+
+            auto CollectItem = [&]() -> void
+            {
+                int cnt = 0;
+                for(int i = 0; i < n_items; ++i)
+                    if (character.CollectItem(items[i]))
+                    {
+                        switch (items[i].GetType())
+                        {
+                            case ItemType::COIN:
+                                break;
+                            default:
+                                items[cnt] = items[i];
+                                ++cnt;
+                                break;
+                        }
+                    }
+                    else
+                        items[cnt++] = items[i];
+                for(int i = cnt; i < n_items; ++i)
+                    items[i].FreeItem();
+                n_items = cnt;
+            };
+            CollectItem();
         };
         auto DoThreats = [&]() -> void
         {
             /// move
+            bool playsound = false;
             for(int i = 0; i < n_threats; ++i)
             {
                 auto& threat = threats[i];
-                if (threat.GetRect().y + threat.GetRect().h <= 0)
-                    continue;
-                switch (threat.GetMotionType())
+                auto rect = threat.GetRect();
+                /// Sound
+                switch (threat.GetType())
                 {
-                    case ThreatMotionType::FLY:
+                    case ThreatType::FLY:
+                    case ThreatType::JUMP:
+                    case ThreatType::MOVE_ON_PLATFORM:
+                        if (abs(rect.y - character.GetRect().y) <= 2000)
+                            playsound = true;
+                        break;
+                }
+                    
+                if (rect.y + rect.h <= 0)
+                    continue;
+                /// Move
+                if (threat.wasted)
+                    threat.Fall();
+                else
+                {
+                    switch (threat.GetMotionType())
+                    {
+                        case ThreatMotionType::FLY:
+                            {
+                                if (rect.x + rect.w > SCREEN_WIDTH)
+                                    threat.ChangeDirection(), threat.MoveLeft(); else
+                                if (rect.x < 0)
+                                    threat.ChangeDirection(), threat.MoveRight(); else
+                                if (threat.CurrentMoveType() == ThreatMoveType::LEFT)
+                                    threat.MoveLeft();
+                                else
+                                    threat.MoveRight();
+                                break;
+                            }
+
+                        case ThreatMotionType::JUMP:
                         {
-                            auto rect = threat.GetRect();
-                            if (rect.x + rect.w > SCREEN_WIDTH)
-                                threat.ChangeDirection(), threat.MoveLeft(); else
-                            if (rect.x < 0)
-                                threat.ChangeDirection(), threat.MoveRight(); else
-                            if (threat.CurrentMoveType() == ThreatMoveType::LEFT)
-                                threat.MoveLeft();
+                            ///threat.Move();
+                            ThreatMoveType g = threat.CurrentMoveType();
+                            bool jump = (g == ThreatMoveType::JUMP);
+                            auto t_rect = threat.GetRect();
+                            for(int i = 0; i < n_platforms; ++i)
+                                if (CheckCollision(t_rect, platforms[i].GetRect()))
+                                {
+                                    jump = true;
+                                }
+                            if (jump)
+                                threat.Jump();
                             else
-                                threat.MoveRight();
+                                threat.Fall();
                             break;
                         }
 
-                    case ThreatMotionType::JUMP:
-                        threat.Move();
+                        case ThreatMotionType::MOVE_ON_PLATFORM:
+                            threat.Move();
+                            break;
 
-                    case ThreatMotionType::MOVE_ON_PLATFORM:
-                        threat.Move();
+                        case ThreatMotionType::NOT_MOVE:
+                            break;
+                    }
+
+                }
+                
+                switch (threat.GetType())
+                {
+                    case ThreatType::FLY:
+                    case ThreatType::JUMP:
+                    case ThreatType::MOVE_ON_PLATFORM:
+                    /// char stand on threat
+                        if (character.current_move_type[uint16_t(CharacterMoveType::JUMP)] == false && 
+                            CheckCollision(rect, character.GetLegsRect()))
+                        {
+                            threat.wasted = true;
+                            character.Jump(NormalSpeed);
+                            PlaySound(character.defeat_threat, 1);
+                        } else
+                        /// defeated by threat
+                        if (CheckCollision(character.GetRect(), rect) &&
+                            OverlapArea(character.GetRect(), rect) >= 1000)
+                        {
+                            end_game = true;
+                            return;
+                        }
+
                         break;
 
-                    case ThreatMotionType::NOT_MOVE:
+                    case ThreatType::TRAP:
+                        if (character.current_move_type[uint16_t(CharacterMoveType::JUMP)] == false && 
+                            CheckCollision(rect, character.GetLegsRect()))
+                            {
+                                end_game = true;
+                                return;
+                            }
                         break;
                 }
+            } 
+            if (playsound)
+            {
+                if (music_playing == false || Mix_PausedMusic())
+                {
+                    music_playing = true;
+                    PlaySound(monster_appear, INFINITE_LOOP);
+                }
+            }
+            else
+            {
+                music_playing = false;
+                Mix_HaltMusic();
             }
         };
         auto UpdateScore = [&]()
@@ -478,28 +625,7 @@ OPTION Game :: PlayGame()
                 old_y = current_y;
             }
         };   
-        auto CollectItem = [&]() -> void
-        {
-            int cnt = 0;
-            for(int i = 0; i < n_items; ++i)
-                if (character.CollectItem(items[i]))
-                {
-                    switch (items[i].GetType())
-                    {
-                        case ItemType::COIN:
-                            break;
-                        default:
-                            items[cnt] = items[i];
-                            ++cnt;
-                            break;
-                    }
-                }
-                else
-                    items[cnt++] = items[i];
-            for(int i = cnt; i < n_items; ++i)
-                items[i].FreeItem();
-            n_items = cnt;
-        };
+        
         auto Render = [&]()
         {
             background.Render();
@@ -529,14 +655,14 @@ OPTION Game :: PlayGame()
         if (o != OPTION::RESUME_BUTTON && o != OPTION::NO_OPTION)
             return o;
         DoChar();
-        old_y += ScrollMap();
         DoThreats();
         GenObjects();
-        CollectItem();
         UpdateScore();
         Render();
         SDL_RenderPresent(renderer);
-        if (character.GetRect().y > SCREEN_HEIGHT)
+
+        end_game |= (character.GetRect().y > SCREEN_HEIGHT);
+        if (end_game)
             return EndGame();
         
         int frame_passed = timer.GetTicks();
@@ -564,6 +690,7 @@ void Game :: ResetGame()
     n_items = 0;
     n_threats = 0;
     in_game_options_pack.clear();
+    character.Reset();
     /**for(int i = 0; i < MAX_PLATFORMS_PER_FRAME; ++i)
         platforms[i].FreePlatform();
     for(int i = 0; i < MAX_ITEMS_PER_FRAME; ++i)
@@ -572,7 +699,29 @@ void Game :: ResetGame()
 
 OPTION Game :: EndGame()
 {
-    return OPTION::EXIT_GAME;
+    Mix_HaltMusic();
+    Mix_Chunk *end_game_sound = nullptr;
+    LoadSound(end_game_sound, SOUND_FOLDER + "end game.wav");
+    PlaySound(end_game_sound, 1);
+    OptionsPack end_game;
+    end_game.background.LoadImg(BACKGROUND_FOLDER + "EndGame.png");
+    end_game.header_name.CreateText(OPTION_FONT, OPTION_FONT_SIZE, "Game Over", d_Text_Color::BLACK_TEXT);
+    end_game.AddOption(OPTION::REPLAY_BUTTON);
+    end_game.AddOption(OPTION::HOME);
+    end_game.AddOption(OPTION::SOUND_BUTTON);
+    
+    end_game.SetRect(SCREEN_WIDTH/2 - 85, SCREEN_HEIGHT/2 - 70);
+    while (true)
+    {
+        auto option = GetChosenOption(end_game.options_pack, SDL_PollEvent(&event));
+        if (option == OPTION::SOUND_BUTTON)
+            SoundOn ^= 1;
+        UpdateSound();
+        if (option != OPTION::NO_OPTION && option != OPTION::SOUND_BUTTON)
+            return option;
+        end_game.Render();
+        SDL_RenderPresent(renderer);
+    }
 }
 
 OPTION Game :: ShowMenu()
@@ -620,6 +769,7 @@ void Game :: Start()
                 return;
 
             case OPTION::HOME:
+                character.Reset();
                 current_option = ShowMenu();
                 break;
 

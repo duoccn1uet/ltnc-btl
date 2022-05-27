@@ -58,6 +58,7 @@ public:
     bool CollectItem(Item& item);
     bool DoOutOfFrame();
     SDL_Rect GetLegsRect();
+    void Reset();
 
     friend class Game;
 
@@ -69,6 +70,7 @@ private:
     bool* current_move_type = new bool[uint16_t(CharacterMoveType::d_NumberOfMoveType)];
     ImgProcess* d_Img = new ImgProcess[uint16_t(CharacterMoveType::d_NumberOfMoveType)];
     Mix_Chunk *landing;
+    Mix_Chunk *defeat_threat;
     pair <CharacterMoveType, int> move_event;/// = {0,0};
 };
 

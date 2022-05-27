@@ -5,6 +5,7 @@
 
 int max_jump_times;
 float jump_speed;
+int character_max_jump_height;
 
 Character :: Character()
 {
@@ -22,6 +23,8 @@ Character :: ~Character()
     delete[] d_Img;
     delete[] current_move_type;
     Mix_FreeChunk(landing);
+    Mix_FreeChunk(defeat_threat);
+    Reset();
 }
 
 void Character :: Init()
@@ -31,6 +34,7 @@ void Character :: Init()
         d_Img[i++].LoadImg(CHARACTER_FOLDER + s);
     d_rect = d_Img[0].GetRect();
     LoadSound(landing, SOUND_FOLDER + "landing.wav");
+    LoadSound(defeat_threat, SOUND_FOLDER + "defeat_threat.wav");
 }
 
 SDL_Rect Character :: GetLegsRect()
@@ -113,6 +117,7 @@ void Character :: Jump(int v0)
 {
     current_move_type[etoi(CharacterMoveType::JUMP)] = true;
     jump_speed = v0;
+    character_max_jump_height = jump_speed*jump_speed / Character_g;
     max_jump_times = jump_speed / Character_g;
 }
 
@@ -186,6 +191,19 @@ bool Character :: CollectItem(Item& item)
             break;
     }
     return false;
+}
+
+void Character :: Reset()
+{
+    jump_times = 0;
+    fall_times = 0;
+    d_move = CharacterMoveType::RIGHT;
+    for(int i = 0; i < int(CharacterMoveType::d_NumberOfMoveType); ++i)
+        current_move_type[i] = false;
+    current_move_type[short(CharacterMoveType::RIGHT)] = true;
+    current_move_type[int(CharacterMoveType::JUMP)] = true;
+    move_event = make_pair(CharacterMoveType::INVALID, 0);
+    jump_speed = NormalSpeed;
 }
 
 #else

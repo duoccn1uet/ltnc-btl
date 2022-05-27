@@ -24,9 +24,9 @@ const int MAX_ITEMS_PER_FRAME = 5;
 const int MAX_ITEM_TYPE_PER_FRAME[] = {3, 0, 2};
 
 /// Threats
-const int MAX_THREATS_PER_FRAME = 3;
-/// const string ThreatTypeText[] = {"fly", "move_on_platform", "jump"};
-const int MAX_THREAT_TYPE_PER_FRAME[] = {1, 1, 1};
+const int MAX_THREATS_PER_FRAME = 2;
+/// const string ThreatTypeText[] = {"fly", "move_on_platform", "jump", "trap"};
+const int MAX_THREAT_TYPE_PER_FRAME[] = {1, 1, 1, 2};
 
 /// Score
 const float PIXEL_PER_SCORE = 3;
@@ -42,7 +42,7 @@ enum class InGameOptionsPack: short
 const vector <string> InGameOptionsPackText = {"Game Paused"};
 const int InGameOptionsPackX[] = {SCREEN_WIDTH/2 - 85};
 const int InGameOptionsPackY[] = {SCREEN_HEIGHT/2 - 70};
-const vector <vector<OPTION>> OptionsInInGameOptionsPack = {{OPTION::REPLAY_BUTTON, OPTION::RESUME_BUTTON, OPTION::HOME}};
+const vector <vector<OPTION>> OptionsInInGameOptionsPack = {{OPTION::REPLAY_BUTTON, OPTION::RESUME_BUTTON, OPTION::HOME, OPTION::SOUND_BUTTON}};
 
 const int SCROLL_LINE = SCREEN_HEIGHT / 4;
 
@@ -88,6 +88,8 @@ private:
 
     /// Threats
     Threat threats[MAX_THREATS_PER_FRAME];
+    bool wasted[MAX_THREATS_PER_FRAME];
+    ///int threat_on_platform[MAX_THREATS_PER_FRAMEư
     int cnt_threat[size_t(ThreatType::nThreatType)];
     int n_threats = 0;
 
@@ -112,6 +114,10 @@ private:
     OPTION PlayGame();
     void ResetGame();
     OPTION EndGame(); 
+
+    /// Sound
+    Mix_Music *monster_appear = nullptr;
+    void UpdateSound();
 
     /// Functions
     void InitOptions();

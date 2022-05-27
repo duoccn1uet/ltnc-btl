@@ -60,6 +60,8 @@ public:
     void Render();
     void FreeThreat();
 
+    friend class Game;
+
 private:
 
     ThreatType type = ThreatType::nThreatType;
@@ -72,6 +74,7 @@ private:
     /// Jump
     int jump_times = 0, fall_times = 0;
     float s_fall = 0;
+    bool wasted = false;
 };
 
 #endif THREAT_H

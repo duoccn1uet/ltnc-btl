@@ -27,6 +27,8 @@ public:
     Option* GetRefOption(const OPTION& option);
     void Render();
 
+    friend class Game;
+
 private:
 
     vector <OPTION> options_pack;

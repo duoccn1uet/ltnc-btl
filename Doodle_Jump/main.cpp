@@ -29,25 +29,31 @@ int main(int agrc, char* argv[])
     srand(time(0));
     initSDL(window, renderer);
     game.Start();
-
-    /**Threat a;
-    a.CreateThreat(ThreatType::JUMP, ThreatMotionType::JUMP);
-    ///a.LoadImg(THREAT_FOLDER+"fly.png");
-    a.SetRect(50, 500);
+    /**Threat threat;
+    threat.CreateThreat(ThreatType::FLY, ThreatMotionType::FLY);
+    ///threat.LoadImg(THREAT_FOLDER+"fly.png");
+    threat.SetRect(50, 500);
     Platform g;
     g.LoadPlatform(PlatformType::NORMAL);
-    g.SetRect(50, a.GetRect().y+a.GetRect().h);
+    g.SetRect(50, threat.GetRect().y+threat.GetRect().h);
+    int t = -1;
     while (true)
     {
-        SDL_RenderClear(renderer);
-        auto rect = a.GetRect();
         if (SDL_PollEvent(&event) != 0 && event.type == SDL_QUIT)
             return 0;
-        a.Move();
-        g.Render();
-        a.Render();
+        SDL_RenderClear(renderer);
+        auto rect = threat.GetRect();
+        if (rect.x + rect.w > SCREEN_WIDTH)
+            threat.ChangeDirection(), threat.MoveLeft(); else
+        if (rect.x < 0)
+            threat.ChangeDirection(), threat.MoveRight(); else
+        if (threat.CurrentMoveType() == ThreatMoveType::LEFT)
+            threat.MoveLeft();
+        else
+            threat.MoveRight();
+        threat.Render();
         SDL_RenderPresent(renderer);
-        ///SDL_Delay(60);
+        ///SDL_Delay(30);
     }*/
     ///game.Start();
     ///cout << MAP_NAME;
