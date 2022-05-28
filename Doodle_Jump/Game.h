@@ -63,8 +63,10 @@ private:
     /// Variables
     ImgProcess background;
     ImgProcess top_frame;
+
+    /// character
     Character character;
-    
+    ImgProcess landing_effect;
     /// Platform
 
     Platform platforms[MAX_PLATFORMS_PER_FRAME];

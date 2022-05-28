@@ -4,7 +4,7 @@
 #ifndef GAME_DEBUG
 
 vector <Option> options;
-const int HardnessValue[] = {100/ PIXEL_PER_SCORE, 400 / PIXEL_PER_SCORE, 100 / PIXEL_PER_SCORE};
+const int HardnessValue[] = {900/ PIXEL_PER_SCORE, 400 / PIXEL_PER_SCORE, 100 / PIXEL_PER_SCORE};
 int DIFFICULTY = HardnessValue[0];
 /// score
 const int NUMBER_OF_HIGH_SCORES = 6;
@@ -300,6 +300,9 @@ void Game :: Init()
     background.LoadImg(BACKGROUND_FOLDER + "background.png");
     top_frame.LoadImg(BACKGROUND_FOLDER + "top_frame.png");
     character.SetRect(SCREEN_WIDTH/2 - character.GetRect().w/2, SCREEN_HEIGHT - character.GetRect().h - 50);
+    landing_effect.LoadImg(CHARACTER_FOLDER + "landing_effect.png");
+    landing_effect.SetClipFrame(4);
+
     InitPlatforms();
     InitItems();
     InitThreats();
@@ -409,6 +412,7 @@ int Game :: ScrollMap()
                 threats[i].FreeThreat();
             n_threats = cnt;
         };
+        landing_effect.SetRect(landing_effect.GetRect().x, landing_effect.GetRect().y + diff);
         ///ScrollBackground();
         ScrollPlatforms();
         ScrollItems();
@@ -468,6 +472,7 @@ OPTION Game :: PlayGame()
     {
         ///timer.Start();
         bool end_game = false;
+        bool has_landing_effect = false;
         bool has_event = SDL_PollEvent(&event) != 0;
         if (has_event)
         {
@@ -503,18 +508,31 @@ OPTION Game :: PlayGame()
             character.Move();
             character.Cross(move_type);
             character.DoOutOfFrame();
+            old_y += ScrollMap();
             if (character.current_move_type[uint16_t(CharacterMoveType::JUMP)] == false) /// is falling down
             {
                 SDL_Rect cl_rect = character.GetLegsRect();
                 for(int i = 0; i < n_platforms; ++i)
-                    if (platforms[i].GetRect().y > cl_rect.y && CheckCollision(platforms[i].GetRect(), cl_rect))
+                {
+                    auto p_rect = platforms[i].GetRect();
+                    if (p_rect.y > cl_rect.y && CheckCollision(p_rect, cl_rect))
                     {
+                        has_landing_effect = true;
+                        if (landing_effect.IsRendering() == false)
+                        {
+                            auto l_rect = landing_effect.GetRect();
+                            auto c_rect = character.GetRect();
+                            int x = c_rect.x + c_rect.w/2;
+                            x -= (l_rect.w / landing_effect.GetClipFrame()) / 2;
+                            ///cout << l_rect.h << endl;
+                            landing_effect.SetRect(x, p_rect.y - 8);
+                        }
                         PlaySound(character.landing, 1);
                         character.Jump(NormalSpeed);
                         break;
                     }
+                }
             }
-            old_y += ScrollMap();
 
             auto CollectItem = [&]() -> void
             {
@@ -624,7 +642,7 @@ OPTION Game :: PlayGame()
                         } else
                         /// defeated by threat
                         if (CheckCollision(character.GetRect(), rect) &&
-                            OverlapArea(character.GetRect(), rect) >= 1000)
+                            OverlapArea(character.GetRect(), rect) >= 400)
                         {
                             end_game = true;
                             return;
@@ -673,6 +691,8 @@ OPTION Game :: PlayGame()
             background.SetRect(tmp.x, tmp.y - tmp.h);
             background.Render();
             background.SetRect(tmp.x, tmp.y);*/
+            if (has_landing_effect || landing_effect.IsRendering())
+                landing_effect.Render();
             for(int i = 0; i < n_platforms; ++i)
                 if (platforms[i].GetRect().y + platforms[i].GetRect().h > 0)
                     platforms[i].Render();

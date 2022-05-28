@@ -28,6 +28,14 @@ int main(int agrc, char* argv[])
 {
     srand(time(0));
     initSDL(window, renderer);
+    /**foru(i, 1, 100)
+    {
+        if (SDL_PollEvent(&event) != 0 && event.type == SDL_QUIT)
+            return 0;
+        SDL_RenderClear(renderer);
+        t.Render();
+        SDL_RenderPresent(renderer);
+    }*/
     game.PlayIntro();
     game.Start();
     /**Threat threat;

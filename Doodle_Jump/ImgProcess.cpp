@@ -39,8 +39,41 @@ void ImgProcess :: Render(const SDL_Rect* clip)
     SDL_RenderCopy(renderer, d_object, clip, &d_rect);
 }
 
+void ImgProcess :: Render()
+{
+    is_rendering = true;
+    SDL_Rect clip;
+    clip.w = d_rect.w / clip_frame;
+    clip.h = d_rect.h;
+    clip.x = clip.w * frame_ptr;
+    clip.y = 0;
+    SDL_Rect temp_rect = d_rect;
+    temp_rect.w = d_rect.w / clip_frame;
+    temp_rect.h = d_rect.h / clip_frame;
+    SDL_RenderCopy(renderer, d_object, &clip, &temp_rect);
+    if (++frame_ptr == clip_frame)
+        frame_ptr = 0, is_rendering = false;
+    if (clip_frame > 1)
+    {
+        ++loop;
+        if (loop < 4)
+        {
+            --frame_ptr;
+            if (frame_ptr == -1)
+                frame_ptr += clip_frame;
+            is_rendering = true;
+        }
+        else
+            loop = 0;
+    }
+}
+
 void ImgProcess :: Free()
 {
+    clip_frame = 1;
+    frame_ptr = 0;
+    loop = 0;
+    is_rendering = false;
     if (d_object != nullptr)
     {
         SDL_DestroyTexture(d_object);
