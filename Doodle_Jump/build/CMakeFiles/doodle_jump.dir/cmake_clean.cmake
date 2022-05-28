@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/doodle_jump.dir/Animation.cpp.obj"
+  "CMakeFiles/doodle_jump.dir/Animation.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Character.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Character.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/CommonFunc.cpp.obj"
@@ -27,6 +29,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/doodle_jump.dir/Threat.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/Timer.cpp.obj"
   "CMakeFiles/doodle_jump.dir/Timer.cpp.obj.d"
+  "CMakeFiles/doodle_jump.dir/View.cpp.obj"
+  "CMakeFiles/doodle_jump.dir/View.cpp.obj.d"
   "CMakeFiles/doodle_jump.dir/main.cpp.obj"
   "CMakeFiles/doodle_jump.dir/main.cpp.obj.d"
   "doodle_jump.exe"

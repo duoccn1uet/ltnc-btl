@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "CommonFunc.h"
+#include "View.h"
 #include "ImgProcess.h"
 #include "Platform.h"
 #include "Character.h"
@@ -54,6 +55,7 @@ public:
     Game(const string& _MAP_NAME);
     ~Game();
 
+    void PlayIntro();
     void Start();
 
 private:

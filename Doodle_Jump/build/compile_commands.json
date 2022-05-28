@@ -1,6 +1,11 @@
 [
 {
   "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\X86_64~2.EXE  @CMakeFiles/doodle_jump.dir/includes_CXX.rsp -g -o CMakeFiles\\doodle_jump.dir\\Animation.cpp.obj -c C:\\Users\\LENOVO\\OneDrive\\Desktop\\ltnc-btl\\Doodle_Jump\\Animation.cpp",
+  "file": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Animation.cpp"
+},
+{
+  "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",
   "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\X86_64~2.EXE  @CMakeFiles/doodle_jump.dir/includes_CXX.rsp -g -o CMakeFiles\\doodle_jump.dir\\Character.cpp.obj -c C:\\Users\\LENOVO\\OneDrive\\Desktop\\ltnc-btl\\Doodle_Jump\\Character.cpp",
   "file": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Character.cpp"
 },
@@ -68,6 +73,11 @@
   "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",
   "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\X86_64~2.EXE  @CMakeFiles/doodle_jump.dir/includes_CXX.rsp -g -o CMakeFiles\\doodle_jump.dir\\Timer.cpp.obj -c C:\\Users\\LENOVO\\OneDrive\\Desktop\\ltnc-btl\\Doodle_Jump\\Timer.cpp",
   "file": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Timer.cpp"
+},
+{
+  "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",
+  "command": "C:\\PROGRA~1\\CODEBL~1\\MinGW\\bin\\X86_64~2.EXE  @CMakeFiles/doodle_jump.dir/includes_CXX.rsp -g -o CMakeFiles\\doodle_jump.dir\\View.cpp.obj -c C:\\Users\\LENOVO\\OneDrive\\Desktop\\ltnc-btl\\Doodle_Jump\\View.cpp",
+  "file": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/View.cpp"
 },
 {
   "directory": "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/build",

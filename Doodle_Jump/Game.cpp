@@ -53,6 +53,46 @@ Game :: ~Game()
     FreeSound(menu_sound);
 }
 
+void Game :: PlayIntro()
+{
+    vector <View> views(2);
+    int INTRO_1 = 0, INTRO_2 = 1;
+    int duration = 1000;
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+    views[INTRO_1].setRenderer(renderer);
+    views[INTRO_1].loadTexture(BACKGROUND_FOLDER + "intro_1.png");
+    views[INTRO_1].setCenterPoint({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 100 });
+	views[INTRO_1].setAnimation("Fade In", duration);
+	views[INTRO_1].setAnimation("Transform", duration, 0, {0, -100});
+	///views[INTRO_1].setAnimation("Fade Out", duration, 6000);
+	views[INTRO_2].setRenderer(renderer);
+    views[INTRO_2].loadTexture(BACKGROUND_FOLDER + "intro_2.png");
+	views[INTRO_2].setCenterPoint({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 100 });
+	views[INTRO_2].setAnimation("Fade In", duration);
+	views[INTRO_2].setAnimation("Transform", duration, 0, { 0, -100 });
+	///views[INTRO_2].setAnimation("Fade Out", duration, 6000);
+    ImgProcess foreground;
+    foreground.LoadImg(BACKGROUND_FOLDER + "foreground.png");
+	while (views[INTRO_1].animation_queue.size() != 0)
+    ///foru(i, 1, 10000) 
+    {
+        foreground.Render();
+		views[INTRO_1].render(true);
+		SDL_RenderPresent(renderer);
+        ///cout << views[INTRO_1].animation_queue.size() << endl;
+	}
+    ///for(long long i = 1; i <= (long long)1e1*duration; ++i) {int x = 1;}
+    SDL_Delay(1000);
+	while (views[INTRO_2].animation_queue.size() != 0) 
+    {
+        foreground.Render();
+		views[INTRO_2].render(true);
+		SDL_RenderPresent(renderer);
+	}
+    SDL_Delay(1000);
+    ///foru(i, 1, 3e8*duration) {int x = 1;}
+}
+
 PlatformType Game :: GenPlatformType()
 {
     return PlatformType::NORMAL;

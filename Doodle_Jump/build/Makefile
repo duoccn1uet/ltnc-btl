@@ -148,6 +148,30 @@ doodle_jump/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/build
 .PHONY : doodle_jump/fast
 
+Animation.obj: Animation.cpp.obj
+.PHONY : Animation.obj
+
+# target to build an object file
+Animation.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Animation.cpp.obj
+.PHONY : Animation.cpp.obj
+
+Animation.i: Animation.cpp.i
+.PHONY : Animation.i
+
+# target to preprocess a source file
+Animation.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Animation.cpp.i
+.PHONY : Animation.cpp.i
+
+Animation.s: Animation.cpp.s
+.PHONY : Animation.s
+
+# target to generate assembly for a file
+Animation.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Animation.cpp.s
+.PHONY : Animation.cpp.s
+
 Character.obj: Character.cpp.obj
 .PHONY : Character.obj
 
@@ -484,6 +508,30 @@ Timer.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/Timer.cpp.s
 .PHONY : Timer.cpp.s
 
+View.obj: View.cpp.obj
+.PHONY : View.obj
+
+# target to build an object file
+View.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/View.cpp.obj
+.PHONY : View.cpp.obj
+
+View.i: View.cpp.i
+.PHONY : View.i
+
+# target to preprocess a source file
+View.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/View.cpp.i
+.PHONY : View.cpp.i
+
+View.s: View.cpp.s
+.PHONY : View.s
+
+# target to generate assembly for a file
+View.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\doodle_jump.dir\build.make CMakeFiles/doodle_jump.dir/View.cpp.s
+.PHONY : View.cpp.s
+
 main.obj: main.cpp.obj
 .PHONY : main.obj
 
@@ -519,6 +567,9 @@ help:
 	@echo ... package_source
 	@echo ... rebuild_cache
 	@echo ... doodle_jump
+	@echo ... Animation.obj
+	@echo ... Animation.i
+	@echo ... Animation.s
 	@echo ... Character.obj
 	@echo ... Character.i
 	@echo ... Character.s
@@ -561,6 +612,9 @@ help:
 	@echo ... Timer.obj
 	@echo ... Timer.i
 	@echo ... Timer.s
+	@echo ... View.obj
+	@echo ... View.i
+	@echo ... View.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

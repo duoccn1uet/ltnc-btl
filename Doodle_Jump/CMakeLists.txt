@@ -6,7 +6,7 @@ set(SDL2_LIB_DIR D:/SDL/lib)
 
 include_directories(${SDL2_INCLUDE_DIR})
 link_directories(${SDL2_LIB_DIR})
-
+  
 
 #FILE(GLOB cpp_file ${CMAKE_SOURCE_DIR}/*.cpp)
 file(GLOB cpp_file *.cpp)

@@ -28,6 +28,7 @@ int main(int agrc, char* argv[])
 {
     srand(time(0));
     initSDL(window, renderer);
+    game.PlayIntro();
     game.Start();
     /**Threat threat;
     threat.CreateThreat(ThreatType::FLY, ThreatMotionType::FLY);

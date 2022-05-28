@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Animation.cpp" "CMakeFiles/doodle_jump.dir/Animation.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Animation.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Character.cpp" "CMakeFiles/doodle_jump.dir/Character.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Character.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CommonFunc.cpp" "CMakeFiles/doodle_jump.dir/CommonFunc.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/CommonFunc.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/CreateWindow.cpp" "CMakeFiles/doodle_jump.dir/CreateWindow.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/CreateWindow.cpp.obj.d"
@@ -22,6 +23,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Text.cpp" "CMakeFiles/doodle_jump.dir/Text.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Text.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Threat.cpp" "CMakeFiles/doodle_jump.dir/Threat.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Threat.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/Timer.cpp" "CMakeFiles/doodle_jump.dir/Timer.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/Timer.cpp.obj.d"
+  "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/View.cpp" "CMakeFiles/doodle_jump.dir/View.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/View.cpp.obj.d"
   "C:/Users/LENOVO/OneDrive/Desktop/ltnc-btl/Doodle_Jump/main.cpp" "CMakeFiles/doodle_jump.dir/main.cpp.obj" "gcc" "CMakeFiles/doodle_jump.dir/main.cpp.obj.d"
   )
 
