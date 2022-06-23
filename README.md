@@ -1,37 +1,51 @@
-# ltnc-btl
-2h, 16/3/2022: Handle keyboard event, fast incremental usage memory, don't know why ??? <br>
+# Doodle Jump
 
-11h40, 17/3/2022:<br>
-+) Using LoadImg every reload will take lots of memories. <br>
-+) Doodle can automatically jump and fall, move left and right. <br>
+A simple game designed by me and powered by SDL2!! <br>
+Based on <a href="https://en.wikipedia.org/wiki/Doodle_Jump">Doodle Jump game</a>.
 
-11h30, 17/3/2022: <br>
-+) Map can automatically be scrolled now.<br>
-+) Doodle can jump out of frame.<br>
+<details><summary><b>Creator</b></summary>
 
-11h, 24/3/2022: <br>
-+) More real motion.<br>
-+) **Bad random platforms algorithm, may not be able to generate more platforms. fixed** <br>
+<p align="center">
+<img src="./info/avt.jpg" height="50%" width="50%">
+</p>
 
-0h31, 30/3/2022: <br>
-+) Simple Menu. <br>
+* **Full Name:** Bùi Huy Dược
 
-0h32, 31/3/2022: <br>
-+) The menu is almost completed. <br>
-+) Have sound. <br>
+* **University:** VNU University of Engineering and Technology (VNU-UET)
 
-0h31, 9/4/2022: <br>
-+) Update score.<br>
-+) **When choose help option multiple times, memory increases because of recursion, fixed.** <br>
+* **Class:** K66C-CLC
 
-15h30, 20/4/2022: <br>
-+) **Item has bug, image was loaded but can not render, not fixed.** <br>
-+) **Incremental usage memory, fixed.**<br>
-+) **Game exit when score > 20000, fixed.**<br>
-+) **Coin coinciding with platform, fixed.** <br>
+* **Student ID:** 21020059
 
-1h00, 1/5/2022: <br>
-+) Has coin. <br>
+* **Mail for work:** hduoc2003@gmail.com
 
-11h30, 1/5/2022:<br>
-+) **Doodler is delayed when key is pressed down continuously, fixed**<br>
+</details>
+
+<details><summary><b>Technologies Used</b></summary>
+
+* x86_64-w64-mingw32-g++.exe
+* Visual Studio Code + Cmake, Cmake Tools (Extension for VS Code).
+* SDL2, SDL2 image, SDL2 mixer, SDL2 ttf.
+
+</details>
+
+<details><summary><b>Run</b></summary>
+
+* **Run:** Open /Doodle_Jump/build/doodle_jump.exe
+
+</details>
+
+<details><summary><b>How to Play</b></summary>
+
+Controls so that the doodler doesn't fall off the platform.
+
+Use ← and → to move.
+
+Collect coins and defeat monsters to earn points.
+
+</details>
+
+<details><summary><b>Video demo</b></summary>
+
+<a href = "https://youtu.be/N3AOmg7kLpo">Demo game</a>
+</details>
